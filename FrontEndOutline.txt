@@ -1,0 +1,24 @@
+Home: 
+-SearchBar 
+-Explore->link to explore page 
+-User_Icon/signin-> link to User Page 
+-List of Popular_Events/Events 
+-List of UsersEvents
+
+Explore Page:*Education | Entertainment | Religious | Other* -Extra work: last thing to do
+
+User Page: *if Not signed in: link to Sign-in page*
+- list of UserEvents()-->Event Page : show name | role(owner, admin, moderator, attendant)
+- Info: name, email, userID, address
+- Edit button--> send to Info edit page, where you can edit all the info shown(besides ID)
+
+Event Page: if Moderator: link to Edit Page-
+-Displays all Event Info
+
+Event Edit Page:
+-Edit all info shown + the role of users
+
+Sign-in Page: 
+-Create Account
+-Sign in: username/password *Maybe: Google account*-We are checking on feasibility
+
