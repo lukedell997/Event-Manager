@@ -1,0 +1,4 @@
+search
+users
+events
+notifications
