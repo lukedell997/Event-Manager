@@ -5,14 +5,18 @@
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
         <meta name="viewport" content="width=device-width, initial-scale=1" />
 
-       <!-- Bootstrap CSS -->   
+        <!-- Bootstrap CSS -->   
         <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
         <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
 
         <!--Custom Styles-->
         <link rel="stylesheet" href="css/styles.css" /> 
-		
-		<!-- Google Fonts -->
+
+        <!-- Owl Carousel -->
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/assets/owl.carousel.min.css" integrity="sha512-tS3S5qG0BlhnQROyJXvNjeEM4UpMXHrQfTGmbQ1gKmelCxlSEBUaxhRBj/EFTzpbP4RVSrpEikbmdJobCvhE3g==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/assets/owl.theme.default.min.css" integrity="sha512-sMXtMNL1zRzolHYKEujM2AqCLUR9F2C4/05cdbxjjLSRvMQIciEPCQZo++nk7go3BtSuK9kfa/s+a4f4i5pLkw==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+        
+        <!-- Google Fonts -->
         <link rel="preconnect" href="https://fonts.googleapis.com">
         <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
         <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@200&display=swap" rel="stylesheet">
@@ -20,8 +24,8 @@
         <link rel="shortcut icon" href="img/logo.png" />
         <title>Capstone | Event Manager</title>
     </head>
-	
-	<body>
+
+    <body>
         <div class="menu-bar">
             <!-- NAVBAR -->
             <nav class="navbar navbar-expand-md navbar-light sticky-top">
@@ -56,13 +60,89 @@
                 </div>  <!--container-->
             </nav>
         </div>  <!--menu-bar-->
-		
-		
-		
-		
-		
-		
-		<!-- FOOTER -->
+
+        <!-- CONTENTS -->
+        <div class="container">
+	    <!-- EVENT DETAILS -->
+            <div class="row row-content">
+                <div class="col">
+                    <div class="media">
+                        <img class="d-flex mr-5 img-fluid img-thumbnail" src="img/concertEvent.jpg" alt="Event Image" />
+                        <div class="media-body align-self-center">
+                            <h3>OCT 28</h3>
+                            <h2>Concert Event</h2>
+                            <h4>$40</h4>  
+                            <button type="submit" class="btn btn-primary">Attend</button>                        
+                        </div>  <!--media-body-->
+                    </div>  <!--media-->
+                </div>  <!--col-->
+            </div>  <!--row-->
+
+            <div class="row row-content">
+                <div class="col col-sm-7">
+                    <p>Event Description</p>                    
+                    <p>Tags:</p>
+                </div>  <!--col-->
+                <div class="col">
+                    <h4>Address</h4>
+                </div>
+            </div>  <!--row-->
+        
+            <!-- OTHER EVENTS YOU MAY LIKE -->
+            <div class="row row-content">
+                <div class="col-sm-6">
+                    <h2>Other Events You May Like</h2>
+                </div>  <!--col-->
+                <div class="owl-carousel owl-theme">
+
+                    <div class="ms-2 me-2">
+                        <div class="card">
+                            <img src="img/concertEvent.jpg" alt="Concert Event" class="card-img-top">
+                            <div class="card-body">
+                                <h4 class="card-title">Concert Events</h4>
+                                <p class="card-text">Concert details</p>
+                                <button type="button" class="btn btn-danger">Read More</button>
+                            </div>  <!--card-body-->
+                        </div>  <!--card-->
+                    </div>  <!--ms-2 me-2-->
+
+                    <div class="ms-2 me-2">
+                        <div class="card">
+                            <img src="img/conferenceEvent.jpg" alt="Conference Event" class="card-img-top">
+                            <div class="card-body">
+                                <h4 class="card-title">Conference Events</h4>
+                                <p class="card-text">Conference details</p>
+                                <button type="button" class="btn btn-danger">Read More</button>
+                            </div>  <!--card-body-->
+                        </div>  <!--card-->
+                    </div>  <!--ms-2 me-2-->
+
+                    <div class="ms-2 me-2">
+                        <div class="card">
+                            <img src="img/dinnerEvent.jpg" alt="Dinner Event" class="card-img-top">
+                            <div class="card-body">
+                                <h4 class="card-title">Dinner Events</h4>
+                                <p class="card-text">Dinner details</p>
+                                <button type="button" class="btn btn-danger">Read More</button>
+                            </div>  <!--card-body-->
+                        </div>  <!--card-->
+                    </div>  <!--ms-2 me-2-->
+
+                    <div class="ms-2 me-2">
+                        <div class="card">
+                            <img src="img/festivalEvent.jpg" alt="Festival Event" class="card-img-top">
+                            <div class="card-body">
+                                <h4 class="card-title">Festival Events</h4>
+                                <p class="card-text">Festival details</p>
+                                <button type="button" class="btn btn-danger">Read More</button>
+                            </div>  <!--card-body-->
+                        </div>  <!--card-->
+                    </div>  <!--ms-2 me-2-->                    
+                </div>  <!--owl-carousel-->
+            </div>  <!--row-->
+        </div>  <!--container-->
+       
+        <!-- FOOTER -->
         <footer class="site-footer">    
             <div class="container-fluid"> 
                 <div class="row">   
@@ -103,6 +183,9 @@
         <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
         <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+
+        <!-- Owl Carousel script-->
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/owl.carousel.min.js" integrity="sha512-bPs7Ae6pVvhOSiIcyUClR7/q2OAsRiovw4vAkX+zJbw3ShAeeqezq50RIIcIURq7Oa20rW2n2q+fyXBNcU9lrw==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
 
         <!-- Custom Scripts-->
         <script src="js/scripts.js"></script>
