@@ -5,14 +5,18 @@
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
         <meta name="viewport" content="width=device-width, initial-scale=1" />
 
-       <!-- Bootstrap CSS -->   
+        <!-- Bootstrap CSS -->   
         <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
         <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
 
         <!--Custom Styles-->
         <link rel="stylesheet" href="css/styles.css" /> 
-		
-		<!-- Google Fonts -->
+
+        <!-- Owl Carousel -->
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/assets/owl.carousel.min.css" integrity="sha512-tS3S5qG0BlhnQROyJXvNjeEM4UpMXHrQfTGmbQ1gKmelCxlSEBUaxhRBj/EFTzpbP4RVSrpEikbmdJobCvhE3g==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/assets/owl.theme.default.min.css" integrity="sha512-sMXtMNL1zRzolHYKEujM2AqCLUR9F2C4/05cdbxjjLSRvMQIciEPCQZo++nk7go3BtSuK9kfa/s+a4f4i5pLkw==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+        
+        <!-- Google Fonts -->
         <link rel="preconnect" href="https://fonts.googleapis.com">
         <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
         <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@200&display=swap" rel="stylesheet">
@@ -20,8 +24,8 @@
         <link rel="shortcut icon" href="img/logo.png" />
         <title>Capstone | Event Manager</title>
     </head>
-	
-	<body>
+
+    <body>
         <div class="menu-bar">
             <!-- NAVBAR -->
             <nav class="navbar navbar-expand-md navbar-light sticky-top">
@@ -56,13 +60,249 @@
                 </div>  <!--container-->
             </nav>
         </div>  <!--menu-bar-->
-		
-		
-		
-		
-		
-		
-		<!-- FOOTER -->
+
+        <!-- CONTENTS -->
+        <div class="container"> 
+            <!-- CREATE / EDIT AN EVENT -->         
+            <div class="row row-content"> 
+                      
+                <div class="col">
+                    <h2>Create An Event</h2>   <!--change to <h2>Edit Event</h2> when in editing version-->                 
+                    <form>
+                        <div class="form-group">
+                            <label for="eventTitle">Event Title</label>
+                            <input type="text" class="form-control" id="eventTitle" placeholder="Event Name">
+                        </div>  <!--row-->
+
+                        <div class="form-group">
+                            <label for="eventAddress">Address</label>
+                            <input type="text" class="form-control" id="eventAddress" placeholder="Street">
+                        </div>                
+        
+                        <div class="form-row">
+                            <div class="form-group col-md-6">
+                                <label for="eventCity">City</label>
+                                <input type="text" class="form-control" id="eventCity">
+                            </div>
+        
+                            <div class="form-group col-md-4">
+                                <label for="eventState">State</label>
+                                <select id="eventState" class="form-control">
+                                    <option selected>Select...</option>
+                                    <option value="AL">Alabama</option>
+                                    <option value="AK">Alaska</option>
+                                    <option value="AZ">Arizona</option>
+                                    <option value="AR">Arkansas</option>
+                                    <option value="CA">California</option>
+                                    <option value="CO">Colorado</option>
+                                    <option value="CT">Connecticut</option>
+                                    <option value="DE">Delaware</option>
+                                    <option value="DC">District Of Columbia</option>
+                                    <option value="FL">Florida</option>
+                                    <option value="GA">Georgia</option>
+                                    <option value="HI">Hawaii</option>
+                                    <option value="ID">Idaho</option>
+                                    <option value="IL">Illinois</option>
+                                    <option value="IN">Indiana</option>
+                                    <option value="IA">Iowa</option>
+                                    <option value="KS">Kansas</option>
+                                    <option value="KY">Kentucky</option>
+                                    <option value="LA">Louisiana</option>
+                                    <option value="ME">Maine</option>
+                                    <option value="MD">Maryland</option>
+                                    <option value="MA">Massachusetts</option>
+                                    <option value="MI">Michigan</option>
+                                    <option value="MN">Minnesota</option>
+                                    <option value="MS">Mississippi</option>
+                                    <option value="MO">Missouri</option>
+                                    <option value="MT">Montana</option>
+                                    <option value="NE">Nebraska</option>
+                                    <option value="NV">Nevada</option>
+                                    <option value="NH">New Hampshire</option>
+                                    <option value="NJ">New Jersey</option>
+                                    <option value="NM">New Mexico</option>
+                                    <option value="NY">New York</option>
+                                    <option value="NC">North Carolina</option>
+                                    <option value="ND">North Dakota</option>
+                                    <option value="OH">Ohio</option>
+                                    <option value="OK">Oklahoma</option>
+                                    <option value="OR">Oregon</option>
+                                    <option value="PA">Pennsylvania</option>
+                                    <option value="RI">Rhode Island</option>
+                                    <option value="SC">South Carolina</option>
+                                    <option value="SD">South Dakota</option>
+                                    <option value="TN">Tennessee</option>
+                                    <option value="TX">Texas</option>
+                                    <option value="UT">Utah</option>
+                                    <option value="VT">Vermont</option>
+                                    <option value="VA">Virginia</option>
+                                    <option value="WA">Washington</option>
+                                    <option value="WV">West Virginia</option>
+                                    <option value="WI">Wisconsin</option>
+                                    <option value="WY">Wyoming</option>
+                                </select>
+                            </div>
+        
+                            <div class="form-group col-md-2">
+                                <label for="eventZip">Zip</label>
+                                <input type="text" class="form-control" id="eventZip">
+                            </div>
+                        </div>  <!--row-->     
+                        
+                        <div class="form-row">
+                            <div class="form-group col-md-6">
+                                <label for="eventStartDate">Starts</label>
+                                <input type="date" class="form-control" id="eventStartDate">
+                                <input type="time" class="form-control" id="eventStartTime">
+                            </div>
+        
+                            <div class="form-group col-md-6">
+                                <label for="eventEndDate">Ends</label>
+                                <input type="date" class="form-control" id="eventEndDate">
+                                <input type="time" class="form-control" id="eventEndTime">
+                            </div>
+                        </div>
+
+                        <div class="form-row">
+                            <div class="form-group col-md-6">
+                                <div class="row">
+                                    <div class="col">
+                                        <label for="eventPrice">Price</label>
+                                        <input type="number" step="0.01" min="0.01" class="form-control" id="eventPrice" placeholder="0.00">    
+                                    </div>
+                                    <div class="col">
+                                        <label for="eventCapacity">Max Capacity</label>
+                                        <input type="number" min="1" class="form-control" id="eventCapacity">
+                                    </div>
+                                </div>
+                            </div>
+        
+                            <div class="form-group col-md-6">
+                                <label for="inputPassword4">Registration Deadline</label>
+                                <input type="date" class="form-control" id="deadlineDate">
+                                <input type="time" class="form-control" id="deadlineTime">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="eventImages">Upload Event Images</label>
+                            <input type="file" class="form-control-file" id="eventImages">
+                        </div>
+
+                        <div class="form-group">
+                            <label for="eventDescr">Event Description</label>
+                            <textarea class="form-control" id="eventDescr" name="eventDescr" rows="8"></textarea> 
+                        </div>  <!--row-->
+                        
+                    </form>
+                </div>  <!--col-->                
+            </div>  <!--row-->
+
+            <!-- MANAGE USERS -->
+            <div class="row row-content">
+                <div class="col">
+                    <div class="row">
+                        <div class="col">
+                            <h2>Manage Users For This Event</h2>
+                        </div>
+                        <div class="col text-right">
+                            <button type="submit" class="btn btn-primary">Add New User</button>     <!--Add <tr> and its contents when adding *One User-->
+                        </div>
+                    </div>
+                
+                    <div class="row">   
+                        <table class="table table-striped">
+                            <thead>
+                              <tr>
+                                <th scope="col">#</th>
+                                <th scope="col">Username</th>
+                                <th scope="col">Role</th>
+                                <th scope="col">Action</th>
+                              </tr>
+                            </thead>
+                            <tbody>
+                              <!-----------------*One User------------------->
+                              <tr>  
+                                <th scope="row">1</th>
+                                <td>staffmage</td>
+                                <td>
+                                    <select id="roleBox" class="form-control">
+                                        <option selected>Attendant</option>
+                                        <option>Owner</option>
+                                        <option>Administrator</option>
+                                        <option>Moderator</option>
+                                    </select>
+                                </td>
+                                <td>
+                                    <a class="btn btn-floating" href="#">
+                                        <i class="fa fa-trash"></i>         <!--delete the user's info-->
+                                    </a>
+                                </td>
+                              </tr>
+                              <tr>
+                              <!------------------------------------------------>
+                                <th scope="row">2</th>
+                                <td>lukedell997</td>
+                                <td>
+                                    <select id="roleBox" class="form-control">
+                                        <option selected>Attendant</option>
+                                        <option>Owner</option>
+                                        <option>Administrator</option>
+                                        <option>Moderator</option>
+                                    </select>
+                                </td>
+                                <td>
+                                    <a class="btn btn-floating" href="#">
+                                        <i class="fa fa-trash"></i>
+                                    </a>
+                                </td>
+                              </tr>
+                              <tr>
+                                <th scope="row">3</th>
+                                <td>mashmerro</td>
+                                <td>
+                                    <select id="roleBox" class="form-control">
+                                        <option selected>Attendant</option>
+                                        <option>Owner</option>
+                                        <option>Administrator</option>
+                                        <option>Moderator</option>
+                                    </select>
+                                </td>
+                                <td>
+                                    <a class="btn btn-floating" href="#">
+                                        <i class="fa fa-trash"></i>
+                                    </a>
+                                </td>
+                              </tr>
+                              <tr>
+                                <th scope="row">4</th>
+                                <td>jzriny</td>
+                                <td>
+                                    <select id="roleBox" class="form-control">
+                                        <option selected>Attendant</option>
+                                        <option>Owner</option>
+                                        <option>Administrator</option>
+                                        <option>Moderator</option>
+                                    </select>
+                                </td>
+                                <td>
+                                    <a class="btn btn-floating" href="#">
+                                        <i class="fa fa-trash"></i>
+                                    </a>
+                                </td>
+                              </tr>
+                            </tbody>
+                          </table>
+                    </div>  <!--row-->
+
+                    <div class="row">
+                        <button type="button" class="btn btn-secondary btn-sm ml-auto" data-dismiss="modal">Cancel</button> <!--return to previous page-->
+                        <button type="submit" class="btn btn-primary btn-sm ml-1">Save</button>     <!--save all info-->
+                    </div>  <!--row-->
+                </div>
+            </div>
+        </div>  <!--container-->
+       
+        <!-- FOOTER -->
         <footer class="site-footer">    
             <div class="container-fluid"> 
                 <div class="row">   
@@ -103,6 +343,9 @@
         <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
         <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+
+        <!-- Owl Carousel script-->
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/owl.carousel.min.js" integrity="sha512-bPs7Ae6pVvhOSiIcyUClR7/q2OAsRiovw4vAkX+zJbw3ShAeeqezq50RIIcIURq7Oa20rW2n2q+fyXBNcU9lrw==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
 
         <!-- Custom Scripts-->
         <script src="js/scripts.js"></script>
