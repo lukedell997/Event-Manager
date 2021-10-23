@@ -149,6 +149,14 @@ h4 {
     background: transparent;
 }
 
+#roleBox {
+    width: 300px;
+}
+
+.table .fa:hover {
+    color: red;
+}
+
 /*-----FOOTER-----*/
 .site-footer {
     background-image: linear-gradient(#333044, #1F1D2B);
