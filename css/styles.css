@@ -89,6 +89,29 @@ h4 {
     min-height: 200px; 
 }
 
+.row-content p {
+    color: black;
+}
+
+.img-thumbnail {
+    width: 50%;
+}
+
+.media h3 {
+    font-weight: bold;
+}
+
+.media button {
+    margin-top: 20px;
+    min-width: 200px;
+}
+
+.media button:hover {
+    background-color: white;
+    color: blue;
+    font-weight: bold;
+}
+
 .card-img-top {
     height: 40vh;
     width: 100%;
@@ -124,6 +147,14 @@ h4 {
 
 .owl-theme, .owl-nav[class="owl-"]:hover {
     background: transparent;
+}
+
+#roleBox {
+    width: 300px;
+}
+
+.table .fa:hover {
+    color: red;
 }
 
 /*-----FOOTER-----*/
