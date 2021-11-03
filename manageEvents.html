@@ -10,7 +10,7 @@
         <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
 
         <!--Custom Styles-->
-        <link rel="stylesheet" href="css/styles.css" /> 
+        <link rel="stylesheet" href="{{ url_for('static', filename='css/styles.css')}}" /> 
 
         <!-- Owl Carousel -->
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/assets/owl.carousel.min.css" integrity="sha512-tS3S5qG0BlhnQROyJXvNjeEM4UpMXHrQfTGmbQ1gKmelCxlSEBUaxhRBj/EFTzpbP4RVSrpEikbmdJobCvhE3g==" crossorigin="anonymous" referrerpolicy="no-referrer" />
@@ -21,7 +21,7 @@
         <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
         <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@200&display=swap" rel="stylesheet">
 
-        <link rel="shortcut icon" href="img/logo.png" />
+        <link rel="shortcut icon" href="{{ url_for('static', filename='img/logo.png')}}" />
         <title>Capstone | Event Manager</title>
     </head>
 
@@ -30,7 +30,7 @@
             <!-- NAVBAR -->
             <nav class="navbar navbar-expand-md navbar-light sticky-top">
                 <div class="container-fluid">
-                    <a class="navbar-brand" href="#"><img src="img/logo.png" alt="Event Manager Logo"></a>
+                    <a class="navbar-brand" href="#"><img src="{{ url_for('static', filename='img/logo.png')}}" alt="Event Manager Logo"></a>
                     <!--SEARCH BAR-->
                     <div class="input-group col-6 col-md-5 ml-auto">
                         <input class="form-control py-2 border-right-0 border" type="search" placeholder="Search for..." id="searchBar">
@@ -308,7 +308,7 @@
                 <div class="row">   
                     <div class="col">
                         <div class="media">
-                            <img src="img/logo.png" alt="Event Manager Logo">
+                            <img src="{{ url_for('static', filename='img/logo.png')}}" alt="Event Manager Logo">
                             <div class="media-body align-self-center">
                                 <p>&copy; <script>document.write(new Date().getFullYear())</script> | Event Manager</p>
                             </div>  <!--media-body-->
@@ -348,6 +348,6 @@
         <script src="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/owl.carousel.min.js" integrity="sha512-bPs7Ae6pVvhOSiIcyUClR7/q2OAsRiovw4vAkX+zJbw3ShAeeqezq50RIIcIURq7Oa20rW2n2q+fyXBNcU9lrw==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
 
         <!-- Custom Scripts-->
-        <script src="js/scripts.js"></script>
+        <script src="{{ url_for('static', filename='js/scripts.js')}}"></script>
     </body>
 </html>
