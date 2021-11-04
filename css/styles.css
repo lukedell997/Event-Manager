@@ -47,7 +47,7 @@ h4 {
 }
 
 .navbar .fa {
-    color: #fff!important;
+    color: #fff;
     font-size: 16px;
 }
 
@@ -69,6 +69,16 @@ h4 {
     .nav-link:hover {
         border-bottom: none!important;
     }
+}
+
+/** User icon dropdown **/
+.dropdown-menu .fa {
+    color: black;
+}
+
+.img-circle {
+    border-radius: 50%;
+    width: 30px;
 }
 
 /*-----HEADER-----*/
@@ -93,10 +103,11 @@ h4 {
     color: black;
 }
 
-.img-thumbnail {
+.img-thumbnail {    /** event details img **/
     width: 50%;
 }
 
+/** event details **/
 .media h3 {
     font-weight: bold;
 }
@@ -111,8 +122,19 @@ h4 {
     color: blue;
     font-weight: bold;
 }
+/********************/
 
-.card-img-top {
+.scrollable {   /** "attending" scrolling **/
+    overflow-y: auto;
+    max-height: 300px;
+}
+
+.lead {
+    font-weight: bold;
+}
+
+/** owl carousel for each events **/
+.card-img-top, .carousel-item img {
     height: 40vh;
     width: 100%;
     object-fit: cover;
@@ -148,8 +170,10 @@ h4 {
 .owl-theme, .owl-nav[class="owl-"]:hover {
     background: transparent;
 }
+/**************************************/
 
-#roleBox {
+/** manage users for this event table **/
+#roleBox {     
     width: 300px;
 }
 
