@@ -12,21 +12,21 @@
         <!--Custom Styles-->
         <link rel="stylesheet" href="{{ url_for('static', filename='css/styles.css')}}" /> 
 		
-		<!-- Google Fonts -->
+	<!-- Google Fonts -->
         <link rel="preconnect" href="https://fonts.googleapis.com">
         <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
         <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@200&display=swap" rel="stylesheet">
 
         <link rel="shortcut icon" href="{{ url_for('static', filename='img/logo.png')}}" />
-        <title>Capstone | Event Manager</title>
+        <title>Search - Browse Events | Event Manager</title>
     </head>
 	
-	<body>
-        <div class="menu-bar">
+    <body>
+       <div class="menu-bar">
             <!-- NAVBAR -->
-            <nav class="navbar navbar-expand-md navbar-light sticky-top">
+            <nav class="navbar navbar-expand-md navbar-dark sticky-top">
                 <div class="container-fluid">
-                    <a class="navbar-brand" href="index.html"><img src="{{ url_for('static', filename='img/logo.png')}}" alt="Event Manager Logo"></a>
+                    <a class="navbar-brand" href="#"><img src="{{ url_for('static', filename='img/logo.png')}}" alt="Event Manager Logo"></a>
                     <!--SEARCH BAR-->
                     <div class="input-group col-6 col-md-5 ml-auto">
                         <input class="form-control py-2 border-right-0 border" type="search" placeholder="Search for..." id="searchBar">
@@ -56,13 +56,157 @@
                 </div>  <!--container-->
             </nav>
         </div>  <!--menu-bar-->
-		
-		
-		
-		
-		
-		
-		<!-- FOOTER -->
+
+        <div class="container">     
+            <div class="row row-content">
+                <div class="col-md-8">
+                    <h2>Events</h2>
+                </div>
+
+                <div class="col">
+                    <div class="input-group">
+                        <div class="input-group-prepend dropdown">
+                            <button class="btn btn-secondary dropdown-toggle" type="button" data-toggle="dropdown" id="filterinput">Filter by: </button>
+                        <div class="dropdown-menu">
+                            <a href="#" class="dropdown-item" onclick="changeval(0);">Tag</a>
+                            <a href="#" class="dropdown-item" onclick="changeval(1);">Price</a>
+                            <a href="#" class="dropdown-item" onclick="changeval(2);">Date</a>
+                            <a href="#" class="dropdown-item" onclick="changeval(3);">Location</a>
+                        </div>
+                        <input type="search" class="form-control" placeholder="Search..." id="myinput" onkeyup="search();">
+                        </div>  <!--input-group-prepend-->
+                    </div>  <!--input-group-->
+                </div>
+
+                <div class="col-12" id="events">
+                    <!--Events Generated with parent class "card"-->
+                    <div class="card">
+                        <div class="row">
+                            <a href="eventDetails.html" class="stretched-link"></a> 
+                            <div class="col-md-4">
+                                <img src="img/concertEvent.jpg" class="img-fluid">
+                            </div>
+                            <div class="card-body">
+                                <div class="d-flex justify-content-between">
+                                    <h4 class="card-title">Concert Event</h4>   
+                                    <span id="capacity" class="text-success mr-4">163/300</span>
+                                </div>
+                                <p>
+                                    <span>Date & Time</span>
+                                    <span>Location</span>
+                                    <span>Price</span>
+                                </p>                                                   
+                            </div>  <!--card-body-->      
+                        </div> <!--row-->                 
+                    </div>  <!--card-->
+                    <!------------------------------------------------>
+
+                    <div class="card">
+                        <div class="row">
+                            <a href="eventDetails.html" class="stretched-link"></a> 
+                            <div class="col-md-4">
+                                <img src="img/conferenceEvent.jpg" class="img-fluid">
+                            </div>
+                            <div class="card-body">
+                                <div class="d-flex justify-content-between">
+                                    <h4 class="card-title">Conference Event</h4>   
+                                    <span id="capacity" class="text-success mr-4">47/50</span>
+                                </div>
+                                <p>
+                                    <span>Date & Time</span>
+                                    <span>Location</span>
+                                    <span>Price</span>
+                                </p>                                                   
+                            </div>  <!--card-body-->      
+                        </div> <!--row-->                 
+                    </div>  <!--card-->
+
+                    <div class="card">
+                        <div class="row">
+                            <a href="eventDetails.html" class="stretched-link"></a> 
+                            <div class="col-md-4">
+                                <img src="img/dinnerEvent.jpg" class="img-fluid">
+                            </div>
+                            <div class="card-body">
+                                <div class="d-flex justify-content-between">
+                                    <h4 class="card-title">Dinner Event</h4>   
+                                    <span id="capacity" class="text-success mr-4">75/100</span>
+                                </div>
+                                <p>
+                                    <span>Date & Time</span>
+                                    <span>Location</span>
+                                    <span>Price</span>
+                                </p>                                                   
+                            </div>  <!--card-body-->      
+                        </div> <!--row-->                 
+                    </div>  <!--card-->
+
+                    <div class="card">
+                        <div class="row">
+                            <a href="eventDetails.html" class="stretched-link"></a> 
+                            <div class="col-md-4">
+                                <img src="img/festivalEvent.jpg" class="img-fluid">
+                            </div>
+                            <div class="card-body">
+                                <div class="d-flex justify-content-between">
+                                    <h4 class="card-title">Festival Event</h4>   
+                                    <span id="capacity" class="text-success mr-4">765/1000</span>
+                                </div>
+                                <p>
+                                    <span>Date & Time</span>
+                                    <span>Location</span>
+                                    <span>Price</span>
+                                </p>                                                   
+                            </div>  <!--card-body-->      
+                        </div> <!--row-->                 
+                    </div>  <!--card-->
+
+                    <div class="card">
+                        <div class="row">
+                            <a href="eventDetails.html" class="stretched-link"></a> 
+                            <div class="col-md-4">
+                                <img src="img/movieEvents.jpg" class="img-fluid">
+                            </div>
+                            <div class="card-body">
+                                <div class="d-flex justify-content-between">
+                                    <h4 class="card-title">Movie Event</h4>   
+                                    <span id="capacity" class="text-success mr-4">23/70</span>
+                                </div>
+                                <p>
+                                    <span>Date & Time</span>
+                                    <span>Location</span>
+                                    <span>Price</span>
+                                </p>                                                   
+                            </div>  <!--card-body-->      
+                        </div> <!--row-->                 
+                    </div>  <!--card-->
+                </div>  <!--col-->
+
+                <div class="col mt-5">
+                    <nav aria-label="Page navigation example">
+                        <ul class="pagination justify-content-center">
+                          <li class="page-item">
+                            <a class="page-link" href="#" aria-label="Previous">
+                              <span aria-hidden="true">&laquo;</span>
+                              <span class="sr-only">Previous</span>
+                            </a>
+                          </li>
+                          <li class="page-item"><a class="page-link" href="#">1</a></li>
+                          <li class="page-item"><a class="page-link" href="#">2</a></li>
+                          <li class="page-item"><a class="page-link" href="#">3</a></li>
+                          <li class="page-item">
+                            <a class="page-link" href="#" aria-label="Next">
+                              <span aria-hidden="true">&raquo;</span>
+                              <span class="sr-only">Next</span>
+                            </a>
+                          </li>
+                        </ul>
+                      </nav>
+                </div>
+            </div>  <!--row-->
+        </div>  <!--container-->
+
+        <!-- FOOTER -->
         <footer class="site-footer">    
             <div class="container-fluid"> 
                 <div class="row">   
@@ -91,7 +235,7 @@
                     </div>  <!--col-->
                     <div class="col text-right">
                         <a href="registerPage.html"><button type="button" class="btn btn-primary">Get Started</button></a>  
-                        <a class="btn btn-floating" href="search_browseEvents.html">
+                        <a class="btn btn-floating" href="#">
                             <i class="fa fa-arrow-circle-up"></i> Back to top
                         </a>
                     </div>  <!--col-->
@@ -105,6 +249,6 @@
         <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
 
         <!-- Custom Scripts-->
-        <script src="{{ url_for('static', filename='js/scripts.js')}}"></script>
+        <script src="{{ url_for('static', filename='js/filter.js')}}"></script>
     </body>
 </html>
