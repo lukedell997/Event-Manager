@@ -1,0 +1,189 @@
+/*-----DEFAULT-----*/
+h1 {
+    font-weight: bold;
+    color: white;
+}
+
+p {
+    color: white;
+}
+
+h2 {
+    font-weight: bold;
+    margin-bottom: 30px;
+}
+
+h4 {
+    font-weight: bold;
+}
+
+/*-----NAVBAR-----*/
+* {
+    margin: 0px;
+    padding: 0px;
+    font-family: 'Nunito', sans-serif;
+}
+
+.menu-bar {
+    background-image: linear-gradient(-90deg, #125fd3, #a83279);
+}
+
+.nav-link {
+    font-size: 15px;
+    margin: 3px;
+    color: #fff!important;
+    font-weight: 500;
+}
+
+.navbar-nav {
+    text-align: right;
+    margin-right: 20px;
+}
+
+.menu-bar .navbar-toggle {
+    padding-right: 20px;
+    outline: none!important;
+    border: none!important;
+}
+
+.navbar .fa {
+    color: #fff!important;
+    font-size: 16px;
+}
+
+.nav-link:hover {
+    font-weight: 600;
+    border-bottom: 1px solid #fff;
+}
+
+.navbar-brand img {
+    width: 40px;
+    margin-left: 10px;
+}
+
+#searchBar:focus::placeholder {
+	color: transparent;
+}
+
+@media only screen and (max-width: 1000px) {
+    .nav-link:hover {
+        border-bottom: none!important;
+    }
+}
+
+/*-----HEADER-----*/
+.jumbotron{
+    background-image: linear-gradient(#333044, #1F1D2B);
+}
+
+.jumbotron button:hover, .site-footer button:hover {
+    background-color: white;
+    color: blue;
+    font-weight: bold;
+}
+
+/*-----CONTENT-----*/
+.row-content {
+    padding: 50px 0;
+    border-bottom: 1px ridge;
+    min-height: 200px; 
+}
+
+.row-content p {
+    color: black;
+}
+
+.img-thumbnail {
+    width: 50%;
+}
+
+.media h3 {
+    font-weight: bold;
+}
+
+.media button {
+    margin-top: 20px;
+    min-width: 200px;
+}
+
+.media button:hover {
+    background-color: white;
+    color: blue;
+    font-weight: bold;
+}
+
+.card-img-top {
+    height: 40vh;
+    width: 100%;
+    object-fit: cover;
+}
+
+.card p {
+    color:#000;
+}
+
+.card-body button:hover {
+    background-color: white;
+    color: red;
+}
+
+.owl-prev {
+    left: -30px;
+}
+
+.owl-next {
+    right: -30px;
+}
+
+.owl-prev, .owl-next {
+    position: absolute;
+    top: 90px;
+}
+
+.owl-prev span, .owl-next span {
+    font-size: 80px;
+    color: black;
+}
+
+.owl-theme, .owl-nav[class="owl-"]:hover {
+    background: transparent;
+}
+
+#roleBox {
+    width: 300px;
+}
+
+.table .fa:hover {
+    color: red;
+}
+
+/*-----FOOTER-----*/
+.site-footer {
+    background-image: linear-gradient(#333044, #1F1D2B);
+    padding: 20px 0; 
+}
+
+.site-footer img {
+    width: 40px;
+    margin-left: 50px;
+    margin-right: 20px;
+    margin-bottom: 10px;
+}
+
+.site-footer a {
+    color: white;
+    font-weight: 500;
+}
+
+.site-footer a:hover {
+    color: white;
+    font-weight: 600;
+}
+
+.site-footer .fa:hover {
+    color: rgb(11, 141, 216);
+}
+
+.site-footer .text-right {
+    margin-right: 40px;
+}

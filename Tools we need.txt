@@ -1,0 +1,15 @@
+web hosting
+database
+eclipse project file
+pament processing tools
+calander tools (google api integration)
+notification tools (i.e. emails)
+google sign in intigration
+java and htlm integration
+
+Front end tools needed:
+VS code
+HTML5
+Bootstrap CSS
+jQuery / React js
+Netlify.com (to deploy website for free)
