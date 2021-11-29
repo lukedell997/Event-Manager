@@ -32,16 +32,12 @@
                 <div class="container-fluid">
                     <a class="navbar-brand" href="index.html"><img src="{{ url_for('static', filename='img/logo.png')}}" alt="Event Manager Logo"></a>
                     <!--SEARCH BAR-->
-                    <div class="input-group col-6 col-md-5 ml-auto">
-                        <input class="form-control py-2 border-right-0 border" type="search" placeholder="Search for..." id="searchBar">
-                        <span class="input-group-append">
-                            <a href="search_browseEvents.html"> 
-                                <button class="btn btn-primary btn-outline-secondary border-left-0 border" type="button">
-                                    <i class="fa fa-search"></i>
-                                </button>
-                            </a>
-                        </span>
-                    </div>  <!--input-group-->
+                    <form class="form-inline ml-4" method="GET">                                                                            <!--incoming search bar-->
+                        <input class="form control py-2 border-right-0 border" type="search" placeholder="Search for..." name="searchbar">
+                        <button class="btn btn-primary btn-outline-secondary border" type="submit">
+                            <i class="fa fa-search"></i>
+                        </button>
+                    </form>
                     <!--HAMBURGER MENU/ NAV LINKS-->
                     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav">
                         <i class="fa fa-bars"></i>
