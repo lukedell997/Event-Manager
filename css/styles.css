@@ -34,8 +34,16 @@ h4 {
     font-weight: 500;
 }
 
+@media only screen and (max-width: 767px) {
+    .nav-link {
+        border-right: none !important; 
+        padding-right: 50px !important; 
+        margin-right: none !important;
+    }
+}
+
 .nav-link:hover {
-    font-weight: 600;
+    font-weight: bold;
     border-bottom: 1px solid #fff;
 }
 
@@ -93,7 +101,7 @@ h4 {
 .row-content {
     padding: 50px 0;
     border-bottom: 1px ridge;
-    min-height: 200px; 
+    min-height: 200px;
 }
 
 .row-content p {
@@ -170,7 +178,7 @@ h4 {
 /**************************************/
 
 /** manage users for this event table **/
-#roleBox {     
+#roleBox {
     width: 300px;
 }
 
@@ -212,9 +220,9 @@ h4 {
 }
 /********************************************************/
 
-.card img {     /** event list thumbnail img **/
+.card img {      /** event list thumbnail img **/
     width: 100%;
-    height: 10rem;
+    height: 13rem;
     object-fit: cover;
 }
 
@@ -223,7 +231,7 @@ h4 {
     width: 150px;
 }
 
-.plus-button {  
+.plus-button {
 	border: 2px solid lightgrey;
 	background-color: #fff;
 	font-size: 16px;
@@ -244,7 +252,7 @@ h4 {
     position: relative;
 }
 
-.vertical-line {   
+.vertical-line {
     border-left: 1px solid #ccc;
     margin: 0 10px;
     height: 1.2rem;
@@ -254,10 +262,14 @@ h4 {
     color: black;
 }
 
+p span {
+    display: block;
+}
+
 /*-----FOOTER-----*/
 .site-footer {
     background-image: linear-gradient(#333044, #1F1D2B);
-    padding: 20px 0; 
+    padding: 20px 0;
 }
 
 .site-footer img {
