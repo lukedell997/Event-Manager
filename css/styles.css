@@ -72,8 +72,16 @@ h4 {
     margin-left: 10px;
 }
 
-#searchBar:focus::placeholder {
-	color: transparent;
+.navbar form {
+    display: flex;
+}
+
+.navbar form:focus::placeholder {
+    color: transparent;
+}
+
+form input {
+    border-radius: 10px 5px 5px 10px;
 }
 
 /** User icon dropdown **/
