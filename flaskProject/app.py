@@ -1,4 +1,4 @@
-from flask import Flask, render_template, redirect, url_for, request, flash
+from flask import Flask, render_template, redirect, url_for, request, flash, session
 from datetime import timedelta
 
 
@@ -15,9 +15,22 @@ admin = False
 @app.route('/')
 @app.route('/index.html')
 def index():  # put application's code here
-    listEvents = []
+    popEventsTitle = []
+    popEventsDetails = []
+    popEventsButton = []
+
+    nearEventsTitle = []
+    nearEventsDetails = []
+    nearEventsButton = []
     # FILL LISTS WITH DATA OF EVENTS FROM DATABASE
-    return render_template("index.html", listEvents = listEvents)
+    search = None
+    if request.method == "POST":
+        search = request.form
+        # DO A SEARCH IDK HOW YET
+
+    return render_template("index.html", popEventsTitle = popEventsTitle, popEventsDetails = popEventsDetails,
+                           popEventsButton = popEventsButton, nearEventsTitle = nearEventsTitle,
+                           nearEventsDetails = nearEventsDetails, nearEventsButton = nearEventsButton, search=search)
 
 @app.route('/registerPage.html')
 @app.route('/registerPage')
@@ -38,11 +51,12 @@ def registerPage():  # put application's code here
         return redirect(url_for("login")) #????
     return render_template("registerPage.html")
 
+
 @app.route('/loginPage.html', methods=["POST", "GET"])
 @app.route('/loginPage', methods=["POST", "GET"])
 def loginPage():  # put application's code here
     if 'remeber' in request.form:
-        app.permanent_session_lifetime = timedelta(years=500)
+        app.permanent_session_lifetime = timedelta(weeks=10000)
     elif 'remeber' not in request.form:
         app.permanent_session_lifetime = timedelta(seconds=0)
     if request.method == "POST":
@@ -59,15 +73,37 @@ def loginPage():  # put application's code here
 @app.route("/index_userLoggedIn.html")
 @app.route("/index_userLoggedIn")
 def user():
+
     if "user" in session:
+        search = None
+        if request.method == "POST":
+            search = request.form
+            #DO A SEARCH IDK HOW YET
+
         user = session["user"]
-        useresEvents = [] # FILL WITH USERES EVENTS
-        popEvents = [] # FILL WITH 6 popular EVENTS
-        nearEvents = [] # FILL WITH 6 NEAR BY EVENTS
-        return render_template("index_userLoggedIn.html", name = user, useresEvents = useresEvents,
-                               popEvents = popEvents, nearEvents = nearEvents)
+
+        myEventImage = []  # FILL THESE
+        myEventTitle = ""
+        myEventDetails = ""
+
+        attendingEventsTitle = [] # FILL WITH USERES EVENTS
+        attendingEventsDate= [] # FILL WITH 6 popular EVENTS
+        attendingEventsDeadline = [] # FILL WITH 6 NEAR BY EVENTS
+
+        popEventTitle = []
+        popEventDetails = []
+        if "clicked" in request.form:
+            return # NEED TO FIX THIS BY CHANGING EVENTDEAITLS.HTML TO CONTAIN NAME IN URL
+        return render_template("index_userLoggedIn.html", name = user, myEventImage = myEventImage,
+                               myEventTitle = myEventTitle, myEventDetails = myEventDetails,
+                               attendingEventsTitle = attendingEventsTitle, attendingEventsDate = attendingEventsDate,
+                               attendingEventsDeadline = attendingEventsDeadline, popEventTitle= popEventTitle,
+                               popEventDetails = popEventDetails, search = search)
+
     else:
         return redirect(url_for("login")) #????
+
+
 
 # This is for a logout page that might be made
 @app.route("/logout")
@@ -86,6 +122,12 @@ def add_editEvents():  # put application's code here
 @app.route('/eventDetails')
 def eventDetails():  # put application's code here
     #NEED TO PULL ALL THE VARIABLES THAT ARE BEING PASSED FROM THE DATABASE
+    eventDate = []
+    eventTitle = []
+    eventPrice = []
+    eventDescription = []
+    eventAddress = []
+    eventTags = []
     if "user" in session:
         if "attend" in request.form:
             user = session["user"]
