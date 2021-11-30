@@ -10,14 +10,14 @@
         <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
 
         <!--Custom Styles-->
-        <link rel="stylesheet" href="css/login-signup-styles.css" /> 
+        <link rel="stylesheet" href="{{ url_for('static', filename='css/login-signup-styles.css')}}" /> 
 
         <!-- Google Fonts -->
         <link rel="preconnect" href="https://fonts.googleapis.com">
         <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
         <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@200&display=swap" rel="stylesheet">
 
-        <link rel="shortcut icon" href="img/logo.png" />
+        <link rel="shortcut icon" href="{{ url_for('static', filename='img/logo.png')}}" />
         <title>Sign-Up | Event Manager</title>
     </head>
 
@@ -25,7 +25,7 @@
         <div class="fillout-form">
             <form action="/examples/actions/confirmation.php" method="post">
                 <div class="text-center mb-4">
-                    <a href="index.html"><img src="img/logo.png" alt="Event Manager logo" style="width: 100px;"></a> 
+                    <a href="index.html"><img src="{{ url_for('static', filename='img/logo.png')}}" alt="Event Manager logo" style="width: 100px;"></a> 
                 </div>  <!--text-center-->
                 
                 <h3>Sign-up</h3>
@@ -43,15 +43,15 @@
                 </div>  <!--form-group-->
 
                 <div class="form-group">
-                    <input type="username" class="form-control" name="username" placeholder="Username" required="required">
+                    <input type="username" class="form-control" name="fn" placeholder="Username" required="required">
                 </div>  <!--form-group-->
 
                 <div class="form-group">
-                    <input type="password" class="form-control" name="password" placeholder="Password" required="required">
+                    <input type="password" class="form-control" name="pw" placeholder="Password" required="required">
                 </div>  <!--form-group-->
 
                 <div class="form-group">
-                    <input type="password" class="form-control" name="confirmPassword" placeholder="Confirm Password" required="required">
+                    <input type="password" class="form-control" name="pw" placeholder="Confirm Password" required="required">
                 </div>  <!--form-group-->
 
                 <div class="form-group">
@@ -74,11 +74,11 @@
                 </div>  <!--form-group-->
 
                 <div class="form-group">
-                    <input type="phoneNum" class="form-control" name="phoneNum" placeholder="Phone Number" required="required">
+                    <input type="phoneNum" class="form-control" name="phone" placeholder="Phone Number" required="required">
                 </div>  <!--form-group-->
 
                 <div class="form-group">
-                    <button type="submit" class="btn btn-primary btn-block">Register</button>
+                    <input type="submit" value="REGISTER" />
                 </div>  <!--form-group-->
 
                 <div class="hint-text">

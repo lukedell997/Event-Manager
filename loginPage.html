@@ -10,37 +10,37 @@
         <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
 
         <!--Custom Styles-->
-        <link rel="stylesheet" href="css/login-signup-styles.css" /> 
+        <link rel="stylesheet" href="{{ url_for('static', filename='css/login-signup-styles.css')}}" /> 
 
         <!-- Google Fonts -->
         <link rel="preconnect" href="https://fonts.googleapis.com">
         <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
         <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@200&display=swap" rel="stylesheet">
 
-        <link rel="shortcut icon" href="img/logo.png" />
+        <link rel="shortcut icon" href="{{ url_for('static', filename='img/logo.png')}}" />
         <title>Login | Event Manager</title>
     </head>
 
     <body>
         <div class="fillout-form">
-            <form action="/examples/actions/confirmation.php" method="post">
+            <form action="/examples/actions/confirmation.php" method="POST">
                 <div class="text-center mb-4">
-                   <a href="index.html"><img src="img/logo.png" alt="Event Manager logo" style="width: 100px;"></a> 
+                   <a href="index.html"><img src="{{ url_for('static', filename='img/logo.png')}}" alt="Event Manager logo" style="width: 100px;"></a> 
                 </div>  <!--text-center-->
 
                 <h3>Login</h3> 
                 <hr>      
 
                 <div class="form-group">
-                    <input type="text" class="form-control" placeholder="Username" required="required">
+                    <input type="text" name="nm" class="form-control" placeholder="Username" required="required">
                 </div>  <!--form-group-->
 
                 <div class="form-group">
-                    <input type="password" class="form-control" placeholder="Password" required="required">
+                    <input type="password" name="pw" class="form-control" placeholder="Password" required="required">
                 </div>  <!--form-group-->
 
-                <div class="form-group">
-                    <button type="submit" class="btn btn-primary btn-block">Login</button>
+                <div class="form-group text-center">
+                    <input type="submit" value="LOGIN" />
                 </div>  <!--form-group-->
 
                 <div class="clearfix">
