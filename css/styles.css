@@ -80,7 +80,7 @@ h4 {
     color: transparent;
 }
 
-form input {
+.navbar form input {
     border-radius: 10px 5px 5px 10px;
 }
 
