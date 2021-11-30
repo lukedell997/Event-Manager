@@ -5,14 +5,14 @@
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
         <meta name="viewport" content="width=device-width, initial-scale=1" />
 
-       <!-- Bootstrap CSS -->   
+        <!-- Bootstrap CSS -->   
         <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
         <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
 
         <!--Custom Styles-->
-        <link rel="stylesheet" href="{{ url_for('static', filename='css/styles.css')}}" /> 
-		
-	<!-- Google Fonts -->
+        <link rel="stylesheet" type="text/css" href="{{ url_for('static',filename='css/styles.css')}}" /> 
+        
+        <!-- Google Fonts -->
         <link rel="preconnect" href="https://fonts.googleapis.com">
         <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
         <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@200&display=swap" rel="stylesheet">
@@ -20,22 +20,20 @@
         <link rel="shortcut icon" href="{{ url_for('static', filename='img/logo.png')}}" />
         <title>Search - Browse Events | Event Manager</title>
     </head>
-	
+
     <body>
-       <div class="menu-bar">
+        <div class="menu-bar">
             <!-- NAVBAR -->
             <nav class="navbar navbar-expand-md navbar-dark sticky-top">
                 <div class="container-fluid">
-                    <a class="navbar-brand" href="#"><img src="{{ url_for('static', filename='img/logo.png')}}" alt="Event Manager Logo"></a>
+                    <a class="navbar-brand" href="index.html"><img src="{{ url_for('static', filename='img/logo.png')}}" alt="Event Manager Logo"></a>
                     <!--SEARCH BAR-->
-                    <div class="input-group col-6 col-md-5 ml-auto">
-                        <input class="form-control py-2 border-right-0 border" type="search" placeholder="Search for..." id="searchBar">
-                        <span class="input-group-append">
-                            <button class="btn btn-primary btn-outline-secondary border-left-0 border" type="button">
-                                <i class="fa fa-search"></i>
-                            </button>
-                        </span>
-                    </div>  <!--input-group-->
+                    <form class="form-inline ml-4" method="GET">                                                                            <!--incoming search bar-->
+                        <input class="form control py-2 border-right-0 border" type="search" placeholder="Search for..." name="searchbar">
+                        <button class="btn btn-primary btn-outline-secondary border" type="submit">
+                            <i class="fa fa-search"></i>
+                        </button>
+                    </form>
                     <!--HAMBURGER MENU/ NAV LINKS-->
                     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav">
                         <i class="fa fa-bars"></i>
@@ -43,7 +41,7 @@
                     <div class="collapse navbar-collapse" id="navbarNav">
                         <ul class="navbar-nav ml-auto">
                             <li class="nav-item">
-                                <a class="nav-link" href="#" style="border-right: 1px solid #FFF; padding-right: 20px; margin-right: 10px">Browse Events</a>
+                                <a class="nav-link" href="search_browseEvents.html" style="border-right: 1px solid #FFF; padding-right: 20px; margin-right: 10px">Browse Events</a>
                             </li>
                             <li class="nav-item">
                                 <a class="nav-link" href="registerPage.html"><i class="fa fa-user-plus"></i> Sign-Up</a>
@@ -59,42 +57,44 @@
 
         <div class="container">     
             <div class="row row-content">
-                <div class="col-md-8">
+                <div class="col-sm-5 col-md-8">
                     <h2>Events</h2>
                 </div>
 
-                <div class="col">
-                    <div class="input-group">
-                        <div class="input-group-prepend dropdown">
-                            <button class="btn btn-secondary dropdown-toggle" type="button" data-toggle="dropdown" id="filterinput">Filter by: </button>
-                        <div class="dropdown-menu">
-                            <a href="#" class="dropdown-item" onclick="changeval(0);">Tag</a>
-                            <a href="#" class="dropdown-item" onclick="changeval(1);">Price</a>
-                            <a href="#" class="dropdown-item" onclick="changeval(2);">Date</a>
-                            <a href="#" class="dropdown-item" onclick="changeval(3);">Location</a>
-                        </div>
-                        <input type="search" class="form-control" placeholder="Search..." id="myinput" onkeyup="search();">
-                        </div>  <!--input-group-prepend-->
-                    </div>  <!--input-group-->
-                </div>
+                <form method="POST">
+                    <div class="form-group">
+                        <div class="input-group">
+                            <div class="input-group-prepend dropdown">
+                                <button class="btn btn-secondary dropdown-toggle" type="button" data-toggle="dropdown" id="filterinput">Filter by: </button>
+                            <div class="dropdown-menu">
+                                <a href="#" class="dropdown-item" onclick="changeval(0);">Tag</a>
+                                <a href="#" class="dropdown-item" onclick="changeval(1);">Price</a>
+                                <a href="#" class="dropdown-item" onclick="changeval(2);">Date</a>
+                                <a href="#" class="dropdown-item" onclick="changeval(3);">Location</a>
+                            </div>
+                            <input type="search" name="filtersearch" class="form-control" placeholder="Search..." id="myinput" onkeyup="search();">                 <!--incoming filter search-->
+                            </div>  <!--input-group-prepend-->
+                        </div>  <!--input-group-->
+                    </div>
+                </form>
 
                 <div class="col-12" id="events">
                     <!--Events Generated with parent class "card"-->
                     <div class="card">
                         <div class="row">
-                            <a href="eventDetails.html" class="stretched-link"></a> 
+                            <a href="eventDetails.html" class="stretched-link"></a>     
                             <div class="col-md-4">
-                                <img src="img/concertEvent.jpg" class="img-fluid">
+                                <img src="{{ url_for('static', filename='img/concertEvent.jpg')}}" class="img-fluid">       <!--outgoing event image-->
                             </div>
                             <div class="card-body">
                                 <div class="d-flex justify-content-between">
-                                    <h4 class="card-title">Concert Event</h4>   
-                                    <span id="capacity" class="text-success mr-4">163/300</span>
+                                    <h4 class="card-title">Concert Event</h4>                                               <!--outgoing event title-->
+                                    <span id="capacity" class="text-success mr-4">163/300</span>                            <!--outgoing event capacity-->
                                 </div>
                                 <p>
-                                    <span>Date & Time</span>
-                                    <span>Location</span>
-                                    <span>Price</span>
+                                    <span>Date & Time</span>                                                                <!--outgoing event date/time-->
+                                    <span>Location</span>                                                                   <!--outgoing event location-->
+                                    <span>Price</span>                                                                      <!--outgoing event price-->
                                 </p>                                                   
                             </div>  <!--card-body-->      
                         </div> <!--row-->                 
@@ -105,17 +105,17 @@
                         <div class="row">
                             <a href="eventDetails.html" class="stretched-link"></a> 
                             <div class="col-md-4">
-                                <img src="img/conferenceEvent.jpg" class="img-fluid">
+                                <img src="{{ url_for('static', filename='img/conferenceEvent.jpg')}}" class="img-fluid">    <!--outgoing event image-->
                             </div>
                             <div class="card-body">
                                 <div class="d-flex justify-content-between">
-                                    <h4 class="card-title">Conference Event</h4>   
-                                    <span id="capacity" class="text-success mr-4">47/50</span>
+                                    <h4 class="card-title">Conference Event</h4>                                            <!--outgoing event title-->
+                                    <span id="capacity" class="text-success mr-4">47/50</span>                              <!--outgoing event capacity-->
                                 </div>
                                 <p>
-                                    <span>Date & Time</span>
-                                    <span>Location</span>
-                                    <span>Price</span>
+                                    <span>Date & Time</span>                                                                <!--outgoing event date/time-->
+                                    <span>Location</span>                                                                   <!--outgoing event location-->
+                                    <span>Price</span>                                                                      <!--outgoing event price-->
                                 </p>                                                   
                             </div>  <!--card-body-->      
                         </div> <!--row-->                 
@@ -125,17 +125,17 @@
                         <div class="row">
                             <a href="eventDetails.html" class="stretched-link"></a> 
                             <div class="col-md-4">
-                                <img src="img/dinnerEvent.jpg" class="img-fluid">
+                                <img src="{{ url_for('static', filename='img/dinnerEvent.jpg')}}" class="img-fluid">        <!--outgoing event image-->
                             </div>
                             <div class="card-body">
                                 <div class="d-flex justify-content-between">
-                                    <h4 class="card-title">Dinner Event</h4>   
-                                    <span id="capacity" class="text-success mr-4">75/100</span>
+                                    <h4 class="card-title">Dinner Event</h4>                                                <!--outgoing event title-->
+                                    <span id="capacity" class="text-success mr-4">75/100</span>                             <!--outgoing event capacity-->
                                 </div>
                                 <p>
-                                    <span>Date & Time</span>
-                                    <span>Location</span>
-                                    <span>Price</span>
+                                    <span>Date & Time</span>                                                                <!--outgoing event date/time-->
+                                    <span>Location</span>                                                                   <!--outgoing event location-->
+                                    <span>Price</span>                                                                      <!--outgoing event price-->
                                 </p>                                                   
                             </div>  <!--card-body-->      
                         </div> <!--row-->                 
@@ -145,17 +145,17 @@
                         <div class="row">
                             <a href="eventDetails.html" class="stretched-link"></a> 
                             <div class="col-md-4">
-                                <img src="img/festivalEvent.jpg" class="img-fluid">
+                                <img src="{{ url_for('static', filename='img/festivalEvent.jpg')}}" class="img-fluid">      <!--outgoing event image-->
                             </div>
                             <div class="card-body">
                                 <div class="d-flex justify-content-between">
-                                    <h4 class="card-title">Festival Event</h4>   
-                                    <span id="capacity" class="text-success mr-4">765/1000</span>
+                                    <h4 class="card-title">Festival Event</h4>                                              <!--outgoing event title-->
+                                    <span id="capacity" class="text-success mr-4">765/1000</span>                           <!--outgoing event capacity-->
                                 </div>
                                 <p>
-                                    <span>Date & Time</span>
-                                    <span>Location</span>
-                                    <span>Price</span>
+                                    <span>Date & Time</span>                                                                <!--outgoing event date/time-->
+                                    <span>Location</span>                                                                   <!--outgoing event location-->
+                                    <span>Price</span>                                                                      <!--outgoing event price-->
                                 </p>                                                   
                             </div>  <!--card-body-->      
                         </div> <!--row-->                 
@@ -165,44 +165,22 @@
                         <div class="row">
                             <a href="eventDetails.html" class="stretched-link"></a> 
                             <div class="col-md-4">
-                                <img src="img/movieEvents.jpg" class="img-fluid">
+                                <img src="{{ url_for('static', filename='img/movieEvents.jpg')}}" class="img-fluid">         <!--outgoing event image-->
                             </div>
                             <div class="card-body">
                                 <div class="d-flex justify-content-between">
-                                    <h4 class="card-title">Movie Event</h4>   
-                                    <span id="capacity" class="text-success mr-4">23/70</span>
+                                    <h4 class="card-title">Movie Event</h4>                                                 <!--outgoing event title-->
+                                    <span id="capacity" class="text-success mr-4">23/70</span>                              <!--outgoing event capacity-->
                                 </div>
                                 <p>
-                                    <span>Date & Time</span>
-                                    <span>Location</span>
-                                    <span>Price</span>
+                                    <span>Date & Time</span>                                                                <!--outgoing event date/time-->
+                                    <span>Location</span>                                                                   <!--outgoing event location-->
+                                    <span>Price</span>                                                                      <!--outgoing event price-->
                                 </p>                                                   
                             </div>  <!--card-body-->      
                         </div> <!--row-->                 
                     </div>  <!--card-->
                 </div>  <!--col-->
-
-                <div class="col mt-5">
-                    <nav aria-label="Page navigation example">
-                        <ul class="pagination justify-content-center">
-                          <li class="page-item">
-                            <a class="page-link" href="#" aria-label="Previous">
-                              <span aria-hidden="true">&laquo;</span>
-                              <span class="sr-only">Previous</span>
-                            </a>
-                          </li>
-                          <li class="page-item"><a class="page-link" href="#">1</a></li>
-                          <li class="page-item"><a class="page-link" href="#">2</a></li>
-                          <li class="page-item"><a class="page-link" href="#">3</a></li>
-                          <li class="page-item">
-                            <a class="page-link" href="#" aria-label="Next">
-                              <span aria-hidden="true">&raquo;</span>
-                              <span class="sr-only">Next</span>
-                            </a>
-                          </li>
-                        </ul>
-                      </nav>
-                </div>
             </div>  <!--row-->
         </div>  <!--container-->
 
