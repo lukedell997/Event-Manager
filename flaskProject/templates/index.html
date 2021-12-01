@@ -28,18 +28,16 @@
     <body>
         <div class="menu-bar">
             <!-- NAVBAR -->
-            <nav class="navbar navbar-expand-md navbar-light sticky-top">
+            <nav class="navbar navbar-expand-md navbar-dark sticky-top">
                 <div class="container-fluid">
                     <a class="navbar-brand" href="index.html"><img src="{{ url_for('static', filename='img/logo.png')}}" alt="Event Manager Logo"></a>
                     <!--SEARCH BAR-->
-                    <div class="input-group col-6 col-md-5 ml-auto">
-                        <input class="form-control py-2 border-right-0 border" type="search" placeholder="Search for..." id="searchBar">
-                        <span class="input-group-append">
-                            <button class="btn btn-primary btn-outline-secondary border-left-0 border" type="button">
-                                <i class="fa fa-search"></i>
-                            </button>
-                        </span>
-                    </div>  <!--input-group-->
+                    <form class="form-inline ml-4" method="GET">                                                                            <!--incoming search bar-->
+                        <input class="form control py-2 border-right-0 border" type="search" placeholder="Search for..." name="searchbar">
+                        <button class="btn btn-primary btn-outline-secondary border" type="submit">
+                            <i class="fa fa-search"></i>
+                        </button>
+                    </form>
                     <!--HAMBURGER MENU/ NAV LINKS-->
                     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav">
                         <i class="fa fa-bars"></i>
@@ -88,44 +86,52 @@
 
                     <div class="ms-2 me-2">
                         <div class="card">
-                            <img src="{{ url_for('static', filename='img/concertEvent.jpg')}}" alt="Concert Event" class="card-img-top">
+                            <img src="{{ url_for('static', filename='img/concertEvent.jpg')}}" alt="Concert Event" class="card-img-top">    <!--outgoing event image-->
                             <div class="card-body">
-                                <h4 class="card-title">Concert Events</h4>
-                                <p class="card-text">Concert details</p>
-                                <button type="button" class="btn btn-danger">Read More</button>
+                                <h4 class="card-title">Concert Events</h4>                                                                  <!--outgoing event title-->
+                                <p class="card-text">Concert details</p>                                                                    <!--outgoing concert details-->
+                                <a href="eventDetails.html">                                                                               
+                                    <button type="button" class="btn btn-danger">Read More</button>             
+                                </a>
                             </div>  <!--card-body-->
                         </div>  <!--card-->
                     </div>  <!--ms-2 me-2-->
 
                     <div class="ms-2 me-2">
                         <div class="card">
-                            <img src="{{ url_for('static', filename='img/conferenceEvent.jpg')}}" alt="Conference Event" class="card-img-top">
+                            <img src="{{ url_for('static', filename='img/conferenceEvent.jpg')}}" alt="Conference Event" class="card-img-top">  <!--outgoing event image-->
                             <div class="card-body">
-                                <h4 class="card-title">Conference Events</h4>
-                                <p class="card-text">Conference details</p>
-                                <button type="button" class="btn btn-danger">Read More</button>
+                                <h4 class="card-title">Conference Events</h4>                                                                   <!--outgoing event title-->
+                                <p class="card-text">Conference details</p>                                                                     <!--outgoing concert details-->
+                                <a href="eventDetails.html">                                                                                    
+                                    <button type="button" class="btn btn-danger">Read More</button>             
+                                </a>
                             </div>  <!--card-body-->
                         </div>  <!--card-->
                     </div>  <!--ms-2 me-2-->
 
                     <div class="ms-2 me-2">
                         <div class="card">
-                            <img src="{{ url_for('static', filename='img/dinnerEvent.jpg')}}" alt="Dinner Event" class="card-img-top">
+                            <img src="{{ url_for('static', filename='img/dinnerEvent.jpg')}}" alt="Dinner Event" class="card-img-top">      <!--outgoing event image-->
                             <div class="card-body">
-                                <h4 class="card-title">Dinner Events</h4>
-                                <p class="card-text">Dinner details</p>
-                                <button type="button" class="btn btn-danger">Read More</button>
+                                <h4 class="card-title">Dinner Events</h4>                                                                   <!--outgoing event title-->
+                                <p class="card-text">Dinner details</p>                                                                     <!--outgoing concert details-->
+                                <a href="eventDetails.html">                                                                                
+                                    <button type="button" class="btn btn-danger">Read More</button>             
+                                </a>
                             </div>  <!--card-body-->
                         </div>  <!--card-->
                     </div>  <!--ms-2 me-2-->
 
                     <div class="ms-2 me-2">
                         <div class="card">
-                            <img src="{{ url_for('static', filename='img/festivalEvent.jpg')}}" alt="Festival Event" class="card-img-top">
+                            <img src="{{ url_for('static', filename='img/festivalEvent.jpg')}}" alt="Festival Event" class="card-img-top">  <!--outgoing event image-->
                             <div class="card-body">
-                                <h4 class="card-title">Festival Events</h4>
-                                <p class="card-text">Festival details</p>
-                                <button type="button" class="btn btn-danger">Read More</button>
+                                <h4 class="card-title">Festival Events</h4>                                                                 <!--outgoing event title-->
+                                <p class="card-text">Festival details</p>                                                                   <!--outgoing concert details-->
+                                <a href="eventDetails.html">                                                                                
+                                    <button type="button" class="btn btn-danger">Read More</button>             
+                                </a>
                             </div>  <!--card-body-->
                         </div>  <!--card-->
                     </div>  <!--ms-2 me-2-->                    
@@ -141,44 +147,52 @@
 
                     <div class="ms-2 me-2">
                         <div class="card">
-                            <img src="{{ url_for('static', filename='img/concertEvent.jpg')}}" alt="Concert Event" class="card-img-top">
+                            <img src="{{ url_for('static', filename='img/concertEvent.jpg')}}" alt="Concert Event" class="card-img-top">    <!--outgoing event image-->
                             <div class="card-body">
-                                <h4 class="card-title">Concert Events</h4>
-                                <p class="card-text">Concert details</p>
-                                <button type="button" class="btn btn-danger">Read More</button>
+                                <h4 class="card-title">Concert Events</h4>                                                                  <!--outgoing event title-->
+                                <p class="card-text">Concert details</p>                                                                    <!--outgoing concert details-->
+                                <a href="eventDetails.html">                                                                                
+                                    <button type="button" class="btn btn-danger">Read More</button>             
+                                </a>
                             </div>  <!--card-body-->
                         </div>  <!--card-->
                     </div>  <!--ms-2 me-2-->
 
                     <div class="ms-2 me-2">
                         <div class="card">
-                            <img src="{{ url_for('static', filename='img/conferenceEvent.jpg')}}" alt="Conference Event" class="card-img-top">
+                            <img src="{{ url_for('static', filename='img/conferenceEvent.jpg')}}" alt="Conference Event" class="card-img-top">  <!--outgoing event image-->
                             <div class="card-body">
-                                <h4 class="card-title">Conference Events</h4>
-                                <p class="card-text">Conference details</p>
-                                <button type="button" class="btn btn-danger">Read More</button>
+                                <h4 class="card-title">Conference Events</h4>                                                                   <!--outgoing event title-->
+                                <p class="card-text">Conference details</p>                                                                     <!--outgoing concert details-->
+                                <a href="eventDetails.html">                                                                                    
+                                    <button type="button" class="btn btn-danger">Read More</button>             
+                                </a>
                             </div>  <!--card-body-->
                         </div>  <!--card-->
                     </div>  <!--ms-2 me-2-->
 
                     <div class="ms-2 me-2">
                         <div class="card">
-                            <img src="{{ url_for('static', filename='img/dinnerEvent.jpg')}}" alt="Dinner Event" class="card-img-top">
+                            <img src="{{ url_for('static', filename='img/dinnerEvent.jpg')}}" alt="Dinner Event" class="card-img-top">  <!--outgoing event image-->
                             <div class="card-body">
-                                <h4 class="card-title">Dinner Events</h4>
-                                <p class="card-text">Dinner details</p>
-                                <button type="button" class="btn btn-danger">Read More</button>
+                                <h4 class="card-title">Dinner Events</h4>                                                               <!--outgoing event title-->
+                                <p class="card-text">Dinner details</p>                                                                 <!--outgoing concert details-->
+                                <a href="eventDetails.html">                                                                           
+                                    <button type="button" class="btn btn-danger">Read More</button>             
+                                </a>
                             </div>  <!--card-body-->
                         </div>  <!--card-->
                     </div>  <!--ms-2 me-2-->
 
                     <div class="ms-2 me-2">
                         <div class="card">
-                            <img src="{{ url_for('static', filename='img/festivalEvent.jpg')}}" alt="Festival Event" class="card-img-top">
+                            <img src="{{ url_for('static', filename='img/festivalEvent.jpg')}}" alt="Festival Event" class="card-img-top">  <!--outgoing event image-->
                             <div class="card-body">
-                                <h4 class="card-title">Festival Events</h4>
-                                <p class="card-text">Festival details</p>
-                                <button type="button" class="btn btn-danger">Read More</button>
+                                <h4 class="card-title">Festival Events</h4>                                                                 <!--outgoing event title-->
+                                <p class="card-text">Festival details</p>                                                                   <!--outgoing concert details-->
+                                <a href="eventDetails.html">                                                                                
+                                    <button type="button" class="btn btn-danger">Read More</button>             
+                                </a>
                             </div>  <!--card-body-->
                         </div>  <!--card-->
                     </div>  <!--ms-2 me-2-->                    
@@ -215,7 +229,7 @@
                     </div>  <!--col-->
                     <div class="col text-right">
                         <a href="registerPage.html"><button type="button" class="btn btn-primary">Get Started</button></a>  
-                        <a class="btn btn-floating" href="index.html">
+                        <a class="btn btn-floating" href="#">
                             <i class="fa fa-arrow-circle-up"></i> Back to top
                         </a>
                     </div>  <!--col-->

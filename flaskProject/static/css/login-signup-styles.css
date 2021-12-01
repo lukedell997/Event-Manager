@@ -97,6 +97,23 @@ body {
 	text-align: center;
 }
 
+input[type=submit] {
+	background-color: #017BFF;
+	border: none;
+	border-radius: 18px;
+	color: white;
+	padding: 10px 32px;
+	text-decoration: none;
+	margin: 4px 2px;
+	cursor: pointer;
+	width: 100%;
+}
+
+input[type=submit]:hover {
+	background-color: #a83279;
+	font-weight: bold;
+}
+
 .social-link a:hover {
 	color: #a83279;
 }

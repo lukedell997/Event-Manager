@@ -10,7 +10,7 @@
         <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
 
         <!--Custom Styles-->
-        <link rel="stylesheet" href="css/styles.css" /> 
+        <link rel="stylesheet" href="{{ url_for('static', filename='css/styles.css')}}" /> 
 
         <!-- Owl Carousel -->
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/assets/owl.carousel.min.css" integrity="sha512-tS3S5qG0BlhnQROyJXvNjeEM4UpMXHrQfTGmbQ1gKmelCxlSEBUaxhRBj/EFTzpbP4RVSrpEikbmdJobCvhE3g==" crossorigin="anonymous" referrerpolicy="no-referrer" />
@@ -21,25 +21,23 @@
         <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
         <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@200&display=swap" rel="stylesheet">
 
-        <link rel="shortcut icon" href="img/logo.png" />
-        <title>Capstone | Event Manager</title>
+        <link rel="shortcut icon" href="{{ url_for('static', filename='img/logo.png')}}" />
+        <title>Event Details | Event Manager</title>
     </head>
 
     <body>
         <div class="menu-bar">
             <!-- NAVBAR -->
-            <nav class="navbar navbar-expand-md navbar-light sticky-top">
+            <nav class="navbar navbar-expand-md navbar-dark sticky-top">
                 <div class="container-fluid">
-                    <a class="navbar-brand" href="#"><img src="img/logo.png" alt="Event Manager Logo"></a>
+                    <a class="navbar-brand" href="index.html"><img src="{{ url_for('static', filename='img/logo.png')}}" alt="Event Manager Logo"></a>
                     <!--SEARCH BAR-->
-                    <div class="input-group col-6 col-md-5 ml-auto">
-                        <input class="form-control py-2 border-right-0 border" type="search" placeholder="Search for..." id="searchBar">
-                        <span class="input-group-append">
-                            <button class="btn btn-primary btn-outline-secondary border-left-0 border" type="button">
-                                <i class="fa fa-search"></i>
-                            </button>
-                        </span>
-                    </div>  <!--input-group-->
+                    <form class="form-inline ml-4" method="GET">                                                                            <!--incoming search bar-->
+                        <input class="form control py-2 border-right-0 border" type="search" placeholder="Search for..." name="searchbar">
+                        <button class="btn btn-primary btn-outline-secondary border" type="submit">
+                            <i class="fa fa-search"></i>
+                        </button>
+                    </form>
                     <!--HAMBURGER MENU/ NAV LINKS-->
                     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav">
                         <i class="fa fa-bars"></i>
@@ -47,7 +45,7 @@
                     <div class="collapse navbar-collapse" id="navbarNav">
                         <ul class="navbar-nav ml-auto">
                             <li class="nav-item">
-                                <a class="nav-link" href="#" style="border-right: 1px solid #FFF; padding-right: 20px; margin-right: 10px">Browse Events</a>
+                                <a class="nav-link" href="search_browseEvents.html" style="border-right: 1px solid #FFF; padding-right: 20px; margin-right: 10px">Browse Events</a>
                             </li>
                             <li class="nav-item">
                                 <a class="nav-link" href="registerPage.html"><i class="fa fa-user-plus"></i> Sign-Up</a>
@@ -67,12 +65,16 @@
             <div class="row row-content">
                 <div class="col">
                     <div class="media">
-                        <img class="d-flex mr-5 img-fluid img-thumbnail" src="img/concertEvent.jpg" alt="Event Image" />
+                        <img class="d-flex mr-5 img-fluid img-thumbnail" src="{{ url_for('static', filename='img/concertEvent.jpg')}}" alt="Event Image" />     <!--outgoing event image-->
                         <div class="media-body align-self-center">
-                            <h3>OCT 28</h3>
-                            <h2>Concert Event</h2>
-                            <h4>$40</h4>  
-                            <button type="submit" class="btn btn-primary">Attend</button>                        
+                            <h3>OCT 28</h3>                                                     <!--outgoing event date-->
+                            <h2>Concert Event</h2>                                              <!--outgoing event title-->
+                            <h4>$40</h4>                                                        <!--outgoing event price-->
+                            <form method="post">
+                                <div class="form-group">
+                                    <input type="submit" value="ATTEND" />                      <!--directs to user logged in homepage with this added event details-->
+                                </div>  <!--form-group-->           
+                            </form>
                         </div>  <!--media-body-->
                     </div>  <!--media-->
                 </div>  <!--col-->
@@ -80,61 +82,69 @@
 
             <div class="row row-content">
                 <div class="col col-sm-7">
-                    <p>Event Description</p>                    
-                    <p>Tags:</p>
+                    <p>Event Description</p>                                                    <!--outgoing event description-->
+                    <p>Tags:</p>                                                                <!--outgoing event tags-->
                 </div>  <!--col-->
                 <div class="col">
-                    <h4>Address</h4>
+                    <h4>Address</h4>                                                            <!--outgoing event address-->
                 </div>
             </div>  <!--row-->
         
-            <!-- OTHER EVENTS YOU MAY LIKE -->
+            <!-- OTHER EVENTS YOU MIGHT LIKE -->
             <div class="row row-content">
                 <div class="col-sm-6">
-                    <h2>Other Events You May Like</h2>
+                    <h2>Other Events You Might Like</h2>
                 </div>  <!--col-->
                 <div class="owl-carousel owl-theme">
 
                     <div class="ms-2 me-2">
                         <div class="card">
-                            <img src="img/concertEvent.jpg" alt="Concert Event" class="card-img-top">
+                            <img src="{{ url_for('static', filename='img/concertEvent.jpg')}}" alt="Concert Event" class="card-img-top">    <!--outgoing event image-->
                             <div class="card-body">
-                                <h4 class="card-title">Concert Events</h4>
-                                <p class="card-text">Concert details</p>
-                                <button type="button" class="btn btn-danger">Read More</button>
+                                <h4 class="card-title">Concert Events</h4>                                                                  <!--outgoing event title-->
+                                <p class="card-text">Concert details</p>                                                                    <!--outgoing event details-->
+                                <a href="eventDetails.html">                                                                                    
+                                    <button type="button" class="btn btn-danger">Read More</button>             
+                                </a>    
                             </div>  <!--card-body-->
                         </div>  <!--card-->
                     </div>  <!--ms-2 me-2-->
 
                     <div class="ms-2 me-2">
                         <div class="card">
-                            <img src="img/conferenceEvent.jpg" alt="Conference Event" class="card-img-top">
+                            <img src="{{ url_for('static', filename='img/conferenceEvent.jpg')}}" alt="Conference Event" class="card-img-top">  <!--outgoing event image-->
                             <div class="card-body">
-                                <h4 class="card-title">Conference Events</h4>
-                                <p class="card-text">Conference details</p>
-                                <button type="button" class="btn btn-danger">Read More</button>
+                                <h4 class="card-title">Conference Events</h4>                                                                   <!--outgoing event title-->
+                                <p class="card-text">Conference details</p>                                                                     <!--outgoing event details-->
+                                <a href="eventDetails.html">                                                                                    
+                                    <button type="button" class="btn btn-danger">Read More</button>             
+                                </a>
                             </div>  <!--card-body-->
                         </div>  <!--card-->
                     </div>  <!--ms-2 me-2-->
 
                     <div class="ms-2 me-2">
                         <div class="card">
-                            <img src="img/dinnerEvent.jpg" alt="Dinner Event" class="card-img-top">
+                            <img src="{{ url_for('static', filename='img/dinnerEvent.jpg')}}" alt="Dinner Event" class="card-img-top">          <!--outgoing event image-->
                             <div class="card-body">
-                                <h4 class="card-title">Dinner Events</h4>
-                                <p class="card-text">Dinner details</p>
-                                <button type="button" class="btn btn-danger">Read More</button>
+                                <h4 class="card-title">Dinner Events</h4>                                                                       <!--outgoing event title-->
+                                <p class="card-text">Dinner details</p>                                                                         <!--outgoing event details-->
+                                <a href="eventDetails.html">                                                                                    
+                                    <button type="button" class="btn btn-danger">Read More</button>             
+                                </a>
                             </div>  <!--card-body-->
                         </div>  <!--card-->
                     </div>  <!--ms-2 me-2-->
 
                     <div class="ms-2 me-2">
                         <div class="card">
-                            <img src="img/festivalEvent.jpg" alt="Festival Event" class="card-img-top">
+                            <img src="{{ url_for('static', filename='img/festivalEvent.jpg')}}" alt="Festival Event" class="card-img-top">       <!--outgoing event image-->
                             <div class="card-body">
-                                <h4 class="card-title">Festival Events</h4>
-                                <p class="card-text">Festival details</p>
-                                <button type="button" class="btn btn-danger">Read More</button>
+                                <h4 class="card-title">Festival Events</h4>                                                                      <!--outgoing event title-->
+                                <p class="card-text">Festival details</p>                                                                        <!--outgoing event details-->
+                                <a href="eventDetails.html">                                                                                    
+                                    <button type="button" class="btn btn-danger">Read More</button>             
+                                </a>
                             </div>  <!--card-body-->
                         </div>  <!--card-->
                     </div>  <!--ms-2 me-2-->                    
@@ -148,7 +158,7 @@
                 <div class="row">   
                     <div class="col">
                         <div class="media">
-                            <img src="img/logo.png" alt="Event Manager Logo">
+                            <img src="{{ url_for('static', filename='img/logo.png')}}" alt="Event Manager Logo">
                             <div class="media-body align-self-center">
                                 <p>&copy; <script>document.write(new Date().getFullYear())</script> | Event Manager</p>
                             </div>  <!--media-body-->
@@ -188,6 +198,6 @@
         <script src="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/owl.carousel.min.js" integrity="sha512-bPs7Ae6pVvhOSiIcyUClR7/q2OAsRiovw4vAkX+zJbw3ShAeeqezq50RIIcIURq7Oa20rW2n2q+fyXBNcU9lrw==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
 
         <!-- Custom Scripts-->
-        <script src="js/scripts.js"></script>
+        <script src="{{ url_for('static', filename='js/scripts.js')}}"></script>
     </body>
 </html>
