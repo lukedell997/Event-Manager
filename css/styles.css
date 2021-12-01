@@ -274,6 +274,25 @@ p span {
     display: block;
 }
 
+.media input[type=submit] {
+	background-color: #017BFF;
+	border: none;
+	border-radius: 18px;
+	color: white;
+	padding: 10px 32px;
+	text-decoration: none;
+	margin: 10px 2px;
+	cursor: pointer;
+	width: 30%;
+}
+
+.media input[type=submit]:hover {
+	background-color: white;
+    color: #017BFF;
+    font-weight: bold;
+    border: 1px solid #017BFF;
+}
+
 /*-----FOOTER-----*/
 .site-footer {
     background-image: linear-gradient(#333044, #1F1D2B);
