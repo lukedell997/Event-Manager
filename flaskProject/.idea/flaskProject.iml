@@ -4,9 +4,6 @@
     <option name="enabled" value="true" />
   </component>
   <component name="NewModuleRootManager">
-    <content url="file://$MODULE_DIR$/../../Python work/PP11/maps">
-      <sourceFolder url="file://$MODULE_DIR$/../../Python work/PP11/maps" isTestSource="false" />
-    </content>
     <content url="file://$MODULE_DIR$" />
     <orderEntry type="jdk" jdkName="Python 3.7" jdkType="Python SDK" />
     <orderEntry type="sourceFolder" forTests="false" />
