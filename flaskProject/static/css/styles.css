@@ -31,8 +31,24 @@ h4 {
 .nav-link {
     font-size: 15px;
     margin: 3px;
-    color: #fff!important;
     font-weight: 500;
+}
+
+@media only screen and (max-width: 767px) {
+    .nav-link {
+        border-right: none !important; 
+        padding-right: 50px !important; 
+        margin-right: none !important;
+    }
+}
+
+.nav-link:hover {
+    font-weight: bold;
+    border-bottom: 1px solid #fff;
+}
+
+.navbar-dark .navbar-nav .nav-link{
+    color: white;
 }
 
 .navbar-nav {
@@ -47,13 +63,8 @@ h4 {
 }
 
 .navbar .fa {
-    color: #fff!important;
+    color: #fff;
     font-size: 16px;
-}
-
-.nav-link:hover {
-    font-weight: 600;
-    border-bottom: 1px solid #fff;
 }
 
 .navbar-brand img {
@@ -61,14 +72,26 @@ h4 {
     margin-left: 10px;
 }
 
-#searchBar:focus::placeholder {
-	color: transparent;
+.navbar form {
+    display: flex;
 }
 
-@media only screen and (max-width: 1000px) {
-    .nav-link:hover {
-        border-bottom: none!important;
-    }
+.navbar form:focus::placeholder {
+    color: transparent;
+}
+
+.navbar form input {
+    border-radius: 10px 5px 5px 10px;
+}
+
+/** User icon dropdown **/
+.dropdown-menu .fa {
+    color: black;
+}
+
+.img-circle {
+    border-radius: 50%;
+    width: 30px;
 }
 
 /*-----HEADER-----*/
@@ -86,10 +109,45 @@ h4 {
 .row-content {
     padding: 50px 0;
     border-bottom: 1px ridge;
-    min-height: 200px; 
+    min-height: 200px;
 }
 
-.card-img-top {
+.row-content p {
+    color: black;
+}
+
+.img-thumbnail {    /** event details img **/
+    width: 50%;
+}
+
+/** event details **/
+.media h3 {
+    font-weight: bold;
+}
+
+.media button {
+    margin-top: 20px;
+    min-width: 200px;
+}
+
+.media button:hover {
+    background-color: white;
+    color: blue;
+    font-weight: bold;
+}
+/********************/
+
+.scrollable {   /** "attending" scrolling **/
+    overflow-y: auto;
+    max-height: 300px;
+}
+
+.lead {
+    font-weight: bold;
+}
+
+/** owl carousel for each events **/
+.card-img-top, .carousel-item img {
     height: 40vh;
     width: 100%;
     object-fit: cover;
@@ -125,11 +183,120 @@ h4 {
 .owl-theme, .owl-nav[class="owl-"]:hover {
     background: transparent;
 }
+/**************************************/
+
+/** manage users for this event table **/
+#roleBox {
+    width: 300px;
+}
+
+.table .fa:hover {
+    color: red;
+}
+
+/**************************************/
+
+/** search box when filtering through your events **/
+.form {
+    position: relative;
+    text-align: right;
+}
+
+.form .fa-search {
+    position: absolute;
+    top: 20px;
+    left: 20px;
+    color: #9ca3af
+}
+
+.form span {
+    position: absolute;
+    right: 17px;
+    top: 13px;
+    padding: 2px;
+    border-left: 1px solid #d1d5db;
+}
+
+.form-input {
+    height: 55px;
+    text-indent: 33px;
+    border-radius: 10px;
+}
+
+.form-control {
+    width: 100%;
+}
+/********************************************************/
+
+.card img {      /** event list thumbnail img **/
+    width: 100%;
+    height: 13rem;
+    object-fit: cover;
+}
+
+.progress { /* capacity bar */
+    height: 10px;
+    width: 150px;
+}
+
+.plus-button {
+	border: 2px solid lightgrey;
+	background-color: #fff;
+	font-size: 16px;
+	height: 2.5em;
+	width: 2.5em;
+	border-radius: 999px;
+}
+
+.plus-button--large {
+	font-size: 40px;
+    font-weight: 700;
+}
+
+.edit-delete {  /** EDIT | DELETE **/
+	color: indianred;
+	font-size: 1rem;
+	z-index: 10;
+    position: relative;
+}
+
+.vertical-line {
+    border-left: 1px solid #ccc;
+    margin: 0 10px;
+    height: 1.2rem;
+}
+
+.nav-tabs {
+    color: black;
+}
+
+p span {
+    display: block;
+}
+
+.media input[type=submit] {
+	background-color: #017BFF;
+	border: none;
+	border-radius: 18px;
+	color: white;
+	padding: 10px 32px;
+	text-decoration: none;
+	margin: 10px 2px;
+	cursor: pointer;
+	width: 30%;
+}
+
+.media input[type=submit]:hover {
+	background-color: white;
+    color: #017BFF;
+    font-weight: bold;
+    border: 1px solid #017BFF;
+}
 
 /*-----FOOTER-----*/
 .site-footer {
     background-image: linear-gradient(#333044, #1F1D2B);
-    padding: 20px 0; 
+    padding: 20px 0;
 }
 
 .site-footer img {
