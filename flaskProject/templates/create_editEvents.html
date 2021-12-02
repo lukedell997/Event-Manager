@@ -22,24 +22,22 @@
         <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@200&display=swap" rel="stylesheet">
 
         <link rel="shortcut icon" href="{{ url_for('static', filename='img/logo.png')}}" />
-        <title>Capstone | Event Manager</title>
+        <title>Create/ Edit Event | Event Manager</title>
     </head>
 
     <body>
         <div class="menu-bar">
             <!-- NAVBAR -->
-            <nav class="navbar navbar-expand-md navbar-light sticky-top">
+            <nav class="navbar navbar-expand-md navbar-dark sticky-top">
                 <div class="container-fluid">
                     <a class="navbar-brand" href="index.html"><img src="{{ url_for('static', filename='img/logo.png')}}" alt="Event Manager Logo"></a>
                     <!--SEARCH BAR-->
-                    <div class="input-group col-6 col-md-5 ml-auto">
-                        <input class="form-control py-2 border-right-0 border" type="search" placeholder="Search for..." id="searchBar">
-                        <span class="input-group-append">
-                            <button class="btn btn-primary btn-outline-secondary border-left-0 border" type="button">
-                                <i class="fa fa-search"></i>
-                            </button>
-                        </span>
-                    </div>  <!--input-group-->
+                    <form class="form-inline ml-4" action="search_browseEvents.html" method="GET">                                                                                    <!--incoming search bar-->
+                        <input class="form control py-2 border-right-0 border" type="search" placeholder="Search for..." name="searchbar">
+                        <button class="btn btn-primary btn-outline-secondary border" type="submit">
+                            <i class="fa fa-search"></i>
+                        </button>
+                    </form>
                     <!--HAMBURGER MENU/ NAV LINKS-->
                     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav">
                         <i class="fa fa-bars"></i>
@@ -47,13 +45,21 @@
                     <div class="collapse navbar-collapse" id="navbarNav">
                         <ul class="navbar-nav ml-auto">
                             <li class="nav-item">
-                                <a class="nav-link" href="#" style="border-right: 1px solid #FFF; padding-right: 20px; margin-right: 10px">Browse Events</a>
+                                <a class="nav-link" href="search_browseEvents.html" style="border-right: 1px solid #FFF; padding-right: 20px; margin-right: 10px">Browse Events</a>
                             </li>
+                            <!--user icon added after logging in-->
                             <li class="nav-item">
-                                <a class="nav-link" href="registerPage.html"><i class="fa fa-user-plus"></i> Sign-Up</a>
-                            </li>
-                            <li class="nav-item">
-                                <a class="nav-link" href="loginPage.html"><i class="fa fa-sign-in"></i> Login</a>
+                                <div class="btn-group">
+                                    <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                        <img class="img-circle" src="{{ url_for('static', filename='img/logo.png')}}">     
+                                    </button>
+                                    <div class="dropdown-menu dropdown-menu-right">
+                                        <a class="dropdown-item" href="index_userLoggedIn.html"><i class="fa fa-user fa-md"></i> My Account</a>
+                                        <a class="dropdown-item" href="create_editEvents.html"><i class="fa fa-calendar-plus-o fa-md"></i> Create An Event</a>
+                                        <a class="dropdown-item" href="manageEvents.html"><i class="fa fa-edit fa-md"></i> Edit Events</a>
+                                        <a class="dropdown-item" href="index.html"><i class="fa fa-sign-out fa-md"></i> Log Out</a>
+                                    </div>
+                                  </div>    
                             </li>
                         </ul>
                     </div>  <!--collapse-->
@@ -63,31 +69,31 @@
 
         <!-- CONTENTS -->
         <div class="container"> 
-            <!-- CREATE / EDIT AN EVENT -->         
-            <div class="row row-content"> 
-                      
-                <div class="col">
-                    <h2>Create An Event</h2>   <!--change to <h2>Edit Event</h2> when in editing version-->                 
-                    <form>
+            <form action="manageEvents.html" method="POST">     <!--after submitting this form, redirect to manageEvents.html-->
+                <!-- CREATE / EDIT AN EVENT -->         
+                <div class="row row-content"> 
+                    <div class="col">
+                        <h2>Create An Event</h2>   <!--change to <h2>Edit Event</h2> when in editing version-->                 
+                        
                         <div class="form-group">
                             <label for="eventTitle">Event Title</label>
-                            <input type="text" class="form-control" id="eventTitle" placeholder="Event Name">
+                            <input type="text" class="form-control" id="eventTitle" placeholder="Event Name" name="title">          <!--incoming event title-->
                         </div>  <!--row-->
 
                         <div class="form-group">
                             <label for="eventAddress">Address</label>
-                            <input type="text" class="form-control" id="eventAddress" placeholder="Street">
+                            <input type="text" class="form-control" id="eventAddress" placeholder="Street" name="street">           <!--incoming event street-->
                         </div>                
         
                         <div class="form-row">
                             <div class="form-group col-md-6">
                                 <label for="eventCity">City</label>
-                                <input type="text" class="form-control" id="eventCity">
+                                <input type="text" class="form-control" id="eventCity" name="city">                                 <!--incoming event city-->
                             </div>
         
                             <div class="form-group col-md-4">
                                 <label for="eventState">State</label>
-                                <select id="eventState" class="form-control">
+                                <select id="eventState" class="form-control">                                                       <!--incoming event state-->
                                     <option selected>Select...</option>
                                     <option value="AL">Alabama</option>
                                     <option value="AK">Alaska</option>
@@ -145,21 +151,21 @@
         
                             <div class="form-group col-md-2">
                                 <label for="eventZip">Zip</label>
-                                <input type="text" class="form-control" id="eventZip">
+                                <input type="text" class="form-control" id="eventZip" name="zip">                           <!--incoming event zip-->
                             </div>
                         </div>  <!--row-->     
                         
                         <div class="form-row">
                             <div class="form-group col-md-6">
                                 <label for="eventStartDate">Starts</label>
-                                <input type="date" class="form-control" id="eventStartDate">
-                                <input type="time" class="form-control" id="eventStartTime">
+                                <input type="date" class="form-control" id="eventStartDate" name="startDate">               <!--incoming start date-->
+                                <input type="time" class="form-control" id="eventStartTime" name="startTime">               <!--incoming start time-->
                             </div>
         
                             <div class="form-group col-md-6">
                                 <label for="eventEndDate">Ends</label>
-                                <input type="date" class="form-control" id="eventEndDate">
-                                <input type="time" class="form-control" id="eventEndTime">
+                                <input type="date" class="form-control" id="eventEndDate" name="endDate">                   <!--incoming end date-->
+                                <input type="time" class="form-control" id="eventEndTime" name="endTime">                   <!--incoming end time-->
                             </div>
                         </div>
 
@@ -168,138 +174,96 @@
                                 <div class="row">
                                     <div class="col">
                                         <label for="eventPrice">Price</label>
-                                        <input type="number" step="0.01" min="0.01" class="form-control" id="eventPrice" placeholder="0.00">    
+                                        <input type="number" step="0.01" min="0.01" class="form-control" id="eventPrice" placeholder="0.00" name="price">    <!--incoming event price-->
                                     </div>
                                     <div class="col">
                                         <label for="eventCapacity">Max Capacity</label>
-                                        <input type="number" min="1" class="form-control" id="eventCapacity">
+                                        <input type="number" min="1" class="form-control" id="eventCapacity" name="maxCapacity">                             <!--incoming event capacity-->
                                     </div>
                                 </div>
                             </div>
         
                             <div class="form-group col-md-6">
                                 <label for="inputPassword4">Registration Deadline</label>
-                                <input type="date" class="form-control" id="deadlineDate">
-                                <input type="time" class="form-control" id="deadlineTime">
+                                <input type="date" class="form-control" id="deadlineDate" name="deadlineDate">              <!--incoming deadline date-->
+                                <input type="time" class="form-control" id="deadlineTime" name="deadlineTime">              <!--incoming deadline time-->
                             </div>
                         </div>
                         <div class="form-group">
                             <label for="eventImages">Upload Event Images</label>
-                            <input type="file" class="form-control-file" id="eventImages">
+                            <input type="file" class="form-control-file" id="eventImages" name="eventImg">                  <!--incoming event image-->
                         </div>
 
                         <div class="form-group">
                             <label for="eventDescr">Event Description</label>
-                            <textarea class="form-control" id="eventDescr" name="eventDescr" rows="8"></textarea> 
+                            <textarea class="form-control" id="eventDescr" rows="8" name="description"></textarea>          <!--incoming event description-->
                         </div>  <!--row-->
-                        
-                    </form>
-                </div>  <!--col-->                
-            </div>  <!--row-->
+                    </div>  <!--col-->                
+                </div>  <!--row-->
 
-            <!-- MANAGE USERS -->
-            <div class="row row-content">
-                <div class="col">
-                    <div class="row">
-                        <div class="col">
-                            <h2>Manage Users For This Event</h2>
+                <!-- MANAGE USERS -->
+                <div class="row row-content">
+                    <div class="col">
+                        <div class="row">
+                            <div class="col">
+                                <h2>Manage Users For This Event</h2>
+                            </div>
+                            <div class="col text-right">
+                                <a id="add_row" class="btn btn-primary float-right" style="color: white">Add New User</a>
+                            </div>
                         </div>
-                        <div class="col text-right">
-                            <button type="submit" class="btn btn-primary">Add New User</button>     <!--Add <tr> and its contents when adding *One User-->
-                        </div>
+                    
+                        <div class="form-row">   
+                            <table class="table table-striped table-sortable text-center" id="tab_logic">
+                                <thead>
+                                    <tr >
+                                        <th>
+                                            Name
+                                        </th>
+                                        <th>
+                                            Email
+                                        </th>
+                                        <th>
+                                            Role
+                                        </th>
+                                        <th>
+                                            Delete
+                                        </th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr id='addr0' data-id="0" class="hidden">
+                                        <td data-name="nm">
+                                            <input type="text" name='name0'  placeholder='Name' class="form-control"/>      <!--incoming username-->
+                                        </td>
+                                        <td data-name="mail">
+                                            <input type="text" name='mail0' placeholder='Email' class="form-control"/>      <!--incoming email-->
+                                        </td>
+                                        <td data-name="role">
+                                            <select name="sel0" class='form-control'>                                       <!--incoming user role-->
+                                                <option selected>Attendant</option>
+                                                <option>Owner</option>
+                                                <option>Administrator</option>
+                                                <option>Moderator</option>
+                                            </select>
+                                        </td>
+                                        <td data-name="del">
+                                            <a class='btn btn-floating row-remove' name='del0' class='form-control'>
+                                                <i class='fa fa-trash'></i>
+                                            </a>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>  
+
+                        <div class="form-group float-right">
+                            <input type='button' value="CANCEL" name="close"/>      <!--incoming cancel, go back to previous page-->
+                            <input type='submit' value="SAVE" name="saveEvent"/>    <!--incoming save all event data, should redirect to manageEvents.html based on <form action>-->
+                        </div>      
                     </div>
-                
-                    <div class="row">   
-                        <table class="table table-striped">
-                            <thead>
-                              <tr>
-                                <th scope="col">#</th>
-                                <th scope="col">Username</th>
-                                <th scope="col">Role</th>
-                                <th scope="col">Action</th>
-                              </tr>
-                            </thead>
-                            <tbody>
-                              <!-----------------*One User------------------->
-                              <tr>  
-                                <th scope="row">1</th>
-                                <td>staffmage</td>
-                                <td>
-                                    <select id="roleBox" class="form-control">
-                                        <option selected>Attendant</option>
-                                        <option>Owner</option>
-                                        <option>Administrator</option>
-                                        <option>Moderator</option>
-                                    </select>
-                                </td>
-                                <td>
-                                    <a class="btn btn-floating" href="#">
-                                        <i class="fa fa-trash"></i>         <!--delete the user's info-->
-                                    </a>
-                                </td>
-                              </tr>
-                              <tr>
-                              <!------------------------------------------------>
-                                <th scope="row">2</th>
-                                <td>lukedell997</td>
-                                <td>
-                                    <select id="roleBox" class="form-control">
-                                        <option selected>Attendant</option>
-                                        <option>Owner</option>
-                                        <option>Administrator</option>
-                                        <option>Moderator</option>
-                                    </select>
-                                </td>
-                                <td>
-                                    <a class="btn btn-floating" href="#">
-                                        <i class="fa fa-trash"></i>
-                                    </a>
-                                </td>
-                              </tr>
-                              <tr>
-                                <th scope="row">3</th>
-                                <td>mashmerro</td>
-                                <td>
-                                    <select id="roleBox" class="form-control">
-                                        <option selected>Attendant</option>
-                                        <option>Owner</option>
-                                        <option>Administrator</option>
-                                        <option>Moderator</option>
-                                    </select>
-                                </td>
-                                <td>
-                                    <a class="btn btn-floating" href="#">
-                                        <i class="fa fa-trash"></i>
-                                    </a>
-                                </td>
-                              </tr>
-                              <tr>
-                                <th scope="row">4</th>
-                                <td>jzriny</td>
-                                <td>
-                                    <select id="roleBox" class="form-control">
-                                        <option selected>Attendant</option>
-                                        <option>Owner</option>
-                                        <option>Administrator</option>
-                                        <option>Moderator</option>
-                                    </select>
-                                </td>
-                                <td>
-                                    <a class="btn btn-floating" href="#">
-                                        <i class="fa fa-trash"></i>
-                                    </a>
-                                </td>
-                              </tr>
-                            </tbody>
-                          </table>
-                    </div>  <!--row-->
-
-                    <div class="row">
-                        <button type="button" class="btn btn-secondary btn-sm ml-auto" data-dismiss="modal">Cancel</button> <!--return to previous page-->
-                        <button type="submit" class="btn btn-primary btn-sm ml-1">Save</button>     <!--save all info-->
-                    </div>  <!--row-->
                 </div>
-            </div>
+            </form>
         </div>  <!--container-->
        
         <!-- FOOTER -->
@@ -330,7 +294,6 @@
                         </a>
                     </div>  <!--col-->
                     <div class="col text-right">
-                        <a href="registerPage.html"><button type="button" class="btn btn-primary">Get Started</button></a>  
                         <a class="btn btn-floating" href="#">
                             <i class="fa fa-arrow-circle-up"></i> Back to top
                         </a>
