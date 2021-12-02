@@ -23,7 +23,7 @@
 
     <body>
         <div class="fillout-form">
-            <form action="/examples/actions/confirmation.php" method="post">
+            <form action="index_userLoggedIn.html" method="POST">
                 <div class="text-center mb-4">
                     <a href="index.html"><img src="{{ url_for('static', filename='img/logo.png')}}" alt="Event Manager logo" style="width: 100px;"></a> 
                 </div>  <!--text-center-->
@@ -34,47 +34,47 @@
                 <div class="form-group">
                     <div class="row">
                         <div class="col">
-                            <input type="text" class="form-control" name="firstName" placeholder="First Name" required="required">
+                            <input type="text" class="form-control" name="fn" placeholder="First Name" required="required">     <!--incoming first name-->
                         </div>  <!--col-->
                         <div class="col">
-                            <input type="text" class="form-control" name="lastName" placeholder="Last Name" required="required">
+                            <input type="text" class="form-control" name="ln" placeholder="Last Name" required="required">      <!--incoming last name-->
                         </div>  <!--col-->
                     </div>  <!--row-->   	
                 </div>  <!--form-group-->
 
                 <div class="form-group">
-                    <input type="username" class="form-control" name="fn" placeholder="Username" required="required">
+                    <input type="username" class="form-control" name="nm" placeholder="Username" required="required">           <!--incoming username-->
                 </div>  <!--form-group-->
 
                 <div class="form-group">
-                    <input type="password" class="form-control" name="pw" placeholder="Password" required="required">
+                    <input type="password" class="form-control" name="pw" placeholder="Password" required="required">           <!--incoming password-->
                 </div>  <!--form-group-->
 
                 <div class="form-group">
-                    <input type="password" class="form-control" name="pw" placeholder="Confirm Password" required="required">
+                    <input type="password" class="form-control" name="pw" placeholder="Confirm Password" required="required">   <!--incoming password-->
                 </div>  <!--form-group-->
 
                 <div class="form-group">
-                    <input type="address" class="form-control" name="address" placeholder="Address" required="required">
+                    <input type="address" class="form-control" name="address" placeholder="Address" required="required">        <!--incoming address-->
                 </div>  <!--form-group-->
 
                 <div class="form-group">
                     <div class="row">
                         <div class="col">
-                            <input type="text" class="form-control" name="city" placeholder="City" required="required">
+                            <input type="text" class="form-control" name="city" placeholder="City" required="required">         <!--incoming city-->
                         </div>  <!--col-->
                         <div class="col">
-                            <input type="text" class="form-control" name="state" placeholder="State" required="required">
+                            <input type="text" class="form-control" name="state" placeholder="State" required="required">       <!--incoming state-->
                         </div>  <!--col-->
                     </div>  <!--row-->   	
                 </div>  <!--form-group-->
 
                 <div class="form-group">
-                    <input type="email" class="form-control" name="email" placeholder="Email" required="required">
+                    <input type="email" class="form-control" name="email" placeholder="Email" required="required">              <!--incoming email-->
                 </div>  <!--form-group-->
 
                 <div class="form-group">
-                    <input type="phoneNum" class="form-control" name="phone" placeholder="Phone Number" required="required">
+                    <input type="phoneNum" class="form-control" name="phone" placeholder="Phone Number" required="required">    <!--incoming phone-->
                 </div>  <!--form-group-->
 
                 <div class="form-group">
