@@ -10,14 +10,14 @@
         <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
 
         <!--Custom Styles-->
-        <link rel="stylesheet" href="css/styles.css" /> 
+        <link rel="stylesheet" type="text/css" href="{{ url_for('static',filename='css/styles.css')}}" /> 
         
         <!-- Google Fonts -->
         <link rel="preconnect" href="https://fonts.googleapis.com">
         <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
         <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@200&display=swap" rel="stylesheet">
 
-        <link rel="shortcut icon" href="img/logo.png" />
+        <link rel="shortcut icon" href="{{ url_for('static', filename='img/logo.png')}}" />
         <title>My Events | Event Manager</title>
     </head>
 
@@ -26,16 +26,14 @@
             <!-- NAVBAR -->
             <nav class="navbar navbar-expand-md navbar-dark sticky-top">
                 <div class="container-fluid">
-                    <a class="navbar-brand" href="#"><img src="img/logo.png" alt="Event Manager Logo"></a>
+                    <a class="navbar-brand" href="index.html"><img src="{{ url_for('static', filename='img/logo.png')}}" alt="Event Manager Logo"></a>
                     <!--SEARCH BAR-->
-                    <div class="input-group col-6 col-md-5 ml-auto">
-                        <input class="form-control py-2 border-right-0 border" type="search" placeholder="Search for..." id="searchBar">
-                        <span class="input-group-append">
-                            <button class="btn btn-primary btn-outline-secondary border-left-0 border" type="button">
-                                <i class="fa fa-search"></i>
-                            </button>
-                        </span>
-                    </div>  <!--input-group-->
+                    <form class="form-inline ml-4" action="search_browseEvents.html" method="GET">                                                                            <!--incoming search bar-->
+                        <input class="form control py-2 border-right-0 border" type="search" placeholder="Search for..." name="searchbar">
+                        <button class="btn btn-primary btn-outline-secondary border" type="submit">
+                            <i class="fa fa-search"></i>
+                        </button>
+                    </form>
                     <!--HAMBURGER MENU/ NAV LINKS-->
                     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav">
                         <i class="fa fa-bars"></i>
@@ -43,13 +41,21 @@
                     <div class="collapse navbar-collapse" id="navbarNav">
                         <ul class="navbar-nav ml-auto">
                             <li class="nav-item">
-                                <a class="nav-link" href="#" style="border-right: 1px solid #FFF; padding-right: 20px; margin-right: 10px">Browse Events</a>
+                                <a class="nav-link" href="search_browseEvents.html" style="border-right: 1px solid #FFF; padding-right: 20px; margin-right: 10px">Browse Events</a>
                             </li>
+                            <!--user icon added after logging in-->
                             <li class="nav-item">
-                                <a class="nav-link" href="registerPage.html"><i class="fa fa-user-plus"></i> Sign-Up</a>
-                            </li>
-                            <li class="nav-item">
-                                <a class="nav-link" href="loginPage.html"><i class="fa fa-sign-in"></i> Login</a>
+                                <div class="btn-group">
+                                    <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                        <img class="img-circle" src="{{ url_for('static', filename='img/logo.png')}}">
+                                    </button>
+                                    <div class="dropdown-menu dropdown-menu-right">
+                                        <a class="dropdown-item" href="index_userLoggedIn.html"><i class="fa fa-user fa-md"></i> My Account</a>
+                                        <a class="dropdown-item" href="create_editEvents.html"><i class="fa fa-calendar-plus-o fa-md"></i> Create An Event</a>
+                                        <a class="dropdown-item" href="manageEvents.html"><i class="fa fa-edit fa-md"></i> Edit Events</a>
+                                        <a class="dropdown-item" href="index.html"><i class="fa fa-sign-out fa-md"></i> Log Out</a>
+                                    </div>
+                                </div>    
                             </li>
                         </ul>
                     </div>  <!--collapse-->
@@ -76,10 +82,10 @@
                 <div class="col-12">
                     <ul class="nav nav-tabs">
                         <li class="nav-item">
-                          <a class="nav-link active" aria-current="page" href="#yourEvents" data-toggle="tab">MY EVENTS (3)</a>
+                          <a class="nav-link active" aria-current="page" href="#yourEvents" data-toggle="tab">MY EVENTS</a>     
                         </li>
                         <li class="nav-item">
-                          <a class="nav-link" href="#attending" data-toggle="tab">ATTENDING (2)</a>
+                          <a class="nav-link" href="#attending" data-toggle="tab">ATTENDING</a>
                         </li>
                     </ul> 
                     <div class="tab-content">
@@ -90,20 +96,20 @@
                                 <div class="row">
                                     <a href="eventDetails.html" class="stretched-link"></a>    
                                     <div class="col-md-4">
-                                        <img src="img/concertEvent.jpg" class="img-fluid">
+                                        <img src="{{ url_for('static', filename='img/concertEvent.jpg')}}" class="img-fluid">   <!--outgoing event image-->
                                     </div>
                                     <div class="col-md-8 pt-2">
-                                        <h3 class="card-title mt-3">Event #1</h3>   
-                                        <p><span id='date-time'></span> 
+                                        <h3 class="card-title mt-3">Event #1</h3>                                               <!--outgoing event title-->
+                                        <p><span id='date-time'></span>                                                         <!--outgoing event date & time-->
                                             <div class="row">
                                                 <div class="col-md-8 mr-5">
-                                                    <a class="edit-delete" href="create_editEvents.html">EDIT</a>
+                                                    <a class="edit-delete" href="create_editEvents.html">EDIT</a>               
                                                     <span class="vertical-line"></span>
-                                                    <a class="edit-delete" href="create_editEvents.html">DELETE</a>
+                                                    <a class="edit-delete" href="manageEvents.html">DELETE</a>               
                                                 </div>
                                                 <div class="col">
                                                     <div class="progress mt-2">
-                                                        <div class="progress-bar" role="progressbar" style="width: 75%" aria-valuenow="75" aria-valuemin="0" aria-valuemax="100">
+                                                        <div class="progress-bar" role="progressbar" style="width: 75%" aria-valuenow="75" aria-valuemin="0" aria-valuemax="100">   <!--outgoing capacity-->
                                                             75/100
                                                         </div>
                                                         <!--"w-75" is the indication capacity shown on the bar (just for visualizing)
@@ -120,20 +126,20 @@
                                 <div class="row">
                                     <a href="eventDetails.html" class="stretched-link"></a>    
                                     <div class="col-md-4">
-                                        <img src="img/festivalEvent.jpg" class="img-fluid">
+                                        <img src="{{ url_for('static', filename='img/festivalEvent.jpg')}}" class="img-fluid">      <!--outgoing event image-->
                                     </div>
                                     <div class="col-md-8 pt-2">
-                                        <h3 class="card-title mt-3">Event #2</h3>   
-                                        <p><span id='date-time'></span>
+                                        <h3 class="card-title mt-3">Event #2</h3>                                                   <!--outgoing event title-->
+                                        <p><span id='date-time'></span>                                                             <!--outgoing event date & time-->
                                             <div class="row">
                                                 <div class="col-md-8 mr-5">
                                                     <a class="edit-delete" href="create_editEvents.html">EDIT</a>
                                                     <span class="vertical-line"></span>
-                                                    <a class="edit-delete" href="create_editEvents.html">DELETE</a>
+                                                    <a class="edit-delete" href="manageEvents.html">DELETE</a>
                                                 </div>
                                                 <div class="col">
                                                     <div class="progress mt-2">
-                                                        <div class="progress-bar" style="width: 90%" role="progressbar" aria-valuenow="45" aria-valuemin="0" aria-valuemax="50">
+                                                        <div class="progress-bar" style="width: 90%" role="progressbar" aria-valuenow="45" aria-valuemin="0" aria-valuemax="50">     <!--outgoing capacity-->
                                                             45/50
                                                         </div>
                                                         <!--"w-75" is the indication capacity shown on the bar (just for visualizing)
@@ -150,20 +156,20 @@
                                 <div class="row">
                                     <a href="eventDetails.html" class="stretched-link"></a>    
                                     <div class="col-md-4">
-                                        <img src="img/conferenceEvent.jpg" class="img-fluid">
+                                        <img src="{{ url_for('static', filename='img/conferenceEvent.jpg')}}" class="img-fluid">    <!--outgoing event image-->
                                     </div>
                                     <div class="col-md-8 pt-2">
-                                        <h3 class="card-title mt-3">Event #3</h3>   
-                                        <p><span id='date-time'></span>
+                                        <h3 class="card-title mt-3">Event #3</h3>                                                   <!--outgoing event title-->
+                                        <p><span id='date-time'></span>                                                             <!--outgoing event date & time-->
                                             <div class="row">
                                                 <div class="col-md-8 mr-5">
                                                     <a class="edit-delete" href="create_editEvents.html">EDIT</a>
                                                     <span class="vertical-line"></span>
-                                                    <a class="edit-delete" href="create_editEvents.html">DELETE</a>
+                                                    <a class="edit-delete" href="manageEvents.html">DELETE</a>
                                                 </div>
                                                 <div class="col">
                                                     <div class="progress mt-2">
-                                                        <div class="progress-bar" role="progressbar" style="width: 100%" aria-valuenow="10" aria-valuemin="0" aria-valuemax="10">
+                                                        <div class="progress-bar" role="progressbar" style="width: 100%" aria-valuenow="10" aria-valuemin="0" aria-valuemax="10">    <!--outgoing capacity-->
                                                             10/10
                                                         </div>
                                                         <!--"w-75" is the indication capacity shown on the bar (just for visualizing)
@@ -175,32 +181,27 @@
                                     </div>  <!--col-->      
                                 </div> <!--row-->                 
                             </div>  <!--card-->
-
-                            <div class="text-right">
-                                <button class="btn btn-secondary btn-lg previous">Previous</button>
-                                <button class="btn btn-primary btn-lg next">Next</button>
-                            </div>
-
                         </div>  <!--tab-pane-->
 
                         <div class="tab-pane fade" role="tabpanel" id="attending">
-
                             <div class="card">
                                 <div class="row">
                                     <a href="eventDetails.html" class="stretched-link"></a>    
                                     <div class="col-md-4">
-                                        <img src="img/movieEvents.jpg" class="img-fluid">
+                                        <img src="{{ url_for('static', filename='img/movieEvents.jpg')}}" class="img-fluid">        <!--outgoing event image-->
                                     </div>
                                     <div class="col-md-8 pt-2">
-                                        <h3 class="card-title mt-3">Movie Event</h3>   
-                                        <p><span id='date-time'></span> 
+                                        <h3 class="card-title mt-3">Movie Event</h3>                                                <!--outgoing event title-->
+                                        <p><span id='date-time'></span>                                                             <!--outgoing event date & time-->
                                             <div class="row">
                                                 <div class="col-md-8 mr-5">
-                                                    <a href="create_editEvents.html"><button type="button" class="btn btn-danger">CANCEL EVENT</button></a> 
+                                                    <a class="edit-delete" href="manageEvents.html">
+                                                        <button type="button" class="btn btn-danger">CANCEL EVENT</button>
+                                                    </a> 
                                                 </div>
                                                 <div class="col">
                                                     <div class="progress mt-2">
-                                                        <div class="progress-bar" role="progressbar" style="width: 75%" aria-valuenow="75" aria-valuemin="0" aria-valuemax="100">
+                                                        <div class="progress-bar" role="progressbar" style="width: 75%" aria-valuenow="75" aria-valuemin="0" aria-valuemax="100">   <!--outgoing capacity-->
                                                             75/100
                                                         </div>
                                                         <!--"w-75" is the indication capacity shown on the bar (just for visualizing)
@@ -217,18 +218,20 @@
                                 <div class="row">
                                     <a href="eventDetails.html" class="stretched-link"></a>    
                                     <div class="col-md-4">
-                                        <img src="img/dinnerEvent.jpg" class="img-fluid">
+                                        <img src="{{ url_for('static', filename='img/dinnerEvent.jpg')}}" class="img-fluid">        <!--outgoing event image-->
                                     </div>
                                     <div class="col-md-8 pt-2">
-                                        <h3 class="card-title mt-3">Dinner Event</h3>   
-                                        <p><span id='date-time'></span> 
+                                        <h3 class="card-title mt-3">Dinner Event</h3>                                               <!--outgoing event title-->
+                                        <p><span id='date-time'></span>                                                             <!--outgoing event date & time-->
                                             <div class="row">
                                                 <div class="col-md-8 mr-5">
-                                                    <a href="create_editEvents.html"><button type="button" class="btn btn-danger">CANCEL EVENT</button></a> 
+                                                    <a class="edit-delete" href="manageEvents.html">
+                                                        <button type="button" class="btn btn-danger">CANCEL EVENT</button>
+                                                    </a> 
                                                 </div>
                                                 <div class="col">
                                                     <div class="progress mt-2">
-                                                        <div class="progress-bar" style="width: 90%" role="progressbar" aria-valuenow="45" aria-valuemin="0" aria-valuemax="50">
+                                                        <div class="progress-bar" style="width: 90%" role="progressbar" aria-valuenow="45" aria-valuemin="0" aria-valuemax="50">    <!--outgoing capacity-->
                                                             45/50
                                                         </div>
                                                         <!--"w-75" is the indication capacity shown on the bar (just for visualizing)
@@ -240,7 +243,6 @@
                                     </div>  <!--col-->      
                                 </div> <!--row-->                 
                             </div>  <!--card-->
-
                         </div>  <!--tab-pane-->
                     </div>  <!--tab-content-->
                 </div>  <!--col-->
@@ -266,7 +268,7 @@
                 <div class="row">   
                     <div class="col">
                         <div class="media">
-                            <img src="img/logo.png" alt="Event Manager Logo">
+                            <img src="{{ url_for('static', filename='img/logo.png')}}" alt="Event Manager Logo">
                             <div class="media-body align-self-center">
                                 <p>&copy; <script>document.write(new Date().getFullYear())</script> | Event Manager</p>
                             </div>  <!--media-body-->
@@ -288,7 +290,6 @@
                         </a>
                     </div>  <!--col-->
                     <div class="col text-right">
-                        <a href="registerPage.html"><button type="button" class="btn btn-primary">Get Started</button></a>  
                         <a class="btn btn-floating" href="#">
                             <i class="fa fa-arrow-circle-up"></i> Back to top
                         </a>
