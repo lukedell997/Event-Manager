@@ -185,11 +185,6 @@ h4 {
 }
 /**************************************/
 
-/** manage users for this event table **/
-#roleBox {
-    width: 300px;
-}
-
 .table .fa:hover {
     color: red;
 }
@@ -291,6 +286,28 @@ p span {
     color: #017BFF;
     font-weight: bold;
     border: 1px solid #017BFF;
+}
+
+/* SUBMIT / CANCEL */
+.form-group input[type=submit] {
+    background-color: #017BFF;
+	border: none;
+	border-radius: 18px;
+	color: white;
+	padding: 10px 20px;
+	text-decoration: none;
+	margin: 10px 2px;
+	cursor: pointer;
+}
+.form-group input[type=button] {
+    background-color: #DC3545;
+	border: none;
+	border-radius: 18px;
+    color: white;
+	padding: 10px 20px;
+	text-decoration: none;
+	margin: 10px 2px;
+	cursor: pointer;
 }
 
 /*-----FOOTER-----*/
