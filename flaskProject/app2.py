@@ -57,18 +57,19 @@ def index():  # put application's code here
 @app.route('/registerPage.html')
 @app.route('/registerPage')
 def registerPage():  # put application's code here
-    userFirstName = request.form["fn"]
-    userLastName = request.form["ln"]
-    userUsername = request.form["nm"]
-    userPassword = request.form["pw"]
-    userAddress = request.form["address"]
-    userCity = request.form["city"]
-    userState = request.form["state"]
-    userEmail = request.form["email"]
-    userNumber = request.form["phone"]
+    
 
     # WE SHOULD ADD A BUTTON TO CREATE THE ACCOUNT then send them to the login page
     if 'submit' in request.form:
+        userFirstName = request.form["fn"]
+        userLastName = request.form["ln"]
+        userUsername = request.form["nm"]
+        userPassword = request.form["pw"]
+        userAddress = request.form["address"]
+        userCity = request.form["city"]
+        userState = request.form["state"]
+        userEmail = request.form["email"]
+        userNumber = request.form["phone"]
         #STILL NEED TO CHECK IF DATA IS CORRECT(state is 2 letters, zip 5 numbers, etc)
         
 # *NEW USER TO DATABASE----------------------------------
@@ -78,13 +79,16 @@ def registerPage():  # put application's code here
                              userZipcode, userCity, userState, userNumber])
         #check if already exists: if not, create new
         if (db.checkAny(cursor, "userId", "users", "username", str(userUsername)
-                        , "username", str(userUsername)) == True):
-            print("ERROR: username already exists")
-        else:
+                        , "username", str(userUsername)) == False):
             db.newUser(cnx, cursor, cU)
+            return redirect(url_for("login")) #????
+        else:
+            print("ERROR: username already exists")
+            return render_template("registerPage.html")
+            
 #END NEW USER---------------------------------------
             
-        return redirect(url_for("login")) #????
+        
     return render_template("registerPage.html")
 
 
@@ -99,6 +103,7 @@ def loginPage():  # put application's code here
         session.permanent = True
         user = request.form["nm"]       # NEED TO CHECK THAT USER EXISTS
         password = request.form["pw"]
+        
 #GET USER--------------------------------------------------
         #: check if user found, then get user info into variables
         if (db.checkAny(cursor, "userId", "users", "username", str(user),
@@ -106,24 +111,24 @@ def loginPage():  # put application's code here
             [uId, user, password, uFN, uLN, uEmail,uAd, uZip, uCity, uState,uPhone] = db.getUser(cursor, str(user), str(password))
 
             #put user info into session...
-            #session["userId:"] = uId
+            session["userId:"] = uId
             #session["nm"] = user
             
-            return redirect(url_for("user"))
+            
         else:
             print("Error: The username or password is incorrect")
             
 #END GET USER-----------------------------------------------
         
-        #session["user:"] = user
+        session["user"] = user
         
-
+        return redirect(url_for("user"))
     return render_template("loginPage.html")
 
 
 
-@app.route("/index_userLoggedIn.html")
-@app.route("/index_userLoggedIn")
+@app.route("/index_userLoggedIn.html", methods=["POST", "GET"])
+@app.route("/index_userLoggedIn", methods=["POST", "GET"])
 def user():
 
     if "user" in session:
@@ -183,15 +188,15 @@ def user():
         popEventTitle = []
         popEventDetails = []
         if "clicked" in request.form:
-            return # NEED TO FIX THIS BY CHANGING EVENTDEAITLS.HTML TO CONTAIN NAME IN URL
-        return render_template("index_userLoggedIn.html", name = user, myEventImage = myEventImage,
+            #return # NEED TO FIX THIS BY CHANGING EVENTDEAITLS.HTML TO CONTAIN NAME IN URL
+            return render_template("index_userLoggedIn.html", name = user, myEventImage = myEventImage,
                                myEventTitle = myEventTitle, myEventDetails = myEventDetails,
                                attendingEventsTitle = attendingEventsTitle, attendingEventsDate = attendingEventsDate,
                                attendingEventsDeadline = attendingEventsDeadline, popEventTitle= popEventTitle,
                                popEventDetails = popEventDetails, search = search)
-
+            
     else:
-        return redirect(url_for("login")) #????
+        return redirect(url_for("user")) #????
 
 
 

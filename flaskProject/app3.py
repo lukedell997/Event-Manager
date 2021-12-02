@@ -1,9 +1,11 @@
 from flask import Flask, render_template, redirect, url_for, request, flash, session
 from datetime import timedelta
+from databaseCode import DataB
 
 app = Flask(__name__)
 app.permanent_session_lifetime = timedelta(hours=5)
-
+db = DataB()
+cnx, cursor = db.openDatabase()
 app.secret_key = "hello"
 
 admin = False
@@ -47,7 +49,22 @@ def registerPage():  # put application's code here
         userState = request.form["state"]
         userEmail = request.form["email"]
         userNumber = request.form["phone"]
-            
+
+# *NEW USER TO DATABASE-------------------------------------------
+        #turn to string
+        cU = getInputString([userUsername, userPassword, userFirstName,
+                             userLastName, userEmail, userAddress,
+                             userZipcode, userCity, userState, userNumber])
+        #check if already exists: if not, create new
+        if (db.checkAny(cursor, "userId", "users", "username", str(userUsername)
+                        , "username", str(userUsername)) == False):
+            db.newUser(cnx, cursor, cU)
+            return redirect(url_for("loginPage"))
+        else:
+            print("ERROR: username already exists")
+            return render_template("registerPage.html")
+#END NEW USER------------------------------------------------------
+        
         if 'submit' in request.form:
             # PUSH THE DATA TO THE DATABASE!!!!!!!!!
             return redirect(url_for("login"))  # ????
@@ -68,7 +85,23 @@ def loginPage():  # put application's code here
         user = request.form["nm"]  # NEED TO CHECK THAT USER EXISTS
         password = request.form["pw"]
         session["user"] = "f"
-        return redirect(url_for("user"))
+#GET USER-------------------------------------------------------------
+        #: check if user found, then get user info into variables
+        if (db.checkAny(cursor, "userId", "users", "username", str(user),
+            "passwordId", str(password)) == True):
+            [uId, user, password, uFN, uLN, uEmail, uAd, uZip, uCity, uState, uPhone] = db.getUser(cursor, str(user), str(password))
+
+            #put user info into session...
+            session["userId"] = uId
+            #session["nm"] = user
+            return redirect(url_for("user")) 
+            
+        else:
+            print("Error: The username or password is incorrect")
+            return render_template("loginPage.html")
+            
+#END GET USER-----------------------------------------------
+        
     else:
         return render_template("loginPage.html")
 
@@ -91,7 +124,41 @@ def user():
         attendingEventsTitle = []  # FILL WITH USERES EVENTS
         attendingEventsDate = []  # FILL WITH 6 popular EVENTS
         attendingEventsDeadline = []  # FILL WITH 6 NEAR BY EVENTS
-        
+        attendingEventsId = []
+        attendingEventsUId = []
+        attendingEventsPrice = []
+        attendingEventsDesc = []
+        attendingEventsCap = []
+        attendingEventsOcp = []
+        attendingEventsAd = []
+        attendingEventsZip = []
+        attendingEventsState = []
+
+#GET ALL USER EVENTS------------------------------- NEEDS UPDATING
+        userId = session["userId"]
+        #get user_events by userId
+        userEvents = db.getUEventsByUser(cursor, str(userId))
+
+        #for all user_events, get the event
+        for tupleEvent in userEvents:
+            evInfo = db.getEventByEId(cursor, str(tupleEvent[2]))
+
+            #add each section to list
+            attendingEventsId.append(evInfo[0])
+            
+            attendingEventsTitle.append(evInfo[1]) 
+            attendingEventsDate.append(evInfo[2]) 
+            attendingEventsDeadline.append(evInfo[3])
+
+            attendingEventsPrice.append(evInfo[4])
+            attendingEventsDesc.append(evInfo[5])
+            attendingEventsCap.append(evInfo[6])
+            attendingEventsOcp.append(evInfo[7])
+            attendingEventsAd.append(evInfo[9])
+            attendingEventsZip.append(evInfo[10])
+            attendingEventsState.append(evInfo[11])
+            attendingEventsUId.append(evInfo[12])
+#GET ALL USER EVENTS----------------------------------------
 
         popEventTitle = []
         popEventDetails = []
