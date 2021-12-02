@@ -100,7 +100,7 @@ def user():
                                popEventDetails=popEventDetails, search=search)
 
     else:
-        return redirect(url_for("login"))  # ????
+        return redirect(url_for("loginPage"))  # ????
 
 
 # This is for a logout page that might be made
@@ -108,13 +108,7 @@ def user():
 def logout():
     session.pop("user", None)
     # flash("You have been logged out!", "info")
-    return redirect(url_for("login"))  # ????
-
-
-@app.route('/add_editEvents.html')
-@app.route('/add_editEvents')
-def add_editEvents():  # put application's code here
-    return render_template("add_editEvents.html")
+    return redirect(url_for("loginPage"))  # ????
 
 
 @app.route('/eventDetails.html', methods=["POST", "GET"])
