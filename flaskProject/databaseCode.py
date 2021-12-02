@@ -244,7 +244,7 @@ class DataB:
 
     #*******************************EVENTS***************************************
     #ADD EVENT
-    def addEvent(self, cnx, cursor, data, eventId):
+    def newEvent(self, cnx, cursor, data):
         try:
             eventClms = ''.join(("name, date, deadlineDate, price, desc, capacity,",
                                 "pub_pri, address, zipcode, state, userId"))
@@ -284,7 +284,15 @@ class DataB:
             for (idU) in cursor:
                 event = [idU]
             return event
-
+        
+        #GET EVENT BY EVENT ID
+    def getEventByEId(self, cursor, eId):
+        ur =''.join(("SELECT * FROM events WHERE eventId = '", eId, "'"))
+        cursor.execute(ur)
+        for (idU) in cursor:
+            event = idU
+        return event
+    
     #GET EVENTS BY STATE
     #(from outside: state)-> get events in state after 
     def getEventsByState(self, cursor, state):
@@ -411,9 +419,11 @@ class DataB:
 
 
 
+
 ##
 ##db = DataB() 
 ##cnx, cursor = db.openDatabase()
+##
 ##
 ##
 ###add new user
@@ -469,7 +479,5 @@ class DataB:
 ##cursor.close()
 ##cnx.close()
 ##
-
-
 
 
