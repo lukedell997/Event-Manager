@@ -1,3 +1,7 @@
+<<<<<<< Updated upstream
+=======
+<<<<<<< Updated upstream
+>>>>>>> Stashed changes
 <!DOCTYPE html>
 <html lang="en">
     <head>
@@ -311,3 +315,321 @@
         </script>
     </body>
 </html>
+<<<<<<< Updated upstream
+=======
+=======
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8" />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1" />
+
+        <!-- Bootstrap CSS -->   
+        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+
+        <!--Custom Styles-->
+        <link rel="stylesheet" type="text/css" href="{{ url_for('static',filename='css/styles.css')}}" /> 
+        
+        <!-- Google Fonts -->
+        <link rel="preconnect" href="https://fonts.googleapis.com">
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@200&display=swap" rel="stylesheet">
+
+        <link rel="shortcut icon" href="{{ url_for('static', filename='img/logo.png')}}" />
+        <title>My Events | Event Manager</title>
+    </head>
+
+    <body>
+        <div class="menu-bar">
+            <!-- NAVBAR -->
+            <nav class="navbar navbar-expand-md navbar-dark sticky-top">
+                <div class="container-fluid">
+                    <a class="navbar-brand" href="index.html"><img src="{{ url_for('static', filename='img/logo.png')}}" alt="Event Manager Logo"></a>
+                    <!--SEARCH BAR-->
+                    <form class="form-inline ml-4" action="search_browseEvents.html" method="GET">                                                                            <!--incoming search bar-->
+                        <input class="form control py-2 border-right-0 border" type="search" placeholder="Search for..." name="searchbar">
+                        <button class="btn btn-primary btn-outline-secondary border" type="submit">
+                            <i class="fa fa-search"></i>
+                        </button>
+                    </form>
+                    <!--HAMBURGER MENU/ NAV LINKS-->
+                    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav">
+                        <i class="fa fa-bars"></i>
+                    </button>
+                    <div class="collapse navbar-collapse" id="navbarNav">
+                        <ul class="navbar-nav ml-auto">
+                            <li class="nav-item">
+                                <a class="nav-link" href="search_browseEvents.html" style="border-right: 1px solid #FFF; padding-right: 20px; margin-right: 10px">Browse Events</a>
+                            </li>
+                            <!--user icon added after logging in-->
+                            <li class="nav-item">
+                                <div class="btn-group">
+                                    <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                        <img class="img-circle" src="{{ url_for('static', filename='img/logo.png')}}">
+                                    </button>
+                                    <div class="dropdown-menu dropdown-menu-right">
+                                        <a class="dropdown-item" href="index_userLoggedIn.html"><i class="fa fa-user fa-md"></i> My Account</a>
+                                        <a class="dropdown-item" href="create_editEvents.html"><i class="fa fa-calendar-plus-o fa-md"></i> Create An Event</a>
+                                        <a class="dropdown-item" href="manageEvents.html"><i class="fa fa-edit fa-md"></i> Edit Events</a>
+                                        <a class="dropdown-item" href="index.html"><i class="fa fa-sign-out fa-md"></i> Log Out</a>
+                                    </div>
+                                </div>    
+                            </li>
+                        </ul>
+                    </div>  <!--collapse-->
+                </div>  <!--container-->
+            </nav>
+        </div>  <!--menu-bar-->
+
+        <!-- CONTENTS -->
+        <div class="container"> 
+            <!--MANAGE AN EVENT-->         
+            <div class="row row-content">                      
+                <div class="col-md-6">
+                    <h2>Manage An Event</h2>
+                </div>  <!--col-->   
+
+                <!--SEARCH BAR-->
+                <div class="col-md-6">
+                    <div class="form"> 
+                        <i class="fa fa-search"></i><input type="text" class="form-control form-input" placeholder="Search Events">
+                    </div>
+                </div>  <!--col-->
+
+                <!--MY EVENTS-->
+                <div class="col-12">
+                    <ul class="nav nav-tabs">
+                        <li class="nav-item">
+                          <a class="nav-link active" aria-current="page" href="#yourEvents" data-toggle="tab">MY EVENTS</a>     
+                        </li>
+                        <li class="nav-item">
+                          <a class="nav-link" href="#attending" data-toggle="tab">ATTENDING</a>
+                        </li>
+                    </ul> 
+                    <div class="tab-content">
+                        <div class="tab-pane fade in show active" role="tabpanel" id="yourEvents">
+
+                            <!--My Events Generated with parent class "card"-->
+                            <div class="card">
+                                <div class="row">
+                                    <a href="eventDetails.html" class="stretched-link"></a>    
+                                    <div class="col-md-4">
+                                        <img src="{{ url_for('static', filename='img/concertEvent.jpg')}}" class="img-fluid">   <!--outgoing event image-->
+                                    </div>
+                                    <div class="col-md-8 pt-2">
+                                        <h3 class="card-title mt-3">Event #1</h3>                                               <!--outgoing event title-->
+                                        <p><span id='date-time'></span>                                                         <!--outgoing event date & time-->
+                                            <div class="row">
+                                                <div class="col-md-8 mr-5">
+                                                    <a class="edit-delete" href="editEvents.html">EDIT</a>               
+                                                    <span class="vertical-line"></span>
+                                                    <a class="edit-delete" href="manageEvents.html">DELETE</a>               
+                                                </div>
+                                                <div class="col">
+                                                    <div class="progress mt-2">
+                                                        <div class="progress-bar" role="progressbar" style="width: 75%" aria-valuenow="75" aria-valuemin="0" aria-valuemax="100">   <!--outgoing capacity-->
+                                                            75/100
+                                                        </div>
+                                                        <!--"w-75" is the indication capacity shown on the bar (just for visualizing)
+                                                            'aria-valuenow' is the capacity value-->
+                                                    </div>
+                                                </div>
+                                            </div>  
+                                        </p>                                                          
+                                    </div>  <!--col-->      
+                                </div> <!--row-->                 
+                            </div>  <!--card-->
+
+                            <div class="card mt-4">
+                                <div class="row">
+                                    <a href="eventDetails.html" class="stretched-link"></a>    
+                                    <div class="col-md-4">
+                                        <img src="{{ url_for('static', filename='img/festivalEvent.jpg')}}" class="img-fluid">      <!--outgoing event image-->
+                                    </div>
+                                    <div class="col-md-8 pt-2">
+                                        <h3 class="card-title mt-3">Event #2</h3>                                                   <!--outgoing event title-->
+                                        <p><span id='date-time'></span>                                                             <!--outgoing event date & time-->
+                                            <div class="row">
+                                                <div class="col-md-8 mr-5">
+                                                    <a class="edit-delete" href="editEvents.html">EDIT</a>
+                                                    <span class="vertical-line"></span>
+                                                    <a class="edit-delete" href="manageEvents.html">DELETE</a>
+                                                </div>
+                                                <div class="col">
+                                                    <div class="progress mt-2">
+                                                        <div class="progress-bar" style="width: 90%" role="progressbar" aria-valuenow="45" aria-valuemin="0" aria-valuemax="50">     <!--outgoing capacity-->
+                                                            45/50
+                                                        </div>
+                                                        <!--"w-75" is the indication capacity shown on the bar (just for visualizing)
+                                                            'aria-valuenow' is the capacity value-->
+                                                    </div>
+                                                </div>
+                                            </div>  
+                                        </p>                                                          
+                                    </div>  <!--col-->      
+                                </div> <!--row-->                 
+                            </div>  <!--card-->
+
+                            <div class="card mt-4">
+                                <div class="row">
+                                    <a href="eventDetails.html" class="stretched-link"></a>    
+                                    <div class="col-md-4">
+                                        <img src="{{ url_for('static', filename='img/conferenceEvent.jpg')}}" class="img-fluid">    <!--outgoing event image-->
+                                    </div>
+                                    <div class="col-md-8 pt-2">
+                                        <h3 class="card-title mt-3">Event #3</h3>                                                   <!--outgoing event title-->
+                                        <p><span id='date-time'></span>                                                             <!--outgoing event date & time-->
+                                            <div class="row">
+                                                <div class="col-md-8 mr-5">
+                                                    <a class="edit-delete" href="editEvents.html">EDIT</a>
+                                                    <span class="vertical-line"></span>
+                                                    <a class="edit-delete" href="manageEvents.html">DELETE</a>
+                                                </div>
+                                                <div class="col">
+                                                    <div class="progress mt-2">
+                                                        <div class="progress-bar" role="progressbar" style="width: 100%" aria-valuenow="10" aria-valuemin="0" aria-valuemax="10">    <!--outgoing capacity-->
+                                                            10/10
+                                                        </div>
+                                                        <!--"w-75" is the indication capacity shown on the bar (just for visualizing)
+                                                            'aria-valuenow' is the capacity value-->
+                                                    </div>  <!--progress-->
+                                                </div>  <!--col-->
+                                            </div>  <!--row-->
+                                        </p>                                                          
+                                    </div>  <!--col-->      
+                                </div> <!--row-->                 
+                            </div>  <!--card-->
+                        </div>  <!--tab-pane-->
+
+                        <div class="tab-pane fade" role="tabpanel" id="attending">
+                            <div class="card">
+                                <div class="row">
+                                    <a href="eventDetails.html" class="stretched-link"></a>    
+                                    <div class="col-md-4">
+                                        <img src="{{ url_for('static', filename='img/movieEvents.jpg')}}" class="img-fluid">        <!--outgoing event image-->
+                                    </div>
+                                    <div class="col-md-8 pt-2">
+                                        <h3 class="card-title mt-3">Movie Event</h3>                                                <!--outgoing event title-->
+                                        <p><span id='date-time'></span>                                                             <!--outgoing event date & time-->
+                                            <div class="row">
+                                                <div class="col-md-8 mr-5">
+                                                    <a class="edit-delete" href="manageEvents.html">
+                                                        <button type="button" class="btn btn-danger">CANCEL EVENT</button>
+                                                    </a> 
+                                                </div>
+                                                <div class="col">
+                                                    <div class="progress mt-2">
+                                                        <div class="progress-bar" role="progressbar" style="width: 75%" aria-valuenow="75" aria-valuemin="0" aria-valuemax="100">   <!--outgoing capacity-->
+                                                            75/100
+                                                        </div>
+                                                        <!--"w-75" is the indication capacity shown on the bar (just for visualizing)
+                                                            'aria-valuenow' is the capacity value-->
+                                                    </div>
+                                                </div>
+                                            </div>  
+                                        </p>                                                          
+                                    </div>  <!--col-->      
+                                </div> <!--row-->                 
+                            </div>  <!--card-->
+
+                            <div class="card mt-4">
+                                <div class="row">
+                                    <a href="eventDetails.html" class="stretched-link"></a>    
+                                    <div class="col-md-4">
+                                        <img src="{{ url_for('static', filename='img/dinnerEvent.jpg')}}" class="img-fluid">        <!--outgoing event image-->
+                                    </div>
+                                    <div class="col-md-8 pt-2">
+                                        <h3 class="card-title mt-3">Dinner Event</h3>                                               <!--outgoing event title-->
+                                        <p><span id='date-time'></span>                                                             <!--outgoing event date & time-->
+                                            <div class="row">
+                                                <div class="col-md-8 mr-5">
+                                                    <a class="edit-delete" href="manageEvents.html">
+                                                        <button type="button" class="btn btn-danger">CANCEL EVENT</button>
+                                                    </a> 
+                                                </div>
+                                                <div class="col">
+                                                    <div class="progress mt-2">
+                                                        <div class="progress-bar" style="width: 90%" role="progressbar" aria-valuenow="45" aria-valuemin="0" aria-valuemax="50">    <!--outgoing capacity-->
+                                                            45/50
+                                                        </div>
+                                                        <!--"w-75" is the indication capacity shown on the bar (just for visualizing)
+                                                            'aria-valuenow' is the capacity value-->
+                                                    </div>  <!--progress-->
+                                                </div>  <!--col-->
+                                            </div>  <!--row--> 
+                                        </p>                                                          
+                                    </div>  <!--col-->      
+                                </div> <!--row-->                 
+                            </div>  <!--card-->
+                        </div>  <!--tab-pane-->
+                    </div>  <!--tab-content-->
+                </div>  <!--col-->
+            </div>  <!--row-->
+
+            <!-- ADD AN EVENT -->
+            <div class="row row-content">
+                <div class="col-md-12">
+                    <h2>Add An Event</h2>
+                </div>  <!--col-->
+                <div class="col">
+                    <a href="create_editEvents.html" class="stretched-link"></a>
+                    <div class="card align-items-center pt-5 pb-5">
+                        <button class="plus-button plus-button--large">+</button>               
+                    </div>  <!--card-->
+                </div>
+            </div>  <!--row-->
+        </div>  <!--container-->
+       
+        <!-- FOOTER -->
+        <footer class="site-footer">    
+            <div class="container-fluid"> 
+                <div class="row">   
+                    <div class="col">
+                        <div class="media">
+                            <img src="{{ url_for('static', filename='img/logo.png')}}" alt="Event Manager Logo">
+                            <div class="media-body align-self-center">
+                                <p>&copy; <script>document.write(new Date().getFullYear())</script> | Event Manager</p>
+                            </div>  <!--media-body-->
+                        </div>  <!--media-->
+                    </div>  <!--col-->
+                    <!-- SOCIAL LINKS -->
+                    <div class="col text-center">
+                        <a class="btn btn-instagram btn-lg" href="http://instagram.com/"> 
+                            <i class="fa fa-instagram fa-md"></i> 
+                        </a>
+                        <a class="btn btn-facebook btn-lg" href="http://facebook.com/"> 
+                            <i class="fa fa-facebook fa-md"></i>
+                        </a>
+                        <a class="btn btn-twitter btn-lg" href="http://twitter.com/">
+                            <i class="fa fa-twitter fa-md"></i>
+                        </a>
+                        <a class="btn btn-youtube btn-lg" href="http://youtube.com/">
+                            <i class="fa fa-youtube fa-md"></i>
+                        </a>
+                    </div>  <!--col-->
+                    <div class="col text-right">
+                        <a class="btn btn-floating" href="#">
+                            <i class="fa fa-arrow-circle-up"></i> Back to top
+                        </a>
+                    </div>  <!--col-->
+                </div> <!--row-->
+            </div>  <!--container-->
+        </footer>
+
+        <!-- JavaScript Bundle for Bootstrap-->
+        <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
+        <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+
+        <!-- Custom Scripts-->
+        <script>    // Current date format template
+            var dt = new Date();
+            document.getElementById("date-time").innerHTML = (dt.toLocaleString('en-US', { weekday: 'short', month: 'long', day:'2-digit', year: 'numeric', hour: 'numeric', minute: 'numeric', hour12: true })
+            );
+        </script>
+    </body>
+</html>
+>>>>>>> Stashed changes
+>>>>>>> Stashed changes
