@@ -67,7 +67,7 @@ def loginPage():  # put application's code here
         session.permanent = True
         user = request.form["nm"]  # NEED TO CHECK THAT USER EXISTS
         password = request.form["pw"]
-        session["user"] = "f"
+        session["user"] = user
         return redirect(url_for("user"))
     else:
         return render_template("loginPage.html")
