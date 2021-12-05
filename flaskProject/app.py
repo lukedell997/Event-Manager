@@ -1,12 +1,14 @@
 from flask import Flask, render_template, redirect, url_for, request, flash, session
 from datetime import timedelta
+from databaseCode import DataB
 
 app = Flask(__name__)
 app.permanent_session_lifetime = timedelta(hours=5)
 
 app.secret_key = "hello"
 
-admin = False
+db = DataB()
+cnx, cursor = db.openDatabase()
 
 def getInputString(ItemList):
     try:
