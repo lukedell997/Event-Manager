@@ -50,8 +50,8 @@
                                         <img class="img-circle" src="{{ url_for('static', filename='img/logo.png')}}">
                                     </button>
                                     <div class="dropdown-menu dropdown-menu-right">
-                                        <a class="dropdown-item" href="index_userLoggedIn.html"><i class="fa fa-user fa-md"></i> My Account</a>
-                                        <a class="dropdown-item" href="create_editEvents.html"><i class="fa fa-calendar-plus-o fa-md"></i> Create An Event</a>
+                                        <a class="dropdown-item" href="updatePersonalInfo.html"><i class="fa fa-user fa-md"></i> My Account</a>
+                                        <a class="dropdown-item" href="createEvent.html"><i class="fa fa-calendar-plus-o fa-md"></i> Create An Event</a>
                                         <a class="dropdown-item" href="manageEvents.html"><i class="fa fa-edit fa-md"></i> Edit Events</a>
                                         <a class="dropdown-item" href="index.html"><i class="fa fa-sign-out fa-md"></i> Log Out</a>
                                     </div>
@@ -103,9 +103,7 @@
                                         <p><span id='date-time'></span>                                                         <!--outgoing event date & time-->
                                             <div class="row">
                                                 <div class="col-md-8 mr-5">
-                                                    <a class="edit-delete" href="create_editEvents.html">EDIT</a>               
-                                                    <span class="vertical-line"></span>
-                                                    <a class="edit-delete" href="manageEvents.html" name="deleteEvent">DELETE</a>                  <!--incoming delete event-->
+                                                    <a class="edit-delete" href="editEvent.html">EDIT</a>               
                                                 </div>
                                                 <div class="col">
                                                     <div class="progress mt-2">
@@ -133,9 +131,7 @@
                                         <p><span id='date-time'></span>                                                             <!--outgoing event date & time-->
                                             <div class="row">
                                                 <div class="col-md-8 mr-5">
-                                                    <a class="edit-delete" href="create_editEvents.html">EDIT</a>
-                                                    <span class="vertical-line"></span>
-                                                    <a class="edit-delete" href="manageEvents.html" name="deleteEvent">DELETE</a>                      <!--incoming delete event-->
+                                                    <a class="edit-delete" href="editEvent.html">EDIT</a>               
                                                 </div>
                                                 <div class="col">
                                                     <div class="progress mt-2">
@@ -163,9 +159,7 @@
                                         <p><span id='date-time'></span>                                                             <!--outgoing event date & time-->
                                             <div class="row">
                                                 <div class="col-md-8 mr-5">
-                                                    <a class="edit-delete" href="create_editEvents.html">EDIT</a>
-                                                    <span class="vertical-line"></span>
-                                                    <a class="edit-delete" href="manageEvents.html" name="deleteEvent">DELETE</a>                      <!--incoming delete event-->
+                                                    <a class="edit-delete" href="editEvent.html">EDIT</a>               
                                                 </div>
                                                 <div class="col">
                                                     <div class="progress mt-2">
@@ -254,7 +248,7 @@
                     <h2>Add An Event</h2>
                 </div>  <!--col-->
                 <div class="col">
-                    <a href="create_editEvents.html" class="stretched-link"></a>
+                    <a href="createEvent.html" class="stretched-link"></a>
                     <div class="card align-items-center pt-5 pb-5">
                         <button class="plus-button plus-button--large">+</button>               
                     </div>  <!--card-->
