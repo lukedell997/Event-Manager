@@ -87,7 +87,7 @@ class DataB:
         return selectRng
 
 #==================== END BASIC STATEMENTS =================================
-    #*****************************USER_EVENTS*****************************************
+#*****************************USER_EVENTS*****************************************
     # CREATE USER EVENTS
     def newUEvents(self, cnx, cursor, data):
         try:
@@ -149,7 +149,7 @@ class DataB:
             eventUsers.append([idU])
         return eventUsers
 
-    #***************************USER PAYMENT************************************
+#***************************USER PAYMENT************************************
     # CREATE USER PAYMENT
     def newUPay(self, cnx, cursor, data):
         try:
@@ -196,7 +196,7 @@ class DataB:
         
 
 
-    #****************************USER*******************************************
+#****************************USER*******************************************
 
     # CREATE NEW USER
     def newUser(self, cnx, cursor, data):
@@ -244,7 +244,7 @@ class DataB:
         return user
 
 
-    #*******************************EVENTS***************************************
+#*******************************EVENTS***************************************
     #ADD EVENT
     def newEvent(self, cnx, cursor, data):
         try:
@@ -312,7 +312,7 @@ class DataB:
             return -99
 
     #GET EVENT
-    def getEventByUser(self, cursor, userId):
+    def getEventsByUser(self, cursor, userId):
         ur =''.join(("SELECT * FROM events WHERE userId = '", userId, "'"))
         cursor.execute(ur)
         event = []
@@ -320,8 +320,8 @@ class DataB:
             event.append(idU)
         return event
         
-        #GET EVENT BY EVENT ID
-    def getEventByEId(self, cursor, eId):
+    #GET EVENT BY EVENT ID
+    def getEventsByEId(self, cursor, eId):
         ur =''.join(("SELECT * FROM events WHERE eventId = '", eId, "'"))
         cursor.execute(ur)
         for (idU) in cursor:
@@ -330,12 +330,23 @@ class DataB:
     
     #GET EVENTS BY STATE
     #(from outside: state)-> get events in state after 
-    def getEventsByState(self, cursor, state):
+    def getEventsByLoc(self, cursor, state):
         events = []
         st = ''.join(("SELECT * FROM events WHERE state = '",state,
-                      "' AND date >= '", str(datetime.date.today()), "'"))
+                      "' AND deadlineDate >= '", str(datetime.date.today()),"'"))
+         
 
         cursor.execute(st)
+
+        for(event) in cursor:
+            events.append(event)
+        return events
+    
+    def getEventsByPop(self, cursor):
+        events = []
+        po = ''.join(("SELECT * FROM events WHERE deadlineDate >= '",str(datetime.date.today()),
+                      "' ORDER BY (capacity - occupants) "))
+        cursor.execute(po)
 
         for(event) in cursor:
             events.append(event)
@@ -354,7 +365,7 @@ class DataB:
         return events
 
 
-    #*****************************EVENT_TAGS*****************************************
+#*****************************EVENT_TAGS*****************************************
     # CREATE EVENT TAGS
     def newEventTag(self, cnx, cursor, data):
         try:
@@ -377,18 +388,18 @@ class DataB:
 
 
     #GET EVENT TAGS BY EVENT
-    def getEventByEvent(self, cursor, eventId, name):
-        ur =''.join(("SELECT * FROM event_tags WHERE eventId = '",eventId))
+    def getEventTagByEvent(self, cursor, eventId):
+        ur =''.join(("SELECT * FROM event_tags WHERE eventId = '",eventId, "'"))
         cursor.execute(ur)
         for (idU) in cursor:
             tags = [idU]
         return tags
 
-    def getEventByTag(self, cursor, tagId, name):
-        ur =''.join(("SELECT * FROM event_tags WHERE tagId = '",tagId))
+    def getEventTagByTagId(self, cursor, tagId):
+        ur =''.join(("SELECT * FROM event_tags WHERE tagId = '",tagId, "'"))
         cursor.execute(ur)
         for (idU) in cursor:
-            events = [idU]
+            events = idU
         return events
     #*****************************EVENT_SEATING*****************************************
     # CREATE EVENT SEATING
@@ -467,9 +478,13 @@ class DataB:
 
 
 ##
-#db = DataB() 
-#cnx, cursor = db.openDatabase()
+db = DataB() 
+cnx, cursor = db.openDatabase()
 
+tagEvents = db.getEventTagByTagId(cursor, str(7))
+evInfo = db.getEventsByEId(cursor, str(tagEvents[1]))
+print(evInfo)
+#print(db.getEventsByPop(cursor))
 #adminEventsId = []
 #adminEventsTitle = []
 #adminEventsSDate = []

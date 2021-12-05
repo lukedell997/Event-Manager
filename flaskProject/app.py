@@ -13,25 +13,58 @@ admin = False
 @app.route('/', methods=["POST", "GET"])
 @app.route('/index.html', methods=["POST", "GET"])
 def index():  # put application's code here
-    if 'user' in session:
-        popEventsTitle = []
-        popEventsDetails = []
-        popEventsButton = []
+    popEventsTitle = []
+    popEventsDetails = []
+    popEventsButton = []
 
-        nearEventsTitle = []
-        nearEventsDetails = []
-        nearEventsButton = []
-        # FILL LISTS WITH DATA OF EVENTS FROM DATABASE
-        search = None
-        if request.method == "POST":
-            search = request.form["searchbar"]
-            # DO A SEARCH IDK HOW YET
+    nearEventsTitle = []
+    nearEventsDetails = []
+    nearEventsButton = []
+#GET ALL POPULAR EVENTS----------------------------------------------
+    popEventsId = []
+    popEventsTitle = []
+    popEventsSDate = []
+    popEventsEDate = []
+    popEventsDetails = []
+    popEventsState = []
 
-        return render_template("index.html", popEventsTitle=popEventsTitle, popEventsDetails=popEventsDetails,
-                               popEventsButton=popEventsButton, nearEventsTitle=nearEventsTitle,
-                               nearEventsDetails=nearEventsDetails, nearEventsButton=nearEventsButton, search=search)
-    else:
-        redirect(url_for('user'))
+    popEvents = db.getEventsByPop(cursor)
+    for tupleEvent3 in popEvents:
+        popEventsId.append(tupleEvent3[0])
+        popEventsTitle.append(tupleEvent3[1])
+        popEventsSDate.append(tupleEvent3[2])
+        popEventsEDate.append(tupleEvent3[3])
+        popEventsDetails.append(tupleEvent3[6])
+        popEventsState.append(tupleEvent3[12])
+        
+    
+#END ALL POPULAR EVENTS----------------------------------------------
+#GET ALL LOCATION EVENTS----------------------------------------------
+    locEventsId = []
+    locEventsTitle = []
+    locEventsSDate = []
+    locEventsEDate = []
+    locEventsDetails = []
+    locEventsState = []
+
+    locEvents = db.getEventsByLoc(cursor, str("IL"))
+    for tEvent in locEvents:
+        locEventsId.append(tEvent[0])
+        locEventsTitle.append(tEvent[1])
+        locEventsSDate.append(tEvent[2])
+        locEventsEDate.append(tEvent[3])
+        locEventsDetails.append(tEvent[6])
+        locEventsState.append(tEvent[12])
+        
+#END ALL LOCATION EVENTS----------------------------------------------
+    search = None
+    if request.method == "POST":
+        search = request.form["searchbar"]
+        # DO A SEARCH IDK HOW YET
+
+    return render_template("index.html", popEventsTitle=popEventsTitle, popEventsDetails=popEventsDetails,
+                           popEventsButton=popEventsButton, nearEventsTitle=nearEventsTitle,
+                           nearEventsDetails=nearEventsDetails, nearEventsButton=nearEventsButton, search=search)
 
 
 @app.route('/registerPage.html', methods=["POST", "GET"])
@@ -47,12 +80,29 @@ def registerPage():  # put application's code here
         userPassword = request.form["pw"]
         userAddress = request.form["address"]
         userCity = request.form["city"]
-        userState = request.form.get("state")
+        userState = request.form["state"]
         userEmail = request.form["email"]
         userNumber = request.form["phone"]
 
-        # PUSH THE DATA TO THE DATABASE!!!!!!!!!
-        return redirect(url_for("loginPage"))  # ????
+# ^NEW USER TO DATABASE^-------------------------------------------^
+        #turn to string
+        cU = getInputString([userUsername, userPassword, userFirstName,
+                             userLastName, userEmail, userAddress,
+                             userZipcode, userCity, userState, userNumber])
+        #check if already exists: if not, create new
+        if (db.checkAny(cursor, "userId", "users", "username", str(userUsername)
+                        , "username", str(userUsername)) == False):
+            #print(test)
+            db.newUser(cnx, cursor, cU)
+            return redirect(url_for("loginPage"))
+        else:
+            print("ERROR: username already exists")
+            return render_template("registerPage.html")
+#^END NEW USER^------------------------------------------------------^
+        
+        if 'submit' in request.form:
+            # PUSH THE DATA TO THE DATABASE!!!!!!!!!
+            return redirect(url_for("loginPage"))  # ????
     else:
         return render_template("registerPage.html")
 
@@ -70,7 +120,27 @@ def loginPage():  # put application's code here
         user = request.form["nm"]  # NEED TO CHECK THAT USER EXISTS
         password = request.form["pw"]
         session["user"] = user
-        return redirect(url_for("user"))
+#^GET USER^-------------------------------------------------------------^
+        #: check if user found, then get user info into variables
+        if (db.checkAny(cursor, "userId", "users", "username", str(user),
+            "passwordId", str(password)) == True):
+            
+            [uId, user, password, uFN, uLN, uEmail,
+             uAd, uZip, uCity, uState,
+             uPhone] = db.getUser(cursor, str(user), str(password))
+            
+            #put user info into session...
+            session["userId"] = uId
+            session["userEmail"] = uEmail
+            session["userState"] = uState
+            #session["nm"] = user
+            return redirect(url_for("user")) 
+            
+        else:
+            print("Error: The username or password is incorrect")
+            return render_template("loginPage.html")
+            
+#^END GET USER^-----------------------------------------------^
     else:
         return render_template("loginPage.html")
 
@@ -86,17 +156,82 @@ def user():
 
         user = session["user"]
 
-        myEventImage = []  # FILL THESE
-        myEventTitle = []
-        myEventDetails = []
-
+#GET ALL USER EVENTS ATTENDING------------------------------- NEEDS UPDATING
+        attendingEventsId = []
         attendingEventsTitle = []  # FILL WITH USERES EVENTS
-        attendingEventsDate = []  # FILL WITH 6 popular EVENTS
-        attendingEventsDeadline = []  # FILL WITH 6 NEAR BY EVENTS
+        attendingEventsSDate = []  # FILL WITH 6 popular EVENTS
+        attendingEventsEDate = []  # FILL WITH 6 NEAR BY EVENTS
+        attendingEventsState = []
         
-        popEventImage = []
-        popEventTitle = []
-        popEventDetails = []
+        
+        #get user_events by userId
+        userEvents = db.getUEventsByUser(cursor, str(userId))
+
+        #for all user_events, get the event
+        for tupleEvent in userEvents:
+            evInfo = db.getEventsByEId(cursor, str(tupleEvent[2]))
+
+            #add each section to list
+            attendingEventsId.append(evInfo[0])
+            attendingEventsTitle.append(evInfo[1])
+            attendingEventsSDate.append(evInfo[2]) 
+            attendingEventsEDate.append(evInfo[3])
+            attendingEventsState.append(evInfo[12])
+
+
+#END ALL USER EVENTS ATTENDING----------------------------------------    
+#GET ALL USER EVENTS ADMINISTRATING----------------------------------
+        adminEventsId = []
+        adminEventsTitle = []
+        adminEventsSDate = []
+        adminEventsEDate = []
+        
+        adminEvents = db.getEventsByUser(cursor, str(userId))
+        for tupleEvent2 in adminEvents:
+            adminEventsId.append(tupleEvent[0])
+            adminEventsTitle.append(tupleEvent2[1])
+            adminEventsSDate.append(tupleEvent2[2])
+            adminEventsEDate.append(tupleEvent2[3])
+            adminEventsState.append(tupleEvent2[12])
+            
+#END ALL USER EVENTS ADMINISTRATING----------------------------------
+#GET ALL POPULAR EVENTS----------------------------------------------
+        popEventsId = []
+        popEventsTitle = []
+        popEventsSDate = []
+        popEventsEDate = []
+        popEventsDetails = []
+        popEventsState = []
+
+        popEvents = db.getEventsByPop(cursor)
+        for tupleEvent3 in popEvents:
+            popEventsId.append(tupleEvent3[0])
+            popEventsTitle.append(tupleEvent3[1])
+            popEventsSDate.append(tupleEvent3[2])
+            popEventsEDate.append(tupleEvent3[3])
+            popEventsDetails.append(tupleEvent3[6])
+            popEventsState.append(tupleEvent3[12])
+            
+        
+#END ALL POPULAR EVENTS----------------------------------------------
+#GET ALL LOCATION EVENTS----------------------------------------------
+        locEventsId = []
+        locEventsTitle = []
+        locEventsSDate = []
+        locEventsEDate = []
+        locEventsDetails = []
+        locEventsState = []
+
+        locEvents = db.getEventsByLoc(cursor, str(userLoc))
+        for tEvent in locEvents:
+            locEventsId.append(tEvent[0])
+            locEventsTitle.append(tEvent[1])
+            locEventsSDate.append(tEvent[2])
+            locEventsEDate.append(tEvent[3])
+            locEventsDetails.append(tEvent[6])
+            locEventsState.append(tEvent[12])
+#END ALL LOCATION EVENTS----------------------------------------------
+
         if request.method == "POST":
             if "clicked" in request.form:
                 eventID = request.form["eventID"]
@@ -126,19 +261,58 @@ def logout():
 @app.route('/eventDetails.html', methods=["POST", "GET"])
 @app.route('/eventDetails', methods=["POST", "GET"])
 def eventDetails(eventId):  # put application's code here
-    # NEED TO PULL ALL THE VARIABLES THAT ARE BEING PASSED FROM THE DATABASE
-    eventDate = []
-    eventTitle = []
-    eventPrice = []
-    eventDescription = []
-    eventAddress = []
-    eventTags = []
-    eventImage = []
+
+#GET ALL EVENT INFO------------------------------------------------------------
+    #check if event found by eventId
+    if (db.checkAny(cursor, "eventId", "events", "eventId", str(eventId),
+            "eventId", str(eventId)) == True):
+        #get all variables in event
+            [eventId, eventName, eventStartDate, eventEndDate, eventDeadline, eventPrice, eventDescription,
+             eventCap, eventOcp, eventPoP, eventAddress,
+             eventCity, eventState, eventZip] = db.getEventByEId(cursor, eventId)
+    else:
+        #otherwise send back to search
+        return redirect(url_for('search_browseEvents'))
+    
+
+#END ALL EVENT INFO------------------------------------------------------------
 
     if "attend" in request.form and request.method == "POST":
         if "user" in session:
+
+            #get all info you need
+            userId = session["userId"]
             user = session["user"]
-            # ADD USER TO THE DATABASE LIST OF USERS ATTENDING THE EVENT
+            paid = 1
+            seat = O0
+            price = eventPrice
+            #if free, user has paid
+            if (price != 0):
+                paid = 0
+# ADD USER FROM ATTENDING EVENT--------------------------
+            
+            #turn to string
+            cUE = getInputString([userId, eventId, user, email, paid, seat, price])
+
+            #check if not already exists: AND if not full
+            if (db.checkAny(cursor, "attendantId", "user_events", "userId",
+                            str(userId), "eventId", str(eventId)) == False
+                and db.checkAvl(cursor, str(eventId)) == True):
+
+                #create new user events
+                db.newUEvents(cnx, cursor, cUE)
+                
+                #add occupant to event
+                db.updateEventOcp(cnx, cursor, eventId, eventOcp)
+                
+                return redirect(url_for("manageEvents"))
+            else:
+                #give error(filled or user already signed up)
+                print("ERROR: event filled or already signed up")
+                return render_template("eventDetails.html", eventDate=eventDate, eventTitle=eventTitle,
+                                       eventPrice=eventPrice, eventDescription=eventDescription,
+                                       eventAddress=eventAddress, eventTags=eventTags)
+# END ADD USER FROM ATTENDING EVENT--------------------------
             return redirect(url_for("user"))
         else:
             return redirect(url_for("loginPage"))
@@ -160,7 +334,25 @@ def manageEvents():  # put application's code here
 
         if 'leaveEvent' in request.form and request.method == "POST":
             user = session["user"]
-            # REMOVE THE USER FROM THE EVENT IN DATABASE
+            userId = session["userId"]
+# REMOVE USER FROM ATTENDING EVENT------------------------------------
+            #if user found with event
+            if (db.checkAny(cursor, "attendantId", "user_events", "userId",
+                            str(userId), "eventId", str(eventId)) == True):
+
+                #remove user from event attendance
+                db.removeUEvents(cnx, cursor, userId, eventId)
+                #update events occupants
+                db.removeEventOcp(cnx, cursor, eventId)
+                
+                return redirect(url_for("manageEvents"))
+            else:
+                print("Attendant Not found for event")
+                return render_template("manageEvents.html", usersEvents=usersEvents, userEventsDates=userEventsDates,
+                               userEventsTime=userEventsTime, userAttendingEvents=userAttendingEvents,
+                               eventsMaxPop=eventsMaxPop)
+            
+#END REMOVE USER FROM ATTENDING EVENT------------------------------------
         return render_template("manageEvents.html", usersEvents=usersEvents, userEventsDates=userEventsDates,
                                userEventsTime=userEventsTime, userAttendingEvents=userAttendingEvents,
                                eventsMaxPop=eventsMaxPop)
@@ -180,6 +372,29 @@ def search_browseEvents():  # put application's code here
     eventImage = []
     #eventPopulation = []
     #eventMaxPop = []
+#SEARCH BY EVENT TAGS------------------------------#needs an indication
+    tagName = "7"       #needs input from html
+    tagEventsId = []
+    tagEventsTitle = []  
+    tagEventsSDate = []  
+    tagEventsEDate = [] 
+    tagEventsState = []
+    
+    
+    #get user_events by userId
+    tagEvents = db.getEventTagByTagId(cursor, str(tagName))
+
+    #for all user_events, get the event
+    for tgEvent in userEvents:
+        evInfo = db.getEventsByEId(cursor, str(tgEvent[1]))
+
+        #add each section to list
+        tagEventsId.append(evInfo[0])
+        tagEventsTitle.append(evInfo[1])
+        tagEventsSDate.append(evInfo[2]) 
+        tagEventsEDate.append(evInfo[3])
+        tagEventsState.append(evInfo[12])
+#END SEARCH BY EVENT TAGS-------------------------
     if request.method == "POST":
         search = request.form["searchbar"]
         # DO A SEARCH
@@ -206,7 +421,8 @@ def editEvent():
     eventDes = []
     userToAdd = []
     userToDelete = []
-    # GET FROM DATABASE!!!!!!!!!
+# GET EVENT-----------------------------------------
+# END GET EVENT-----------------------------------------
 
     if request.method == "POST":
         if 'searchbar' in request.form:
@@ -227,7 +443,8 @@ def editEvent():
             eventDes = request.form["description"]
             userToAdd = request.form["addUser"]
             userToDelete = request.form["deleteUser"]
-            # PUSH TO DATABASE
+# UPDATE EVENT---------------------------------------------------
+# END UPDATE EVENT---------------------------------------------------
     else:
         return render_template("editEvent.html", eventTitle=eventTitle, eventAddress=eventAddress, eventCity=eventCity,
                                eventState=eventState, eventZip=eventZip, eventStartDate=eventStartDate, eventEndDate=
@@ -254,7 +471,20 @@ def createEvent():
             eventDes = request.form["description"]
             userToAdd = request.form["addUser"]
             userToDelete = request.form["deleteUser"]
-            # PUSH TO DATABASE
+#NEW EVENT--------------------------------------------------------------
+            #turn to string
+            cE = getInputString([eventTitle, eventStartDate, eventEndDate, eventDeadline, eventPrice, eventDes, eventCap,
+                                 eventOcp, eventPoP, eventAddress, eventCity, eventState, eventZip, userId])
+            #check if already exists: if not, create new
+            if (db.checkAny(cursor, "eventId", "events", "name", str(eventTitle)
+                            , "userId", str(userId)) == False):
+                #print(test)
+                db.newEvent(cnx, cursor, cE)
+                return redirect(url_for("manageEvents"))
+            else:
+                print("ERROR: event already created by you")
+                return render_template("create_editEvents.html", userInfo=userInfo)
+#END NEW EVENT--------------------------------------------------------------
             return redirect(url_for("user"))
         else:
             return render_template("createEvent.html")
@@ -265,6 +495,8 @@ def createEvent():
 @app.route('/updatePersonalInfo', methods=["POST", "GET"])
 def updatePersonalInfo():
     if 'user' in session:
+#GET USER---------------------------------------
+#END GET USER---------------------------------------
         if request.method == "POST":
             firstName = request.form["firstName"]
             lastName = request.form["lastName"]
@@ -275,7 +507,8 @@ def updatePersonalInfo():
             state = request.form["state"]
             email = request.form["email"]
             phone = request.form["phone"]
-            # PUSH TO DATABASE!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+# UPDATE USER----------------------------------------------
+#END UPDATE USER-------------------------------------------
             return redirect(url_for("user"))
         else:
             firstName = []

@@ -45,9 +45,41 @@ def index():  # put application's code here
     nearEventsDetails = []
     nearEventsButton = []
 #GET ALL POPULAR EVENTS----------------------------------------------
-#END ALL POPULAR EVENTS----------------------------------------------
+    popEventsId = []
+    popEventsTitle = []
+    popEventsSDate = []
+    popEventsEDate = []
+    popEventsDetails = []
+    popEventsState = []
 
+    popEvents = db.getEventsByPop(cursor)
+    for tupleEvent3 in popEvents:
+        popEventsId.append(tupleEvent3[0])
+        popEventsTitle.append(tupleEvent3[1])
+        popEventsSDate.append(tupleEvent3[2])
+        popEventsEDate.append(tupleEvent3[3])
+        popEventsDetails.append(tupleEvent3[6])
+        popEventsState.append(tupleEvent3[12])
+        
+    
+#END ALL POPULAR EVENTS----------------------------------------------
 #GET ALL LOCATION EVENTS----------------------------------------------
+    locEventsId = []
+    locEventsTitle = []
+    locEventsSDate = []
+    locEventsEDate = []
+    locEventsDetails = []
+    locEventsState = []
+
+    locEvents = db.getEventsByLoc(cursor, str("IL"))
+    for tEvent in locEvents:
+        locEventsId.append(tEvent[0])
+        locEventsTitle.append(tEvent[1])
+        locEventsSDate.append(tEvent[2])
+        locEventsEDate.append(tEvent[3])
+        locEventsDetails.append(tEvent[6])
+        locEventsState.append(tEvent[12])
+        
 #END ALL LOCATION EVENTS----------------------------------------------
     search = None
     if request.method == "POST":
@@ -123,6 +155,8 @@ def loginPage():  # put application's code here
             
             #put user info into session...
             session["userId"] = uId
+            session["userEmail"] = uEmail
+            session["userState"] = uState
             #session["nm"] = user
             return redirect(url_for("user")) 
             
@@ -146,80 +180,95 @@ def user():
             # DO A SEARCH IDK HOW YET
 
         user = session["user"]
+        userId = session["userId"]
+        userLoc = session["userState"]
+    
 
-        myEventImage = []  # FILL THESE
-        myEventTitle = ""
-        myEventDetails = ""
-
-        attendingEventsTitle = []  # FILL WITH USERES EVENTS
-        attendingEventsDate = []  # FILL WITH 6 popular EVENTS
-        attendingEventsDeadline = []  # FILL WITH 6 NEAR BY EVENTS
-        attendingEventsId = []
-        attendingEventsUId = []
-        attendingEventsPrice = []
-        attendingEventsDesc = []
-        attendingEventsCap = []
-        attendingEventsOcp = []
-        attendingEventsAd = []
-        attendingEventsZip = []
-        attendingEventsState = []
 
 #GET ALL USER EVENTS ATTENDING------------------------------- NEEDS UPDATING
-        userId = session["userId"]
+        attendingEventsId = []
+        attendingEventsTitle = []  # FILL WITH USERES EVENTS
+        attendingEventsSDate = []  # FILL WITH 6 popular EVENTS
+        attendingEventsEDate = []  # FILL WITH 6 NEAR BY EVENTS
+        attendingEventsState = []
+        
+        
         #get user_events by userId
         userEvents = db.getUEventsByUser(cursor, str(userId))
 
         #for all user_events, get the event
         for tupleEvent in userEvents:
-            evInfo = db.getEventByEId(cursor, str(tupleEvent[2]))
+            evInfo = db.getEventsByEId(cursor, str(tupleEvent[2]))
 
             #add each section to list
             attendingEventsId.append(evInfo[0])
-            
-            attendingEventsTitle.append(evInfo[1]) 
-            attendingEventsDate.append(evInfo[2]) 
-            attendingEventsDeadline.append(evInfo[3])
+            attendingEventsTitle.append(evInfo[1])
+            attendingEventsSDate.append(evInfo[2]) 
+            attendingEventsEDate.append(evInfo[3])
+            attendingEventsState.append(evInfo[12])
 
-            attendingEventsPrice.append(evInfo[4])
-            attendingEventsDesc.append(evInfo[5])
-            attendingEventsCap.append(evInfo[6])
-            attendingEventsOcp.append(evInfo[7])
-            attendingEventsAd.append(evInfo[9])
-            attendingEventsZip.append(evInfo[10])
-            attendingEventsState.append(evInfo[11])
-            attendingEventsUId.append(evInfo[12])
 
-#GET ALL USER EVENTS ATTENDING----------------------------------------    
+#END ALL USER EVENTS ATTENDING----------------------------------------    
 #GET ALL USER EVENTS ADMINISTRATING----------------------------------
         adminEventsId = []
         adminEventsTitle = []
         adminEventsSDate = []
         adminEventsEDate = []
         
-        adminEvents = db.getEventbyUser(cursor, str(userId))
-        for tupleEvent in adminEvents:
+        adminEvents = db.getEventsByUser(cursor, str(userId))
+        for tupleEvent2 in adminEvents:
             adminEventsId.append(tupleEvent[0])
-            adminEventsTitle.append(tupleEvent[1])
-            adminEventsSDate.append(tupleEvent[2])
-            adminEventsEDate.append(tupleEvent[3])
-#END ALL USER EVENTS ADMINISTRATING----------------------------------
-
-#GET ALL POPULAR EVENTS----------------------------------------------
+            adminEventsTitle.append(tupleEvent2[1])
+            adminEventsSDate.append(tupleEvent2[2])
+            adminEventsEDate.append(tupleEvent2[3])
+            adminEventsState.append(tupleEvent2[12])
             
-#END ALL POPULAR EVENTS----------------------------------------------
+#END ALL USER EVENTS ADMINISTRATING----------------------------------
+#GET ALL POPULAR EVENTS----------------------------------------------
+        popEventsId = []
+        popEventsTitle = []
+        popEventsSDate = []
+        popEventsEDate = []
+        popEventsDetails = []
+        popEventsState = []
 
+        popEvents = db.getEventsByPop(cursor)
+        for tupleEvent3 in popEvents:
+            popEventsId.append(tupleEvent3[0])
+            popEventsTitle.append(tupleEvent3[1])
+            popEventsSDate.append(tupleEvent3[2])
+            popEventsEDate.append(tupleEvent3[3])
+            popEventsDetails.append(tupleEvent3[6])
+            popEventsState.append(tupleEvent3[12])
+            
+        
+#END ALL POPULAR EVENTS----------------------------------------------
 #GET ALL LOCATION EVENTS----------------------------------------------
+        locEventsId = []
+        locEventsTitle = []
+        locEventsSDate = []
+        locEventsEDate = []
+        locEventsDetails = []
+        locEventsState = []
+
+        locEvents = db.getEventsByLoc(cursor, str(userLoc))
+        for tEvent in locEvents:
+            locEventsId.append(tEvent[0])
+            locEventsTitle.append(tEvent[1])
+            locEventsSDate.append(tEvent[2])
+            locEventsEDate.append(tEvent[3])
+            locEventsDetails.append(tEvent[6])
+            locEventsState.append(tEvent[12])
 #END ALL LOCATION EVENTS----------------------------------------------
             
         popEventTitle = []
         popEventDetails = []
         if "clicked" in request.form and request.method == "POST":
             return  # NEED TO FIX THIS BY CHANGING EVENTDEAITLS.HTML TO CONTAIN NAME IN URL
-        return render_template("index_userLoggedIn.html", name=user, myEventImage=myEventImage,
-                               myEventTitle=myEventTitle, myEventDetails=myEventDetails,
-                               attendingEventsTitle=attendingEventsTitle, attendingEventsDate=attendingEventsDate,
-                               attendingEventsDeadline=attendingEventsDeadline, popEventTitle=popEventTitle,
-                               popEventDetails=popEventDetails, search=search)
+        return render_template("index_userLoggedIn.html", name=user,
+                               attendingEventsTitle=attendingEventsTitle, attendingEventsDate=attendingEventsSDate,
+                               attendingEventsDeadline=attendingEventsEDate, popEventTitle=popEventsTitle,
+                               popEventDetails=popEventsSDate, search=search)
 
     else:
         return redirect(url_for("loginPage"))  # ????
@@ -235,16 +284,8 @@ def logout():
 
 @app.route('/eventDetails.html', methods=["POST", "GET"])
 @app.route('/eventDetails', methods=["POST", "GET"])
-def eventDetails(eventId):  # put application's code here
-    '''# NEED TO PULL ALL THE VARIABLES THAT ARE BEING PASSED FROM THE DATABASE
-    eventDate = []
-    eventTitle = []
-    eventPrice = []
-    eventDescription = []
-    eventAddress = []
-    eventTags = []
-    eventCap = []
-    eventOcp = []'''
+def eventDetails():  # put application's code here
+    # NEED TO PULL ALL THE VARIABLES THAT ARE BEING PASSED FROM THE DATABASE
     
 #GET ALL EVENT INFO------------------------------------------------------------
     #check if event found by eventId
@@ -258,7 +299,7 @@ def eventDetails(eventId):  # put application's code here
         #otherwise send back to search
         return redirect(url_for('search_browseEvents'))
     
-#* if we want we can exclude user admins from this page, and send them to edit event
+
 #END ALL EVENT INFO------------------------------------------------------------
     
     if "user" in session:
@@ -274,7 +315,7 @@ def eventDetails(eventId):  # put application's code here
             if (price != 0):
                 paid = 0
 
-# ADD USER TO THE DATABASE LIST OF USERS ATTENDING THE EVENT--------------------------
+# ADD USER FROM ATTENDING EVENT--------------------------
             #turn to string
             cUE = getInputString([userId, eventId, user, email, paid, seat, price])
 
@@ -296,7 +337,14 @@ def eventDetails(eventId):  # put application's code here
                 return render_template("eventDetails.html", eventDate=eventDate, eventTitle=eventTitle,
                                        eventPrice=eventPrice, eventDescription=eventDescription,
                                        eventAddress=eventAddress, eventTags=eventTags)
-# END USER TO THE DATABASE LIST OF USERS ATTENDING THE EVENT--------------------------
+# END ADD USER FROM ATTENDING EVENT--------------------------
+
+
+        else:
+           return render_template("eventDetails.html", eventDate=eventDate, eventTitle=eventTitle, eventPrice=eventPrice,
+                               eventDescription=eventDescription, eventAddress=eventAddress, eventTags=eventTags) 
+
+
     else:
         print("Must be signed in to attend")
         return render_template("eventDetails.html", eventDate=eventDate, eventTitle=eventTitle, eventPrice=eventPrice,
@@ -315,7 +363,7 @@ def manageEvents():  # put application's code here
 
         if 'leave' in request.form and request.method == "POST":
             user = session["user"]
-# REMOVE THE USER FROM THE EVENT IN DATABASE------------------------------------
+# REMOVE USER FROM ATTENDING EVENT------------------------------------
             #if user found with event
             if (db.checkAny(cursor, "attendantId", "user_events", "userId",
                             str(userId), "eventId", str(eventId)) == True):
@@ -332,7 +380,7 @@ def manageEvents():  # put application's code here
                                userEventsTime=userEventsTime, userAttendingEvents=userAttendingEvents,
                                eventsMaxPop=eventsMaxPop)
             
-#END REMOVE THE USER FROM THE EVENT IN DATABASE------------------------------------
+#END REMOVE USER FROM ATTENDING EVENT------------------------------------
         return render_template("manageEvents.html", usersEvents=usersEvents, userEventsDates=userEventsDates,
                                userEventsTime=userEventsTime, userAttendingEvents=userAttendingEvents,
                                eventsMaxPop=eventsMaxPop)
@@ -351,6 +399,31 @@ def search_browseEvents():  # put application's code here
     eventPrices = []
     eventPopulation = []
     eventMaxPop = []
+
+#SEARCH BY EVENT TAGS------------------------------#needs an indication
+    tagName = "7"       #needs input from html
+    tagEventsId = []
+    tagEventsTitle = []  
+    tagEventsSDate = []  
+    tagEventsEDate = [] 
+    tagEventsState = []
+    
+    
+    #get user_events by userId
+    tagEvents = db.getEventTagByTagId(cursor, str(tagName))
+
+    #for all user_events, get the event
+    for tgEvent in tagEvents:
+        evInfo = db.getEventsByEId(cursor, str(tagEvents[1]))
+
+        #add each section to list
+        tagEventsId.append(evInfo[0])
+        tagEventsTitle.append(evInfo[1])
+        tagEventsSDate.append(evInfo[2]) 
+        tagEventsEDate.append(evInfo[3])
+        tagEventsState.append(evInfo[12])
+#END SEARCH BY EVENT TAGS-------------------------
+        
     return render_template("search_browseEvents.html", events=events, eventDates=eventDates, eventTimes=eventTimes,
                            eventLocations=eventLocations, eventPrices=eventPrices, eventPopulation=eventPopulation,
                            eventMaxPop=eventMaxPop)
