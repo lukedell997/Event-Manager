@@ -28,7 +28,7 @@
                 <div class="container-fluid">
                     <a class="navbar-brand" href="index.html"><img src="{{ url_for('static', filename='img/logo.png')}}" alt="Event Manager Logo"></a>
                     <!--SEARCH BAR-->
-                    <form class="form-inline ml-4" action="search_browseEvents.html" method="GET">                                                                            <!--incoming search bar-->
+                    <form class="form-inline ml-4" method="GET">                                                                            <!--incoming search bar-->
                         <input class="form control py-2 border-right-0 border" type="search" placeholder="Search for..." name="searchbar">
                         <button class="btn btn-primary btn-outline-secondary border" type="submit">
                             <i class="fa fa-search"></i>
@@ -65,7 +65,7 @@
                     <div class="form-group">
                         <div class="input-group">
                             <div class="input-group-prepend dropdown">
-                                <button class="btn btn-secondary dropdown-toggle" type="button" data-toggle="dropdown" id="filterinput">Filter by: </button>        <!--optional, can be deleted-->
+                                <button class="btn btn-secondary dropdown-toggle" type="button" data-toggle="dropdown" id="filterinput">Filter by: </button>
                             <div class="dropdown-menu">
                                 <a href="#" class="dropdown-item" onclick="changeval(0);">Tag</a>
                                 <a href="#" class="dropdown-item" onclick="changeval(1);">Price</a>

@@ -23,7 +23,7 @@ def index():  # put application's code here
     # FILL LISTS WITH DATA OF EVENTS FROM DATABASE
     search = None
     if request.method == "POST":
-        search = request.form
+        search = request.form["searchbar"]
         # DO A SEARCH IDK HOW YET
 
     return render_template("index.html", popEventsTitle=popEventsTitle, popEventsDetails=popEventsDetails,
@@ -50,7 +50,7 @@ def registerPage():  # put application's code here
             
         if 'submit' in request.form:
             # PUSH THE DATA TO THE DATABASE!!!!!!!!!
-            return redirect(url_for("login"))  # ????
+            return redirect(url_for("loginPage"))  # ????
     else:
         return render_template("registerPage.html")
 
@@ -85,23 +85,29 @@ def user():
         user = session["user"]
 
         myEventImage = []  # FILL THESE
-        myEventTitle = ""
-        myEventDetails = ""
+        myEventTitle = []
+        myEventDetails = []
 
         attendingEventsTitle = []  # FILL WITH USERES EVENTS
         attendingEventsDate = []  # FILL WITH 6 popular EVENTS
         attendingEventsDeadline = []  # FILL WITH 6 NEAR BY EVENTS
         
-
+        popEventImage = []
         popEventTitle = []
         popEventDetails = []
-        if "clicked" in request.form and request.method == "POST":
-            return  # NEED TO FIX THIS BY CHANGING EVENTDEAITLS.HTML TO CONTAIN NAME IN URL
-        return render_template("index_userLoggedIn.html", name=user, myEventImage=myEventImage,
-                               myEventTitle=myEventTitle, myEventDetails=myEventDetails,
-                               attendingEventsTitle=attendingEventsTitle, attendingEventsDate=attendingEventsDate,
-                               attendingEventsDeadline=attendingEventsDeadline, popEventTitle=popEventTitle,
-                               popEventDetails=popEventDetails, search=search)
+        if request.method == "POST":
+            if "clicked" in request.form:
+                eventID = request.form["eventID"]
+                return  redirect(url_for("eventDetails", eventID = eventID))
+            elif 'searchbar' in request.form:
+                search = request.form["searchbar"]
+                # DO A SEARCH
+        else:
+            return render_template("index_userLoggedIn.html", name=user, myEventImage=myEventImage,
+                                   myEventTitle=myEventTitle, myEventDetails=myEventDetails,
+                                   attendingEventsTitle=attendingEventsTitle, attendingEventsDate=attendingEventsDate,
+                                   attendingEventsDeadline=attendingEventsDeadline, popEventTitle=popEventTitle,
+                                   popEventDetails=popEventDetails, search=search, popEventImage=popEventImage)
 
     else:
         return redirect(url_for("loginPage"))  # ????
@@ -125,25 +131,32 @@ def eventDetails(eventId):  # put application's code here
     eventDescription = []
     eventAddress = []
     eventTags = []
-    if "user" in session:
-        if "attend" in request.form and request.method == "POST":
+    eventImage = []
+
+    if "attend" in request.form and request.method == "POST":
+        if "user" in session:
             user = session["user"]
             # ADD USER TO THE DATABASE LIST OF USERS ATTENDING THE EVENT
+            return redirect(url_for("user"))
+        else:
+            return redirect(url_for("loginPage"))
     return render_template("eventDetails.html", eventDate=eventDate, eventTitle=eventTitle, eventPrice=eventPrice,
-                           eventDescription=eventDescription, eventAddress=eventAddress, eventTags=eventTags)
+                           eventDescription=eventDescription, eventAddress=eventAddress, eventTags=eventTags,
+                           eventImage=eventImage)
 
 
 @app.route('/manageEvents.html', methods=["POST", "GET"])
 @app.route('/manageEvents', methods=["POST", "GET"])
 def manageEvents():  # put application's code here
     if "user" in session:
+        user = session["user"]
         usersEvents = []  # FILL THESE WITH THE APPROPRIATE DATA
         userEventsDates = []
         userEventsTime = []
         userAttendingEvents = []  # I have no idea what the difference between the first one and this one is but it is requested
         eventsMaxPop = []
 
-        if 'leave' in request.form and request.method == "POST":
+        if 'leaveEvent' in request.form and request.method == "POST":
             user = session["user"]
             # REMOVE THE USER FROM THE EVENT IN DATABASE
         return render_template("manageEvents.html", usersEvents=usersEvents, userEventsDates=userEventsDates,
@@ -154,44 +167,128 @@ def manageEvents():  # put application's code here
         return redirect(url_for("login"))  # ????
 
 
-@app.route('/search_browseEvents.html')
-@app.route('/search_browseEvents')
+@app.route('/search_browseEvents.html', methods=["POST", "GET"])
+@app.route('/search_browseEvents', methods=["POST", "GET"])
 def search_browseEvents():  # put application's code here
     events = []  # fill the info
     eventDates = []
     eventTimes = []
     eventLocations = []
     eventPrices = []
-    eventPopulation = []
-    eventMaxPop = []
-    return render_template("search_browseEvents.html", events=events, eventDates=eventDates, eventTimes=eventTimes,
-                           eventLocations=eventLocations, eventPrices=eventPrices, eventPopulation=eventPopulation,
-                           eventMaxPop=eventMaxPop)
-
-
-@app.route('/create_editEvents.html', methods=["POST", "GET"])
-@app.route('/create_editEvents', methods=["POST", "GET"])
-def create_editEvents():
-    userInfo = []  # list contating users names and their roles to pull from database
+    eventImage = []
+    #eventPopulation = []
+    #eventMaxPop = []
     if request.method == "POST":
-        eventTitle = request.form["title"]
-        eventAddress = request.form["address"]
-        eventCity = request.form["city"]
-        eventState = request.form["state"]
-        eventZip = request.form["zip"]
-        eventStartDate = request.form["startDate"]
-        eventEndDate = request.form["endDate"]
-        eventPrice = request.form["price"]
-        eventCap = request.form["maxCap"]
-        eventDeadline = request.form["deadline"]
-        uploadedFile = request.form["uploadedFile"]
-        eventDes = request.form["description"]
-        userToAdd = request.form["addUser"]
-        userToDelete = request.form["deleteUser"]
-        ################## push to database!!!!!!!
+        search = request.form["searchbar"]
+        # DO A SEARCH
+    else:
+        return render_template("search_browseEvents.html", events=events, eventDates=eventDates, eventTimes=eventTimes,
+                               eventLocations=eventLocations, eventPrices=eventPrices, eventImage=eventImage)
 
-    return render_template("create_editEvents.html", userInfo=userInfo)
 
+
+@app.route('/editEvent.html', methods=["POST", "GET"])
+@app.route('/editEvent.html', methods=["POST", "GET"])
+def editEvent():
+    eventTitle = []
+    eventAddress = []
+    eventCity = []
+    eventState = []
+    eventZip = []
+    eventStartDate = []
+    eventEndDate = []
+    eventPrice = []
+    eventCap = []
+    eventDeadline = []
+    eventDeadlineTime = []
+    eventDes = []
+    userToAdd = []
+    userToDelete = []
+    # GET FROM DATABASE!!!!!!!!!
+
+    if request.method == "POST":
+        if 'searchbar' in request.form:
+            search = request.form["searchbar"]
+            # DO A SEARCH
+        else:
+            eventTitle = request.form["title"]
+            eventAddress = request.form["address"]
+            eventCity = request.form["city"]
+            eventState = request.form["state"]
+            eventZip = request.form["zip"]
+            eventStartDate = request.form["startDate"]
+            eventEndDate = request.form["endDate"]
+            eventPrice = request.form["price"]
+            eventCap = request.form["maxCap"]
+            eventDeadline = request.form["deadline"]
+            eventDeadlineTime = request.form["deadlineTime"]
+            eventDes = request.form["description"]
+            userToAdd = request.form["addUser"]
+            userToDelete = request.form["deleteUser"]
+            # PUSH TO DATABASE
+    else:
+        return render_template("editEvent.html", eventTitle=eventTitle, eventAddress=eventAddress, eventCity=eventCity,
+                               eventState=eventState, eventZip=eventZip, eventStartDate=eventStartDate, eventEndDate=
+                               eventEndDate, eventPrice=eventPrice, eventCap=eventCap, eventDeadline=eventDeadline,
+                               eventDeadlineTime=eventDeadlineTime, eventDes=eventDes, userToAdd=userToAdd,
+                               userToDelete=userToDelete)
+
+@app.route('/createEvent.html', methods=["POST", "GET"])
+@app.route('/createEvent.html', methods=["POST", "GET"])
+def createEvent():
+    if 'user' in session:
+        if request.method == "POST":
+            eventTitle = request.form["title"]
+            eventAddress = request.form["address"]
+            eventCity = request.form["city"]
+            eventState = request.form["state"]
+            eventZip = request.form["zip"]
+            eventStartDate = request.form["startDate"]
+            eventEndDate = request.form["endDate"]
+            eventPrice = request.form["price"]
+            eventCap = request.form["maxCap"]
+            eventDeadline = request.form["deadline"]
+            eventDeadlineTime = request.form["deadlineTime"]
+            eventDes = request.form["description"]
+            userToAdd = request.form["addUser"]
+            userToDelete = request.form["deleteUser"]
+            # PUSH TO DATABASE
+            return redirect(url_for("user"))
+        else:
+            return render_template("createEvent.html")
+    else:
+        redirect(url_for("loginPage"))
+
+@app.route('/updatePersonalInfo.html', methods=["POST", "GET"])
+@app.route('/updatePersonalInfo', methods=["POST", "GET"])
+def updatePersonalInfo():
+    if 'user' in session:
+        if request.method == "POST":
+            firstName = request.form["firstName"]
+            lastName = request.form["lastName"]
+            username = request.form["username"]
+            password = request.form["password"]
+            address = request.form["address"]
+            city = request.form["city"]
+            state = request.form["state"]
+            email = request.form["email"]
+            phone = request.form["phone"]
+            # PUSH TO DATABASE!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+            return redirect(url_for("user"))
+        else:
+            firstName = []
+            lastName = []
+            username = []
+            password = []
+            address = []
+            city = []
+            state = []
+            email = []
+            phone = []
+            return render_template("eventDetails.html", firstName=firstName, lastName=lastName, username=username, password=
+                                   password, address=address, city=city, state=state, email=email, phone=phone)
+    else:
+        redirect(url_for("loginPage"))
 
 if __name__ == '__main__':
     app.run(debug=True)
