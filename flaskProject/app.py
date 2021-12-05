@@ -1,14 +1,12 @@
 from flask import Flask, render_template, redirect, url_for, request, flash, session
 from datetime import timedelta
-from databaseCode import DataB
 
 app = Flask(__name__)
 app.permanent_session_lifetime = timedelta(hours=5)
 
 app.secret_key = "hello"
 
-db = DataB()
-cnx, cursor = db.openDatabase()
+admin = False
 
 def getInputString(ItemList):
     try:
@@ -102,7 +100,8 @@ def registerPage():  # put application's code here
         userPassword = request.form["pw"]
         userAddress = request.form["address"]
         userCity = request.form["city"]
-        userState = request.form.get("state")
+        userState = request.form["state"]
+        userZipcode = 123456
         userEmail = request.form["email"]
         userNumber = request.form["phone"]
 
@@ -177,6 +176,8 @@ def user():
             # DO A SEARCH IDK HOW YET
 
         user = session["user"]
+        userId = session["userId"]
+        userLoc = session["userState"]
 
 #GET ALL USER EVENTS ATTENDING------------------------------- NEEDS UPDATING
         attendingEventsId = []
@@ -306,6 +307,7 @@ def eventDetails(eventId):  # put application's code here
             #get all info you need
             userId = session["userId"]
             user = session["user"]
+            email = session["userEmail"]
             paid = 1
             seat = O0
             price = eventPrice
@@ -328,7 +330,7 @@ def eventDetails(eventId):  # put application's code here
                 #add occupant to event
                 db.updateEventOcp(cnx, cursor, eventId, eventOcp)
                 
-                return redirect(url_for("manageEvents"))
+                return redirect(url_for("user"))
             else:
                 #give error(filled or user already signed up)
                 print("ERROR: event filled or already signed up")
@@ -354,6 +356,7 @@ def manageEvents():  # put application's code here
         userEventsTime = []
         userAttendingEvents = []  # I have no idea what the difference between the first one and this one is but it is requested
         eventsMaxPop = []
+        eventId = []
 
         if 'leaveEvent' in request.form and request.method == "POST":
             user = session["user"]
@@ -408,7 +411,7 @@ def search_browseEvents():  # put application's code here
     tagEvents = db.getEventTagByTagId(cursor, str(tagName))
 
     #for all user_events, get the event
-    for tgEvent in userEvents:
+    for tgEvent in tagEvents:
         evInfo = db.getEventsByEId(cursor, str(tgEvent[1]))
 
         #add each section to list
@@ -494,6 +497,9 @@ def createEvent():
             eventDes = request.form["description"]
             userToAdd = request.form["addUser"]
             userToDelete = request.form["deleteUser"]
+            eventOcp = 0
+            eventPoP = 0
+            userId = session["userId"]
 #NEW EVENT--------------------------------------------------------------
             #turn to string
             cE = getInputString([eventTitle, eventStartDate, eventEndDate, eventDeadline, eventPrice, eventDes, eventCap,
@@ -503,7 +509,7 @@ def createEvent():
                             , "userId", str(userId)) == False):
                 #print(test)
                 db.newEvent(cnx, cursor, cE)
-                return redirect(url_for("manageEvents"))
+                return redirect(url_for("user"))
             else:
                 print("ERROR: event already created by you")
                 return render_template("create_editEvents.html", userInfo=userInfo)
