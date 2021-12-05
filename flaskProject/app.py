@@ -10,6 +10,26 @@ app.secret_key = "hello"
 db = DataB()
 cnx, cursor = db.openDatabase()
 
+def getInputString(ItemList):
+    try:
+       #for all items in input, add ' data '
+        info = ""
+        for i in range (len(ItemList)):
+            if ItemList[i] == "" or ItemList[i] == "None":
+                info += "'None'"
+            else:
+                info += "'"
+                info += str(ItemList[i])
+                info += "'"
+
+            #add comma unless last item
+            if(i != len(ItemList)-1):
+                info += ","
+            else:
+                return info
+        return info
+    except:
+        return -99
 
 @app.route('/index' , methods=["POST", "GET"])
 @app.route('/', methods=["POST", "GET"])
@@ -187,6 +207,7 @@ def user():
         adminEventsTitle = []
         adminEventsSDate = []
         adminEventsEDate = []
+        adminEventsState = []
         
         adminEvents = db.getEventsByUser(cursor, str(userId))
         for tupleEvent2 in adminEvents:
