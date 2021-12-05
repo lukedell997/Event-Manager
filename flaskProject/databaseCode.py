@@ -91,7 +91,7 @@ class DataB:
     # CREATE USER EVENTS
     def newUEvents(self, cnx, cursor, data):
         try:
-            userClms = ''.join(("userId, eventId, userEmail, paid, seat, price"))
+            userClms = ''.join(("userId, eventId, userName, userEmail, paid, seat, price"))
             cursor.execute(db.insert("user_events", userClms, data))
             cnx.commit()
             return
@@ -132,7 +132,7 @@ class DataB:
         return user
     
     #GET USER EVENTS BY USERID
-    def getUEventsByUser(self, cursor, userId, name):
+    def getUEventsByUser(self, cursor, userId):
         ur =''.join(("SELECT * FROM user_events WHERE userId = '",userId, "'"))
         cursor.execute(ur)
         usersEvents = []
@@ -202,9 +202,11 @@ class DataB:
     def newUser(self, cnx, cursor, data):
         userClms = ''.join(("username, passwordId, first_name, last_name,",
                             "email, address, zipcode, city, state, phone"))
-        cursor.execute(db.insert("users", userClms, data))
+        cursor.execute(DataB.insert(self, "users", userClms, data))
         cnx.commit()
         return
+
+  
 
     #REMOVE USER
     def removeUser(self, cnx, cursor, userId, passwordId):
@@ -238,7 +240,7 @@ class DataB:
                      username,"' AND passwordId = '", pswd, "'"))
         cursor.execute(ur)
         for (idU) in cursor:
-            user = [idU]
+            user = idU
         return user
 
 
@@ -276,14 +278,47 @@ class DataB:
         except:
             return -99
 
+
+    #UPDATE OCCUPANTS BY 1
+    def updateEventOcp(self, cnx, cursor, eventId, pastOcp):
+        try:
+            #get occupant as old plus 1
+            ocp = int(pastOcp) + 1
+            #update
+            cursor.execute(db.update("events", "occupants", str(ocp), "eventId",
+                                      str(eventId), "eventId", str(eventId)))
+            cnx.commit()
+            return
+        except:
+            return -99
+
+    #UPDATE OCCUPANTS BY -1
+    def removeEventOcp(self,cnx, cursor, eventId):
+        try:
+            #get event info
+            event = db.getEventByEId(cursor, eventId)
+            if(event[8] == 0):
+                return
+            else:
+                #get occupant as old minus 1
+                ocp = int(event[8]) - 1
+                #update
+                cursor.execute(db.update("events", "occupants", str(ocp),
+                                         "eventId", str(eventId),
+                                         "eventId", str(eventId)))
+                cnx.commit()
+            return
+        except:
+            return -99
+
     #GET EVENT
-        def getEvent(self, cursor, name, userId):
-            ur =''.join(("SELECT * FROM events WHERE name = '",
-                     username,"' AND userId = '", pswd, "'"))
-            cursor.execute(ur)
-            for (idU) in cursor:
-                event = [idU]
-            return event
+    def getEventByUser(self, cursor, userId):
+        ur =''.join(("SELECT * FROM events WHERE userId = '", userId, "'"))
+        cursor.execute(ur)
+        event = []
+        for (idU) in cursor:
+            event.append(idU)
+        return event
         
         #GET EVENT BY EVENT ID
     def getEventByEId(self, cursor, eId):
@@ -417,15 +452,44 @@ class DataB:
         if it == 0:
             return False
 
+    def checkAvl(self, cursor, eId):
+        anyC = ''.join(("SELECT ALL eventId FROM events WHERE eventId = '",eId ,
+                        "' AND occupants < capacity"))
+        cursor.execute(anyC)
+        it = 0
+        #if i is found, return normal
+        for i in cursor:
+            it += 1
+            return True
+        #if not found, return not normal
+        if it == 0:
+            return False
 
 
+##
+#db = DataB() 
+#cnx, cursor = db.openDatabase()
 
-##
-##db = DataB() 
-##cnx, cursor = db.openDatabase()
-##
-##
-##
+#adminEventsId = []
+#adminEventsTitle = []
+#adminEventsSDate = []
+#adminEventsEDate = []
+#adminEvents = db.getEventByUser(cursor, str(1))
+#for tupleEvent in adminEvents:
+#    adminEventsId.append(tupleEvent[0])
+#    adminEventsTitle.append(tupleEvent[1])
+#    adminEventsSDate.append(tupleEvent[2])
+#    adminEventsEDate.append(tupleEvent[3])
+#print(adminEventsId)
+
+#print(db.removeEventOcp(cnx, cursor, "1"))
+
+##        #turn to string
+#cU = "'userUsername', 'userPassword', 'userFirstName', 'userLastName', 'userEmail', 'userAddress', 'userZipcode', 'userCity', 'userState', 'userNumber'"
+
+#db.newUser(cnx, cursor, cU)
+##        
+
 ###add new user
 ##
 ##newUserData = ''.join(("'PlanetSaver83', 'ab4c3d','Al', 'Gore', ",
