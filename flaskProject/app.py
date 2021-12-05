@@ -13,22 +13,25 @@ admin = False
 @app.route('/', methods=["POST", "GET"])
 @app.route('/index.html', methods=["POST", "GET"])
 def index():  # put application's code here
-    popEventsTitle = []
-    popEventsDetails = []
-    popEventsButton = []
+    if 'user' in session:
+        popEventsTitle = []
+        popEventsDetails = []
+        popEventsButton = []
 
-    nearEventsTitle = []
-    nearEventsDetails = []
-    nearEventsButton = []
-    # FILL LISTS WITH DATA OF EVENTS FROM DATABASE
-    search = None
-    if request.method == "POST":
-        search = request.form["searchbar"]
-        # DO A SEARCH IDK HOW YET
+        nearEventsTitle = []
+        nearEventsDetails = []
+        nearEventsButton = []
+        # FILL LISTS WITH DATA OF EVENTS FROM DATABASE
+        search = None
+        if request.method == "POST":
+            search = request.form["searchbar"]
+            # DO A SEARCH IDK HOW YET
 
-    return render_template("index.html", popEventsTitle=popEventsTitle, popEventsDetails=popEventsDetails,
-                           popEventsButton=popEventsButton, nearEventsTitle=nearEventsTitle,
-                           nearEventsDetails=nearEventsDetails, nearEventsButton=nearEventsButton, search=search)
+        return render_template("index.html", popEventsTitle=popEventsTitle, popEventsDetails=popEventsDetails,
+                               popEventsButton=popEventsButton, nearEventsTitle=nearEventsTitle,
+                               nearEventsDetails=nearEventsDetails, nearEventsButton=nearEventsButton, search=search)
+    else:
+        redirect(url_for('user'))
 
 
 @app.route('/registerPage.html', methods=["POST", "GET"])
@@ -47,7 +50,7 @@ def registerPage():  # put application's code here
         userState = request.form.get("state")
         userEmail = request.form["email"]
         userNumber = request.form["phone"]
-            
+
         # PUSH THE DATA TO THE DATABASE!!!!!!!!!
         return redirect(url_for("loginPage"))  # ????
     else:
