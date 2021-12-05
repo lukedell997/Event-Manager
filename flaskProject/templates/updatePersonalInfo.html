@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8" />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1" />
+
+        <!-- Bootstrap CSS -->   
+        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+
+        <!--Custom Styles-->
+        <link rel="stylesheet" href="{{ url_for('static', filename='css/login-signup-styles.css')}}" /> 
+
+        <!-- Google Fonts -->
+        <link rel="preconnect" href="https://fonts.googleapis.com">
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@200&display=swap" rel="stylesheet">
+
+        <link rel="shortcut icon" href="{{ url_for('static', filename='img/logo.png')}}" />
+        <title>Update Personal Information | Event Manager</title>
+    </head>
+
+    <body>
+        <div class="fillout-form">
+            <form action="#" method="POST">
+                <div class="text-center mb-4">
+                    <a href="index.html"><img src="{{ url_for('static', filename='img/logo.png')}}" alt="Event Manager logo" style="width: 100px;"></a> 
+                </div>  <!--text-center-->
+                
+                <h3>Update Account</h3>
+                <hr>
+                
+                <div class="form-group">
+                    <div class="row">
+                        <div class="col">
+                            <input type="text" class="form-control" name="fn" placeholder="First Name" required="required">     <!--outgoing first name-->
+                        </div>  <!--col-->
+                        <div class="col">
+                            <input type="text" class="form-control" name="ln" placeholder="Last Name" required="required">      <!--outgoing last name-->
+                        </div>  <!--col-->
+                    </div>  <!--row-->   	
+                </div>  <!--form-group-->
+
+                <div class="form-group">
+                    <input type="username" class="form-control" name="nm" placeholder="Username" required="required">           <!--outgoing user name-->
+                </div>  <!--form-group-->
+
+                <div class="form-group">
+                    <input type="password" class="form-control" name="pw" placeholder="Password" required="required">           <!--outgoing password-->
+                </div>  <!--form-group-->
+
+                <div class="form-group">
+                    <input type="password" class="form-control" name="pw" placeholder="Confirm Password" required="required">   <!--outgoing password-->
+                </div>  <!--form-group-->
+
+                <div class="form-group">
+                    <input type="address" class="form-control" name="address" placeholder="Address" required="required">        <!--outgoing address-->
+                </div>  <!--form-group-->
+
+                <div class="form-group">
+                    <div class="row">
+                        <div class="col">
+                            <input type="text" class="form-control" name="city" placeholder="City" required="required">         <!--outgoing city-->
+                        </div>  <!--col-->
+                        <div class="col">
+                            <input type="text" class="form-control" name="state" placeholder="State" required="required">       <!--outgoing state-->
+                        </div>  <!--col-->
+                    </div>  <!--row-->   	
+                </div>  <!--form-group-->
+
+                <div class="form-group">
+                    <input type="email" class="form-control" name="email" placeholder="Email" required="required">              <!--outgoing email-->
+                </div>  <!--form-group-->
+
+                <div class="form-group">
+                    <input type="phoneNum" class="form-control" name="phone" placeholder="Phone Number" required="required">    <!--outgoing phone-->
+                </div>  <!--form-group-->
+
+                <div class="form-group">
+                    <input type="submit" value="Save" />   
+                </div>  <!--form-group-->
+
+                <div class="social-link d-flex justify-content-center text-center mt-2 pt-1">             
+                    <a href="http://facebook.com/"><i class="fa fa-facebook-f fa-lg"></i></a>
+                    <a href="http://twitter.com/"><i class="fa fa-twitter fa-lg mx-4 px-2"></i></a>
+                    <a href="http://google.com/"><i class="fa fa-google fa-lg"></i></a>                
+                </div>  <!--d-flex-->     
+            </form>
+        </div>  <!--fillout-form-->
+
+        <!-- JavaScript Bundle for Bootstrap-->
+        <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
+        <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+    </body>
+</html>
