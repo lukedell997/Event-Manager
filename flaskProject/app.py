@@ -44,13 +44,12 @@ def registerPage():  # put application's code here
         userPassword = request.form["pw"]
         userAddress = request.form["address"]
         userCity = request.form["city"]
-        userState = request.form["state"]
+        userState = request.form.get("state")
         userEmail = request.form["email"]
         userNumber = request.form["phone"]
             
-        if 'submit' in request.form:
-            # PUSH THE DATA TO THE DATABASE!!!!!!!!!
-            return redirect(url_for("loginPage"))  # ????
+        # PUSH THE DATA TO THE DATABASE!!!!!!!!!
+        return redirect(url_for("loginPage"))  # ????
     else:
         return render_template("registerPage.html")
 
