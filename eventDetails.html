@@ -32,7 +32,7 @@
                 <div class="container-fluid">
                     <a class="navbar-brand" href="index.html"><img src="{{ url_for('static', filename='img/logo.png')}}" alt="Event Manager Logo"></a>
                     <!--SEARCH BAR-->
-                    <form class="form-inline ml-4" method="GET">                                                                            <!--incoming search bar-->
+                    <form class="form-inline ml-4" action="search_browseEvents.html" method="GET">                                                                            <!--incoming search bar-->
                         <input class="form control py-2 border-right-0 border" type="search" placeholder="Search for..." name="searchbar">
                         <button class="btn btn-primary btn-outline-secondary border" type="submit">
                             <i class="fa fa-search"></i>
@@ -70,9 +70,9 @@
                             <h3>OCT 28</h3>                                                     <!--outgoing event date-->
                             <h2>Concert Event</h2>                                              <!--outgoing event title-->
                             <h4>$40</h4>                                                        <!--outgoing event price-->
-                            <form method="post">
+                            <form method="POST">                                  <!--action="loginPage.html" if user is not logged in yet, action="index_userLoggedIn.html" if user is logged in-->
                                 <div class="form-group">
-                                    <input type="submit" value="ATTEND" />                      <!--directs to user logged in homepage with this added event details-->
+                                    <input type="submit" value="ATTEND" name="attend"/>                     
                                 </div>  <!--form-group-->           
                             </form>
                         </div>  <!--media-body-->
@@ -83,7 +83,7 @@
             <div class="row row-content">
                 <div class="col col-sm-7">
                     <p>Event Description</p>                                                    <!--outgoing event description-->
-                    <p>Tags:</p>                                                                <!--outgoing event tags-->
+                    <p>Tags:</p>                                                                <!--optional if we have time-->
                 </div>  <!--col-->
                 <div class="col">
                     <h4>Address</h4>                                                            <!--outgoing event address-->
