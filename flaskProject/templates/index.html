@@ -88,8 +88,8 @@
                         <div class="card">
                             <img src="{{ url_for('static', filename='img/concertEvent.jpg')}}" alt="Concert Event" class="card-img-top">    <!--outgoing event image-->
                             <div class="card-body">
-                                <h4 class="card-title">Concert Events</h4>                                                                  <!--outgoing event title-->
-                                <p class="card-text">Concert details</p>                                                                    <!--outgoing concert details-->
+                                <h4 class="card-title">{{ popEventsTitle[0] }}</h4>                                                                  <!--outgoing event title-->
+                                <p class="card-text">{{ popEventsDetails[0] }}</p>                                                                    <!--outgoing concert details-->
                                 <a href="eventDetails.html">                                                                               
                                     <button type="button" class="btn btn-danger">Read More</button>             
                                 </a>
@@ -101,8 +101,8 @@
                         <div class="card">
                             <img src="{{ url_for('static', filename='img/conferenceEvent.jpg')}}" alt="Conference Event" class="card-img-top">  <!--outgoing event image-->
                             <div class="card-body">
-                                <h4 class="card-title">Conference Events</h4>                                                                   <!--outgoing event title-->
-                                <p class="card-text">Conference details</p>                                                                     <!--outgoing concert details-->
+                                <h4 class="card-title">{{ popEventsTitle[1] }}</h4>                                                                   <!--outgoing event title-->
+                                <p class="card-text">{{ popEventsDetails[2] }}</p>                                                                     <!--outgoing concert details-->
                                 <a href="eventDetails.html">                                                                                    
                                     <button type="button" class="btn btn-danger">Read More</button>             
                                 </a>
@@ -114,8 +114,8 @@
                         <div class="card">
                             <img src="{{ url_for('static', filename='img/dinnerEvent.jpg')}}" alt="Dinner Event" class="card-img-top">      <!--outgoing event image-->
                             <div class="card-body">
-                                <h4 class="card-title">Dinner Events</h4>                                                                   <!--outgoing event title-->
-                                <p class="card-text">Dinner details</p>                                                                     <!--outgoing concert details-->
+                                <h4 class="card-title">{{ popEventsTitle[2] }}</h4>                                                                   <!--outgoing event title-->
+                                <p class="card-text">{{ popEventsDetails[2] }}</p>                                                                     <!--outgoing concert details-->
                                 <a href="eventDetails.html">                                                                                
                                     <button type="button" class="btn btn-danger">Read More</button>             
                                 </a>
@@ -127,8 +127,8 @@
                         <div class="card">
                             <img src="{{ url_for('static', filename='img/festivalEvent.jpg')}}" alt="Festival Event" class="card-img-top">  <!--outgoing event image-->
                             <div class="card-body">
-                                <h4 class="card-title">Festival Events</h4>                                                                 <!--outgoing event title-->
-                                <p class="card-text">Festival details</p>                                                                   <!--outgoing concert details-->
+                                <h4 class="card-title">{{ popEventsTitle[3] }}</h4>                                                                 <!--outgoing event title-->
+                                <p class="card-text">{{ popEventsDetails[3] }}</p>                                                                   <!--outgoing concert details-->
                                 <a href="eventDetails.html">                                                                                
                                     <button type="button" class="btn btn-danger">Read More</button>             
                                 </a>
@@ -149,8 +149,8 @@
                         <div class="card">
                             <img src="{{ url_for('static', filename='img/concertEvent.jpg')}}" alt="Concert Event" class="card-img-top">    <!--outgoing event image-->
                             <div class="card-body">
-                                <h4 class="card-title">Concert Events</h4>                                                                  <!--outgoing event title-->
-                                <p class="card-text">Concert details</p>                                                                    <!--outgoing concert details-->
+                                <h4 class="card-title">{{ nearEventsTitle[0] }}</h4>                                                                  <!--outgoing event title-->
+                                <p class="card-text">{{ nearEventsDetails[0] }}</p>                                                                    <!--outgoing concert details-->
                                 <a href="eventDetails.html">                                                                                
                                     <button type="button" class="btn btn-danger">Read More</button>             
                                 </a>
@@ -162,8 +162,8 @@
                         <div class="card">
                             <img src="{{ url_for('static', filename='img/conferenceEvent.jpg')}}" alt="Conference Event" class="card-img-top">  <!--outgoing event image-->
                             <div class="card-body">
-                                <h4 class="card-title">Conference Events</h4>                                                                   <!--outgoing event title-->
-                                <p class="card-text">Conference details</p>                                                                     <!--outgoing concert details-->
+                                <h4 class="card-title">{{ nearEventsTitle[1] }}</h4>                                                                   <!--outgoing event title-->
+                                <p class="card-text">{{ nearEventsDetails[1] }}</p>                                                                     <!--outgoing concert details-->
                                 <a href="eventDetails.html">                                                                                    
                                     <button type="button" class="btn btn-danger">Read More</button>             
                                 </a>
@@ -175,8 +175,8 @@
                         <div class="card">
                             <img src="{{ url_for('static', filename='img/dinnerEvent.jpg')}}" alt="Dinner Event" class="card-img-top">  <!--outgoing event image-->
                             <div class="card-body">
-                                <h4 class="card-title">Dinner Events</h4>                                                               <!--outgoing event title-->
-                                <p class="card-text">Dinner details</p>                                                                 <!--outgoing concert details-->
+                                <h4 class="card-title">{{ nearEventsTitle[2] }}</h4>                                                               <!--outgoing event title-->
+                                <p class="card-text">{{ nearEventsDetails[2] }}</p>                                                                 <!--outgoing concert details-->
                                 <a href="eventDetails.html">                                                                           
                                     <button type="button" class="btn btn-danger">Read More</button>             
                                 </a>
@@ -188,8 +188,8 @@
                         <div class="card">
                             <img src="{{ url_for('static', filename='img/festivalEvent.jpg')}}" alt="Festival Event" class="card-img-top">  <!--outgoing event image-->
                             <div class="card-body">
-                                <h4 class="card-title">Festival Events</h4>                                                                 <!--outgoing event title-->
-                                <p class="card-text">Festival details</p>                                                                   <!--outgoing concert details-->
+                                <h4 class="card-title">{{ nearEventsTitle[3] }}</h4>                                                                 <!--outgoing event title-->
+                                <p class="card-text">{{ nearEventsDetails[3] }}</p>                                                                   <!--outgoing concert details-->
                                 <a href="eventDetails.html">                                                                                
                                     <button type="button" class="btn btn-danger">Read More</button>             
                                 </a>
