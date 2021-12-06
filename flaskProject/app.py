@@ -332,7 +332,7 @@ def eventDetails(eventId):  # put application's code here
                 #add occupant to event
                 db.updateEventOcp(cnx, cursor, eventId, eventOcp)
                 
-                return redirect(url_for("user"))
+                return redirect(url_for("index_userLoggedIn"))
             else:
                 #give error(filled or user already signed up)
                 print("ERROR: event filled or already signed up")
@@ -340,7 +340,7 @@ def eventDetails(eventId):  # put application's code here
                                        eventPrice=eventPrice, eventDescription=eventDescription,
                                        eventAddress=eventAddress, eventTags=eventTags)
 # END ADD USER FROM ATTENDING EVENT--------------------------
-            return redirect(url_for("user"))
+            return redirect(url_for("index_userLoggedIn"))
         else:
             return redirect(url_for("loginPage"))
     return render_template("eventDetails.html", eventDate=eventDate, eventTitle=eventTitle, eventPrice=eventPrice,
@@ -511,12 +511,12 @@ def createEvent():
                             , "userId", str(userId)) == False):
                 #print(test)
                 db.newEvent(cnx, cursor, cE)
-                return redirect(url_for("user"))
+                return redirect(url_for("index_userLoggedIn"))
             else:
                 print("ERROR: event already created by you")
                 return render_template("create_editEvents.html", userInfo=userInfo)
 #END NEW EVENT--------------------------------------------------------------
-            return redirect(url_for("user"))
+            return redirect(url_for("index_userLoggedIn"))
         else:
             return render_template("createEvent.html")
     else:
