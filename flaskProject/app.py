@@ -332,7 +332,7 @@ def eventDetails(eventId):  # put application's code here
                 #add occupant to event
                 db.updateEventOcp(cnx, cursor, eventId, eventOcp)
                 
-                return redirect(url_for("user"))
+                return redirect(url_for("index_userLoggedIn"))
             else:
                 #give error(filled or user already signed up)
                 print("ERROR: event filled or already signed up")
@@ -340,7 +340,7 @@ def eventDetails(eventId):  # put application's code here
                                        eventPrice=eventPrice, eventDescription=eventDescription,
                                        eventAddress=eventAddress, eventTags=eventTags)
 # END ADD USER FROM ATTENDING EVENT--------------------------
-            return redirect(url_for("user"))
+            return redirect(url_for("index_userLoggedIn"))
         else:
             return redirect(url_for("loginPage"))
     return render_template("eventDetails.html", eventDate=eventDate, eventTitle=eventTitle, eventPrice=eventPrice,
@@ -434,7 +434,7 @@ def search_browseEvents():  # put application's code here
 
 @app.route('/editEvent.html', methods=["POST", "GET"])
 @app.route('/editEvent.html', methods=["POST", "GET"])
-def editEvent():
+def editEvent(eventId):
     eventTitle = []
     eventAddress = []
     eventCity = []
@@ -449,7 +449,20 @@ def editEvent():
     eventDes = []
     userToAdd = []
     userToDelete = []
+    
+    userId = session["userId"]
 # GET EVENT-----------------------------------------
+    #check if event found by eventId
+    if (db.checkAny(cursor, "eventId", "events", "eventId", str(eventId),
+            "userId", str(userId)) == True):
+        #get all variables in event
+            [eId, eventName, eventStartDate, eventEndDate, eventDeadline, eventPrice, eventDescription,
+             eventCap, eventOcp, eventPoP, eventAddress,
+             eventCity, eventState, eventZip] = db.getEventByEId(cursor, eventId)
+    else:
+        #otherwise send back to search
+        print("You are not authorized to edit event")
+        return redirect(url_for('index'))
 # END GET EVENT-----------------------------------------
 
     if request.method == "POST":
@@ -471,8 +484,25 @@ def editEvent():
             eventDes = request.form["description"]
             userToAdd = request.form["addUser"]
             userToDelete = request.form["deleteUser"]
+
+            
 # UPDATE EVENT---------------------------------------------------
+            #check if event found by eventId
+            if (db.checkAny(cursor, "eventId", "events", "eventId", str(eventId),
+                    "eventId", str(eventId)) == True):
+                #update all variables
+                eE = getInputString([eventTitle, eventStartDate, eventEndDate, eventDeadline, eventPrice,
+                                     eventDes, eventCap, eventOcp, eventPoP, eventAddress, eventCity, eventState,
+                                     eventZip, userId])
+            else:
+                #otherwise send back to search
+                return redirect(url_for('search_browseEvents'))
 # END UPDATE EVENT---------------------------------------------------
+
+# NEED REMOVE EVENT BUTTON--------------------------------------------------*****
+# NEED REMOVE EVENT BUTTON--------------------------------------------------*****
+#NEED USER TO DELETE BUTTON--------------------------------------------------*****(Not sure how to go about it)
+#NEED USER TO DELETE BUTTON--------------------------------------------------*****
     else:
         return render_template("editEvent.html", eventTitle=eventTitle, eventAddress=eventAddress, eventCity=eventCity,
                                eventState=eventState, eventZip=eventZip, eventStartDate=eventStartDate, eventEndDate=
@@ -511,12 +541,12 @@ def createEvent():
                             , "userId", str(userId)) == False):
                 #print(test)
                 db.newEvent(cnx, cursor, cE)
-                return redirect(url_for("user"))
+                return redirect(url_for("index_userLoggedIn"))
             else:
                 print("ERROR: event already created by you")
                 return render_template("create_editEvents.html", userInfo=userInfo)
 #END NEW EVENT--------------------------------------------------------------
-            return redirect(url_for("user"))
+            return redirect(url_for("index_userLoggedIn"))
         else:
             return render_template("createEvent.html")
     else:
@@ -526,8 +556,22 @@ def createEvent():
 @app.route('/updatePersonalInfo', methods=["POST", "GET"])
 def updatePersonalInfo():
     if 'user' in session:
-#GET USER---------------------------------------
-#END GET USER---------------------------------------
+        user = session["user"]
+        userId = session["userId"]
+#^GET USER^-------------------------------------------------------------^
+        #: check if user found, then get user info into variables
+        if (db.checkAny(cursor, "userId", "users", "username", str(user),
+            "userId", str(userId)) == True):
+            
+            [uId, user, passwordId, uFN, uLN, uEmail,
+             uAd, uZip, uCity, uState,
+             uPhone] = db.getUser(cursor, str(user), str(password)) 
+            
+        else:
+            print("Error: The username does not match the userId")
+            return render_template("index_userLoggedIn.html")
+            
+#^END GET USER^-----------------------------------------------^
         if request.method == "POST":
             firstName = request.form["firstName"]
             lastName = request.form["lastName"]
@@ -539,7 +583,14 @@ def updatePersonalInfo():
             email = request.form["email"]
             phone = request.form["phone"]
 # UPDATE USER----------------------------------------------
+            #turn variables into string
+            eU= getStringInput([username, password, firstName, lastName, email, address, zipcode, city, state, phone])
+            #update user
+            userUpdate(cnx, cursor, userId, passwordId)
 #END UPDATE USER-------------------------------------------
+# NEED BUTTON TO REMOVE USER---------------------------------------****
+            userRemove(cnx, cursor, userId, passwordId)
+# NEED BUTTON TO REMOVE USER---------------------------------------****
             return redirect(url_for("user"))
         else:
             firstName = []
