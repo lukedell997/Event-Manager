@@ -62,21 +62,21 @@ def index():  # put application's code here
     
 #END ALL POPULAR EVENTS----------------------------------------------
 #GET ALL LOCATION EVENTS----------------------------------------------
-    locEventsId = []
-    locEventsTitle = []
-    locEventsSDate = []
-    locEventsEDate = []
-    locEventsDetails = []
-    locEventsState = []
+    nearEventsId = []
+    nearEventsTitle = []
+    nearEventsSDate = []
+    nearEventsEDate = []
+    nearEventsDetails = []
+    nearEventsState = []
 
     locEvents = db.getEventsByLoc(cursor, str("IL"))
     for tEvent in locEvents:
-        locEventsId.append(tEvent[0])
-        locEventsTitle.append(tEvent[1])
-        locEventsSDate.append(tEvent[2])
-        locEventsEDate.append(tEvent[3])
-        locEventsDetails.append(tEvent[6])
-        locEventsState.append(tEvent[12])
+        nearEventsId.append(tEvent[0])
+        nearEventsTitle.append(tEvent[1])
+        nearEventsSDate.append(tEvent[2])
+        nearEventsEDate.append(tEvent[3])
+        nearEventsDetails.append(tEvent[6])
+        nearEventsState.append(tEvent[12])
         
 #END ALL LOCATION EVENTS----------------------------------------------
     search = None
@@ -85,8 +85,8 @@ def index():  # put application's code here
         # DO A SEARCH IDK HOW YET
 
     return render_template("index.html", popEventsTitle=popEventsTitle, popEventsDetails=popEventsDetails,
-                           popEventsButton=popEventsButton, nearEventsTitle=nearEventsTitle,
-                           nearEventsDetails=nearEventsDetails, nearEventsButton=nearEventsButton, search=search)
+                           popEventsId=popEventsId, nearEventsTitle=nearEventsTitle,
+                           nearEventsDetails=nearEventsDetails, nearEventsId=nearEventsId, search=search)
 
 
 @app.route('/registerPage.html', methods=["POST", "GET"])
@@ -182,11 +182,11 @@ def user():
         userLoc = session["userState"]
 
 #GET ALL USER EVENTS ATTENDING------------------------------- NEEDS UPDATING
-        attendingEventsId = []
-        attendingEventsTitle = []  # FILL WITH USERES EVENTS
-        attendingEventsSDate = []  # FILL WITH 6 popular EVENTS
-        attendingEventsEDate = []  # FILL WITH 6 NEAR BY EVENTS
-        attendingEventsState = []
+        atEventsId = []
+        atEventsTitle = []  # FILL WITH USERES EVENTS
+        atEventsSDate = []  # FILL WITH 6 popular EVENTS
+        atEventsEDate = []  # FILL WITH 6 NEAR BY EVENTS
+        atEventsState = []
         
         
         #get user_events by userId
@@ -197,28 +197,28 @@ def user():
             evInfo = db.getEventsByEId(cursor, str(tupleEvent[2]))
 
             #add each section to list
-            attendingEventsId.append(evInfo[0])
-            attendingEventsTitle.append(evInfo[1])
-            attendingEventsSDate.append(evInfo[2]) 
-            attendingEventsEDate.append(evInfo[3])
-            attendingEventsState.append(evInfo[12])
+            atEventsId.append(evInfo[0])
+            atEventsTitle.append(evInfo[1])
+            atEventsSDate.append(evInfo[2]) 
+            atEventsEDate.append(evInfo[3])
+            atEventsState.append(evInfo[12])
 
 
 #END ALL USER EVENTS ATTENDING----------------------------------------    
 #GET ALL USER EVENTS ADMINISTRATING----------------------------------
-        adminEventsId = []
-        adminEventsTitle = []
-        adminEventsSDate = []
-        adminEventsEDate = []
-        adminEventsState = []
+        adEventsId = []
+        adEventsTitle = []
+        adEventsSDate = []
+        adEventsEDate = []
+        adEventsState = []
         
         adminEvents = db.getEventsByUser(cursor, str(userId))
         for tupleEvent2 in adminEvents:
-            adminEventsId.append(tupleEvent[0])
-            adminEventsTitle.append(tupleEvent2[1])
-            adminEventsSDate.append(tupleEvent2[2])
-            adminEventsEDate.append(tupleEvent2[3])
-            adminEventsState.append(tupleEvent2[12])
+            adEventsId.append(tupleEvent[0])
+            adEventsTitle.append(tupleEvent2[1])
+            adEventsSDate.append(tupleEvent2[2])
+            adEventsEDate.append(tupleEvent2[3])
+            adEventsState.append(tupleEvent2[12])
             
 #END ALL USER EVENTS ADMINISTRATING----------------------------------
 #GET ALL POPULAR EVENTS----------------------------------------------
@@ -266,11 +266,11 @@ def user():
                 search = request.form["searchbar"]
                 # DO A SEARCH
         else:
-            return render_template("index_userLoggedIn.html", name=user, myEventImage=myEventImage,
-                                   myEventTitle=myEventTitle, myEventDetails=myEventDetails,
-                                   attendingEventsTitle=attendingEventsTitle, attendingEventsDate=attendingEventsDate,
-                                   attendingEventsDeadline=attendingEventsDeadline, popEventTitle=popEventTitle,
-                                   popEventDetails=popEventDetails, search=search, popEventImage=popEventImage)
+            return render_template("index_userLoggedIn.html", name=user,
+                                   atEventsTitle=atEventsTitle, atEventsSDate=atEventsSDate, atEventsEDate=atEventsEDate, atEventsId=atEventsId,
+                                   adEventsTitle=adEventsTitle, adEventsSDate=adEventsSDate, adEventsEDate=adEventsEDate, adEventsId=adEventsId,
+                                   popEventsTitle=popEventsTitle, popEventsDetails=popEventsDetails,popEventsId=popEventsId,
+                                   nearEventsTitle=locEventsTitle, nearEventsDetails=locEventsDetails, nearEventsId=locEventsId, search=search)
 
     else:
         return redirect(url_for("loginPage"))  # ????
@@ -400,6 +400,11 @@ def search_browseEvents():  # put application's code here
     eventImage = []
     #eventPopulation = []
     #eventMaxPop = []
+
+#SEARCH BY KEYWORD----------------------------------#needs an indication
+    
+
+#SEARCH BY KEYWORD----------------------------------
 #SEARCH BY EVENT TAGS------------------------------#needs an indication
     tagName = "7"       #needs input from html
     tagEventsId = []
@@ -504,7 +509,7 @@ def editEvent(eventId):
 #NEED USER TO DELETE BUTTON--------------------------------------------------*****(Not sure how to go about it)
 #NEED USER TO DELETE BUTTON--------------------------------------------------*****
     else:
-        return render_template("editEvent.html", eventTitle=eventTitle, eventAddress=eventAddress, eventCity=eventCity,
+        return render_template("editEvent.html", eventTitle=eventName, eventAddress=eventAddress, eventCity=eventCity,
                                eventState=eventState, eventZip=eventZip, eventStartDate=eventStartDate, eventEndDate=
                                eventEndDate, eventPrice=eventPrice, eventCap=eventCap, eventDeadline=eventDeadline,
                                eventDeadlineTime=eventDeadlineTime, eventDes=eventDes, userToAdd=userToAdd,

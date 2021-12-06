@@ -65,6 +65,15 @@ class DataB:
                                                                                        pId,
                                                                                        pswd)
         return update
+    def update2(self, table, clm, value, uId, user, pId, pswd ):
+        update = "UPDATE {0} SET {1} = '{2}' WHERE {3} = {4} AND {5} = '{6}'".format(table,
+                                                                                       clm,
+                                                                                       value,
+                                                                                       uId,
+                                                                                       user,
+                                                                                       pId,
+                                                                                       pswd)
+        return update
     #REMOVE
     def remove(self, table, uId, user, pId, pswd):
         remove = "DELETE FROM {0} WHERE {1} = '{2}' AND {3} = '{4}'".format(table, uId, user,
@@ -95,8 +104,8 @@ class DataB:
             cursor.execute(db.insert("user_events", userClms, data))
             cnx.commit()
             return
-        except:
-            return -99
+        except Exception as e:
+            return e
 
     #REMOVE USER EVENTS
     def removeUEvents(self, cnx, cursor, userId, eventId):
@@ -104,8 +113,8 @@ class DataB:
             cursor.execute(db.remove("user_events", "userId", userId, "eventId", eventId))
             cnx.commit()
             return
-        except:
-            return -99
+        except Exception as e:
+            return e
 
         
     # UPDATE USER EVENTS
@@ -118,8 +127,8 @@ class DataB:
                                       str(userId), "eventId", str(eventId)))
                 cnx.commit()
                 return
-        except:
-            return -99
+        except Exception as e:
+            return e
 
     #GET USER EVENTS
     def getUEvents(self, cursor, userId, eventId, name):
@@ -157,8 +166,8 @@ class DataB:
             cursor.execute(db.insert("user_payment", userClms, data))
             cnx.commit()
             return
-        except:
-            return -99
+        except Exception as e:
+            return e
 
     #REMOVE USER PAYMENT
     def removeUPay(self, cnx, cursor, userId, name):
@@ -166,8 +175,8 @@ class DataB:
             cursor.execute(db.remove("user_payment", "userId", userId, "card_name", name))
             cnx.commit()
             return
-        except:
-            return -99
+        except Exception as e:
+            return e
 
         
     # UPDATE USER PAYMENT
@@ -180,8 +189,8 @@ class DataB:
                                       str(userId), "card_name", str(name)))
                 cnx.commit()
                 return
-        except:
-            return -99
+        except Exception as e:
+            return e
 
 
     #GET USER PAYMENT
@@ -214,24 +223,21 @@ class DataB:
             cursor.execute(db.remove("users", "userId", userId, "passwordId", passwordId))
             cnx.commit()
             return
-        except:
-            return -99
-
+        except Exception as e:
+            return e
         
-    # UPDATE USER: List of coulmns, and list of changes
-    def updateUser(self, cnx, cursor,userId, passwordId, clms, chng):
+    #UPDATE USER
+    def updateEvent(self, cnx, cursor, userId, pswd, chngs):
         try:
-            #for all elements in list: if password hash password given
-            for i in range (0, len(clms)):
-                if (clms[i] == "passwordId"):
-                    chng[i] = hashIt(chng[i])
-                #update the column
-                cursor.execute(db.update("users", str(clms[i]), str(chng[i]), "userId",
-                                        str(userId), "passwordId", str(passwordId)))
-                cnx.commit()
-                return
-        except:
-            return -99
+            clms = ''.join(("username, passwordId, first_name, last_name,",
+                            " email, address, zipcode, city, state, phone"))
+            cursor.execute(db.update2("users", str(clms), str(chngs),
+                                      "userId", str(userId), "passwordId", str(pswd)))
+            cnx.commit()
+            return
+        except Exception as e:
+            return e        
+
 
 
     #GET USER
@@ -253,8 +259,8 @@ class DataB:
             cursor.execute(db.insert("events", eventClms, data))
             cnx.commit()
             return
-        except:
-            return -99
+        except Exception as e:
+            return e
 
     #REMOVE EVENT
     def removeEvent(self, cnx, cursor, eventId, userId):
@@ -262,22 +268,21 @@ class DataB:
             cursor.execute(db.remove("events", "eventId", eventId, "userId", userId))
             cnx.commit()
             return
-        except:
-            return -99
+        except Exception as e:
+            return e
 
-    #UPDATE EVENTS
-    def updateEvent(self, cnx, cursor, eventId, userId, clms, chng):
+    #UPDATE EVENTS: ALL INFO as string
+    def updateEvent(self, cnx, cursor, eventId, userId, chngs):
         try:
-            #for all elements in list
-            for i in range (0, len(clms)):
-                #update the column
-                cursor.execute(db.update("events", str(clms[i]), str(chng[i]), "eventId",
-                                      str(eventId), "userId", str(userId)))
-                cnx.commit()
-                return
-        except:
-            return -99
-
+            clms = ''.join(("name, sDate, eDate, deadlineDate, price, desc,",
+                            " capacity, occupants, pub_pri, address, city,",
+                            " state, zipcode, userId"))
+            cursor.execute(db.update2("events", str(clms), str(chngs),
+                                      "eventId", str(eventId), "userId", str(userId)))
+            cnx.commit()
+            return
+        except Exception as e:
+            return e
 
     #UPDATE OCCUPANTS BY 1
     def updateEventOcp(self, cnx, cursor, eventId, pastOcp):
@@ -289,8 +294,8 @@ class DataB:
                                       str(eventId), "eventId", str(eventId)))
             cnx.commit()
             return
-        except:
-            return -99
+        except Exception as e:
+            return e
 
     #UPDATE OCCUPANTS BY -1
     def removeEventOcp(self,cnx, cursor, eventId):
@@ -308,8 +313,8 @@ class DataB:
                                          "eventId", str(eventId)))
                 cnx.commit()
             return
-        except:
-            return -99
+        except Exception as e:
+            return e
 
     #GET EVENT
     def getEventsByUser(self, cursor, userId):
@@ -341,7 +346,8 @@ class DataB:
         for(event) in cursor:
             events.append(event)
         return events
-    
+
+    #GET EVENT BY POPULARITY MOST TO LEAST
     def getEventsByPop(self, cursor):
         events = []
         po = ''.join(("SELECT * FROM events WHERE deadlineDate >= '",str(datetime.date.today()),
@@ -363,7 +369,15 @@ class DataB:
         for(event) in cursor:
             events.append(event)
         return events
+    
+    def getEventsByKeyword(self, cursor, word):
+        events = []
+        cursor.execute("SELECT * FROM events WHERE name LIKE '%s'"%(str(word,)))
+        print(cursor)
 
+        for (event) in cursor:
+            events.append(event)
+        return events
 
 #*****************************EVENT_TAGS*****************************************
     # CREATE EVENT TAGS
@@ -373,8 +387,8 @@ class DataB:
             cursor.execute(db.insert("event_tags", userClms, data))
             cnx.commit()
             return
-        except:
-            return -99
+        except Exception as e:
+            return e
 
 
     #REMOVE EVENT TAGS
@@ -383,73 +397,27 @@ class DataB:
             cursor.execute(db.remove("event_tags", "eventId", eventId, "tagId", tagId))
             cnx.commit()
             return
-        except:
-            return -99
+        except Exception as e:
+            return e
 
 
     #GET EVENT TAGS BY EVENT
     def getEventTagByEvent(self, cursor, eventId):
-        ur =''.join(("SELECT * FROM event_tags WHERE eventId = '",eventId, "'"))
+        ur =''.join(("SELECT * FROM event_tags WHERE eventId = '%s'"%(str(eventId),)))
         cursor.execute(ur)
         for (idU) in cursor:
             tags = [idU]
         return tags
 
     def getEventTagByTagId(self, cursor, tagId):
-        ur =''.join(("SELECT * FROM event_tags WHERE tagId = '",tagId, "'"))
+        ur =''.join(("SELECT * FROM event_tags WHERE tagId = '%s'"%(str(tagId),)))
         cursor.execute(ur)
         for (idU) in cursor:
             events = idU
         return events
-    #*****************************EVENT_SEATING*****************************************
-    # CREATE EVENT SEATING
-    def newEventSeating(self, cnx, cursor, data):
-        try:
-            userClms = ''.join(("seatingId, eventId, seatCat1, cat1Price,",
-                                " seatCat2, cat2Price, seatCat3, cat3Price,",
-                                " seatCat4, cat4Price, seatCat5, cat5Price,",
-                                " seatCat6, cat6Price,"))
-            cursor.execute(db.insert("event_seating", userClms, data))
-            cnx.commit()
-            return
-        except:
-            return -99
+     #-------------------------------------------------------
 
-    #UPDATE EVENT SEATING
-    def updateEventSeating(self, cnx, cursor, seatingId, eventId,  clms, chng):
-        try:
-            #for all elements in list
-            for i in range (0, len(clms)):
-                #update the column
-                cursor.execute(db.update("event_seating", str(clms[i]), str(chng[i]), "seatingId",
-                                      str(seatingId), "eventId", str(eventId)))
-                cnx.commit()
-                return
-        except:
-            return -99
-        
-    #REMOVE EVENT SEATING
-    def removeEventSeating(self, cnx, cursor, seatingId, eventId):
-        try:
-            cursor.execute(db.remove("event_seating", "seatingId", seatingId, "eventId", eventId))
-            cnx.commit()
-            return
-        except:
-            return -99
-
-
-    #GET EVENT SEATING
-    def getEventSeating(self, cursor, eventId, name):
-        ur =''.join(("SELECT * FROM event_seating WHERE eventId = '",eventId))
-        cursor.execute(ur)
-        for (idU) in cursor:
-            eventSeating = [idU]
-        return eventSeating
-
-
-    #-------------------------------------------------------
-
-
+    #check to see if in table
     def checkAny(self, cursor, clm, tbl, cd1, ans1, cd2, ans2):
         anyC = ''.join(("SELECT ALL ", clm," FROM ", tbl," WHERE ",cd1 ," = '",ans1 ,
                         "' AND ", cd2," = '",ans2 ,"'"))
@@ -463,6 +431,7 @@ class DataB:
         if it == 0:
             return False
 
+    #check if occupants is less than capacity
     def checkAvl(self, cursor, eId):
         anyC = ''.join(("SELECT ALL eventId FROM events WHERE eventId = '",eId ,
                         "' AND occupants < capacity"))
@@ -478,12 +447,13 @@ class DataB:
 
 
 ##
-db = DataB() 
-cnx, cursor = db.openDatabase()
+#db = DataB()
+#cnx, cursor = db.openDatabase()
 
-tagEvents = db.getEventTagByTagId(cursor, str(7))
-evInfo = db.getEventsByEId(cursor, str(tagEvents[1]))
-print(evInfo)
+#print(db.getEventsByKeyword(cursor, "%t%"))
+#tagEvents = db.getEventTagByTagId(cursor, str(7))
+#evInfo = db.getEventsByEId(cursor, str(tagEvents[1]))
+#print(evInfo)
 #print(db.getEventsByPop(cursor))
 #adminEventsId = []
 #adminEventsTitle = []
