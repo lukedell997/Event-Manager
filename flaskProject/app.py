@@ -102,7 +102,7 @@ def registerPage():  # put application's code here
         userPassword = request.form["pw"]
         userAddress = request.form["address"]
         userCity = request.form["city"]
-        userState = request.form["state"]
+        userState = request.form.get("state")
         userZipcode = 123456
         userEmail = request.form["email"]
         userNumber = request.form["phone"]
