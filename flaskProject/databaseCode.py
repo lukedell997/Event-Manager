@@ -41,7 +41,7 @@ class DataB:
     #==================END OPEN DATABASE =========================================
 
     # Turn into hash
-    def hashIt(pas):
+    def hashIt(self, pas):
         hash_pas = hashlib.md5(pas.encode("utf-8")).hexdigest()
         return hash_pas
     #encrypt
@@ -65,15 +65,7 @@ class DataB:
                                                                                        pId,
                                                                                        pswd)
         return update
-    def update2(self, table, clm, value, uId, user, pId, pswd ):
-        update = "UPDATE {0} SET {1} = '{2}' WHERE {3} = {4} AND {5} = '{6}'".format(table,
-                                                                                       clm,
-                                                                                       value,
-                                                                                       uId,
-                                                                                       user,
-                                                                                       pId,
-                                                                                       pswd)
-        return update
+
     #REMOVE
     def remove(self, table, uId, user, pId, pswd):
         remove = "DELETE FROM {0} WHERE {1} = '{2}' AND {3} = '{4}'".format(table, uId, user,
@@ -225,17 +217,22 @@ class DataB:
         except Exception as e:
             return e
         
-    #UPDATE USER
-    def updateEvent(self, cnx, cursor, userId, pswd, chngs):
+    # UPDATE USER: List of coulmns, and list of changes
+    def updateUser(self, cnx, cursor,userId, passwordId, clms, chng):
         try:
-            clms = ''.join(("username, passwordId, first_name, last_name,",
-                            " email, address, zipcode, city, state, phone"))
-            cursor.execute(db.update2("users", str(clms), str(chngs),
-                                      "userId", str(userId), "passwordId", str(pswd)))
-            cnx.commit()
-            return
+            #for all elements in list: if password hash password given
+            for i in range (0, len(clms)):
+                if (clms[i] == "passwordId"):
+                    chng[i] = db.hashIt(str(chng[i]))
+                    passwordId = chng[i]
+                #update the column
+                cursor.execute(self.update("users", str(clms[i]), str(chng[i]), "userId",
+                                        str(userId), "passwordId", str(passwordId)))
+                print(cursor)
+                cnx.commit()
+            return True
         except Exception as e:
-            return e        
+            return e       
 
 
 
@@ -244,6 +241,7 @@ class DataB:
         ur =''.join(("SELECT * FROM users WHERE username = '",
                      username,"' AND passwordId = '", pswd, "'"))
         cursor.execute(ur)
+        user = []
         for (idU) in cursor:
             user = idU
         return user
@@ -270,18 +268,18 @@ class DataB:
         except Exception as e:
             return e
 
-    #UPDATE EVENTS: ALL INFO as string
-    def updateEvent(self, cnx, cursor, eventId, userId, chngs):
+    #UPDATE EVENTS: ALL INFO as list
+    def updateEvent(self, cnx, cursor, eventId, userId, clms, chng):
         try:
-            clms = ''.join(("name, sDate, eDate, deadlineDate, price, desc,",
-                            " capacity, occupants, iTag, address, city,",
-                            " state, zipcode, userId"))
-            cursor.execute(db.update2("events", str(clms), str(chngs),
-                                      "eventId", str(eventId), "userId", str(userId)))
-            cnx.commit()
-            return
-        except Exception as e:
-            return e
+            #for all elements in list
+            for i in range (0, len(clms)):
+                #update the column
+                cursor.execute(db.update("events", str(clms[i]), str(chng[i]), "eventId",
+                                      str(eventId), "userId", str(userId)))
+                cnx.commit()
+                return
+        except:
+            return -99
 
     #UPDATE OCCUPANTS BY 1
     def updateEventOcp(self, cnx, cursor, eventId, pastOcp):
@@ -446,9 +444,18 @@ class DataB:
 
 
 ##
-#db = DataB()
-#cnx, cursor = db.openDatabase()
-
+db = DataB()
+cnx, cursor = db.openDatabase()
+userId = "7"
+passwordId = "HoHoH0"
+eU =["Santa", "hohoho", "Santa", "Claus", "HOHOHO@cheers.cheers", "01 North Pole", "00001", "North Pole", "NP", 1234567890]
+uC =["username","passwordId", "first_name", "last_name", "email", "address", "zipcode",
+                 "city", "state", "phone"]
+            #update user
+rt = db.updateUser(cnx, cursor, userId, passwordId, uC, eU)
+print(rt)
+#cursor.execute(db.updateOld("users", "phone", "1234567890", "userId", "6", "passwordId", "12345"))
+#cnx.commit()
 #print(db.getEventsByKeyword(cursor, "%t%"))
 #tagEvents = db.getEventTagByTagId(cursor, str(7))
 #evInfo = db.getEventsByEId(cursor, str(tagEvents[1]))
