@@ -69,7 +69,7 @@
 
         <!-- CONTENTS -->
         <div class="container"> 
-            <form action="#" method="POST">     <!--after submitting this form, redirect to manageEvents.html-->
+            <form action="manageEvents.html" method="POST">     <!--after submitting this form, redirect to manageEvents.html-->
                 <!-- CREATE / EDIT AN EVENT -->         
                 <div class="row row-content"> 
                     <div class="col">

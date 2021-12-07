@@ -214,7 +214,7 @@ def user():
         
         adminEvents = db.getEventsByUser(cursor, str(userId))
         for tupleEvent2 in adminEvents:
-            adEventsId.append(tupleEvent[0])
+            adEventsId.append(tupleEvent2[0])
             adEventsTitle.append(tupleEvent2[1])
             adEventsSDate.append(tupleEvent2[2])
             adEventsEDate.append(tupleEvent2[3])
@@ -288,7 +288,7 @@ def logout():
 @app.route('/eventDetails', methods=["POST", "GET"])
 def eventDetails():  # put application's code here
 
-    eventId = 1
+    eventId = 4
 #GET ALL EVENT INFO------------------------------------------------------------
     #check if event found by eventId
     if (db.checkAny(cursor, "eventId", "events", "eventId", str(eventId),
@@ -345,7 +345,7 @@ def eventDetails():  # put application's code here
                 #add occupant to event
                 db.updateEventOcp(cnx, cursor, eventId, eventOcp)
                 
-                return redirect(url_for("index_userLoggedIn"))
+                return redirect(url_for("user"))
             else:
                 #give error(filled or user already signed up)
                 print("ERROR: event filled or already signed up")
@@ -416,10 +416,13 @@ def manageEvents():  # put application's code here
         if 'leaveEvent' in request.form and request.method == "POST":
             user = session["user"]
             userId = session["userId"]
+            return f"Test"
+            
 # REMOVE USER FROM ATTENDING EVENT------------------------------------
             #if user found with event
             if (db.checkAny(cursor, "attendantId", "user_events", "userId",
                             str(userId), "eventId", str(eventId)) == True):
+                
 
                 #remove user from event attendance
                 db.removeUEvents(cnx, cursor, userId, eventId)
@@ -433,18 +436,18 @@ def manageEvents():  # put application's code here
                                        userAttendingEvents=atEventsTitle, atEventsSDate=atEventsSDate,
                                        atEventsEDate=atEventsEDate, atEventsId=atEventsId,
                                        atEventsCap=atEventsCap, atEventsOcp=atEventsOcp,
-                                       adEventsTitle=adEventsTitle, adEventsSDate=adEventsSDate,
+                                       usersEvents=adEventsTitle, adEventsSDate=adEventsSDate,
                                        adEventsEDate=adEventsEDate, adEventsId=adEventsId,
-                                       eventMaxPop=adEventsCap, adEventsOcp=adEventsOcp)
+                                       eventsMaxPop=adEventsCap, adEventsOcp=adEventsOcp)
             
 #END REMOVE USER FROM ATTENDING EVENT------------------------------------
         return render_template("manageEvents.html",
-                               atEventsTitle=atEventsTitle, atEventsSDate=atEventsSDate,
+                               userAttendingEvents=atEventsTitle, atEventsSDate=atEventsSDate,
                                atEventsEDate=atEventsEDate, atEventsId=atEventsId,
                                atEventsCap=atEventsCap, atEventsOcp=atEventsOcp,
-                               adEventsTitle=adEventsTitle, adEventsSDate=adEventsSDate,
+                               usersEvents=adEventsTitle, adEventsSDate=adEventsSDate,
                                adEventsEDate=adEventsEDate, adEventsId=adEventsId,
-                               adEventsCap=adEventsCap, adEventsOcp=adEventsOcp)
+                               eventsMaxPop=adEventsCap, adEventsOcp=adEventsOcp)
 
     else:
         return redirect(url_for("login"))  # ????
@@ -522,7 +525,7 @@ def editEvent(eventId):
         userId = session["userId"]
     else:
         redirect(url_for('loginPage'))
-# GET EVENT----------------------------------------------------------------
+# GET EVENT----------------------------------------------------------------^
     #check if event found by eventId
     if (db.checkAny(cursor, "eventId", "events", "eventId", str(eventId),
             "userId", str(userId)) == True):
@@ -553,7 +556,7 @@ def editEvent(eventId):
         #otherwise send back to search
         print("You are not authorized to edit event")
         return redirect(url_for('index'))
-# END GET EVENT------------------------------------------------------------------
+# END GET EVENT-------------------------------------------------------------^
 
 
     if request.method == "POST":
@@ -567,10 +570,12 @@ def editEvent(eventId):
             eventState = request.form["state"]
             eventZip = request.form["zip"]
             eventStartDate = request.form["startDate"]
+            eventStartTime = request.form["startTime"]
             eventEndDate = request.form["endDate"]
+            eventEndTime = request.form["endTime"]
             eventPrice = request.form["price"]
-            eventCap = request.form["maxCap"]
-            eventDeadline = request.form["deadline"]
+            eventCap = request.form["maxCapacity"]
+            eventDeadline = request.form["deadlineDate"]
             eventDeadlineTime = request.form["deadlineTime"]
             eventITag = request.form.get("eventTag")   #NEEDS CHECKING
             eventDes = request.form["description"]
@@ -618,40 +623,43 @@ def createEvent():
             eventTitle = request.form["title"]
             eventAddress = request.form["address"]
             eventCity = request.form["city"]
-            eventState = request.form["state"]
+            eventState = request.form.get("eventState")
             eventZip = request.form["zip"]
             eventStartDate = request.form["startDate"]
+            eventStartTime = request.form["endTime"]
             eventEndDate = request.form["endDate"]
+            eventEndTime = request.form["endTime"]
             eventPrice = request.form["price"]
-            eventCap = request.form["maxCap"]
-            eventDeadline = request.form["deadline"]
+            eventCap = request.form["maxCapacity"]
+            eventDeadline = request.form["deadlineDate"]
             eventDeadlineTime = request.form["deadlineTime"]
+            eventITag = request.form.get("eventTag")
             eventDes = request.form["description"]
-            userToAdd = request.form["addUser"]
-            userToDelete = request.form["deleteUser"]
+            #userToAdd = request.form["addUser"]
+            #userToDelete = request.form["deleteUser"]
             eventOcp = 0
             eventPoP = 0
             userId = session["userId"]
-#NEW EVENT--------------------------------------------------------------
+#NEW EVENT--------------------------------------------------------------^
             #turn to string
             cE = getInputString([eventTitle, eventStartDate, eventEndDate, eventDeadline, eventPrice, eventDes, eventCap,
-                                 eventOcp, eventPoP, eventAddress, eventCity, eventState, eventZip, userId])
+                                 eventOcp, eventITag, eventAddress, eventCity, eventState, eventZip, userId])
             #check if already exists: if not, create new
             if (db.checkAny(cursor, "eventId", "events", "name", str(eventTitle)
                             , "userId", str(userId)) == False):
-                #print(test)
-                db.newEvent(cnx, cursor, cE)
-                return redirect(url_for("index_userLoggedIn"))
+                
+                rt = db.newEvent(cnx, cursor, cE)
+                return redirect(url_for("user"))
             else:
                 print("ERROR: event already created by you")
-                return render_template("create_editEvents.html", userInfo=userInfo)
-#END NEW EVENT--------------------------------------------------------------
+                return render_template("create_editEvents.html")
+#END NEW EVENT--------------------------------------------------------------^
             return redirect(url_for("index_userLoggedIn"))
         else:
             return render_template("createEvent.html")
     else:
         redirect(url_for("loginPage"))
-
+############################################################################UPDATE USER#######################
 @app.route('/updatePersonalInfo.html', methods=["POST", "GET"])
 @app.route('/updatePersonalInfo', methods=["POST", "GET"])
 def updatePersonalInfo():
@@ -688,16 +696,15 @@ def updatePersonalInfo():
             
 # UPDATE USER---------------------------------------------- ******NEEDS WORK*******
             eU =[username, password, firstName, lastName, email, address, zipcode, city, state, phone]
-            uC =["username","passwordId", "first_name", "last_name", "email", "address", "zipcode",
-                 "city", "state", "phone"]
             #update user
-            rt = db.updateUser(cnx, cursor, userId, passwordId, uC, eU)
+            rt = db.updateUser(cnx, cursor, userId, passwordId, eU)
+            return redirect(url_for("user"))
 #END UPDATE USER-------------------------------------------
 # NEED BUTTON TO REMOVE USER---------------------------------------****
         if 'remove' in request.form:
 
             userRemove(cnx, cursor, userId, passwordId)
-            return redirect(url_for("user"))
+            return redirect(url_for("index.html"))
 # NEED BUTTON TO REMOVE USER---------------------------------------****)
         else:
             firstName = uFN

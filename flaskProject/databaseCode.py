@@ -94,7 +94,7 @@ class DataB:
         try:
             userClms = ''.join(("userId, eventId, userName, userEmail,",
                                 " paid, seat, price"))
-            cursor.execute(db.insert("user_events", userClms, data))
+            cursor.execute(self.insert("user_events", userClms, data))
             cnx.commit()
             return
         except Exception as e:
@@ -103,7 +103,7 @@ class DataB:
     #REMOVE USER EVENTS
     def removeUEvents(self, cnx, cursor, userId, eventId):
         try:
-            cursor.execute(db.remove("user_events", "userId", userId, "eventId", eventId))
+            cursor.execute(self.remove("user_events", "userId", userId, "eventId", eventId))
             cnx.commit()
             return
         except Exception as e:
@@ -116,7 +116,7 @@ class DataB:
             #for all elements in list: if password hash password given
             for i in range (0, len(clms)):
                 #update the column
-                cursor.execute(db.update("user_events", str(clms[i]), str(chng[i]), "userId",
+                cursor.execute(self.update("user_events", str(clms[i]), str(chng[i]), "userId",
                                       str(userId), "eventId", str(eventId)))
                 cnx.commit()
                 return
@@ -154,7 +154,7 @@ class DataB:
     def newUPay(self, cnx, cursor, data):
         try:
             userClms = ''.join(("userId, card_name, cvc, expiration date, number"))
-            cursor.execute(db.insert("user_payment", userClms, data))
+            cursor.execute(self.insert("user_payment", userClms, data))
             cnx.commit()
             return
         except Exception as e:
@@ -163,7 +163,7 @@ class DataB:
     #REMOVE USER PAYMENT
     def removeUPay(self, cnx, cursor, userId, name):
         try:
-            cursor.execute(db.remove("user_payment", "userId", userId, "card_name", name))
+            cursor.execute(self.remove("user_payment", "userId", userId, "card_name", name))
             cnx.commit()
             return
         except Exception as e:
@@ -176,7 +176,7 @@ class DataB:
             #for all elements in list: if password hash password given
             for i in range (0, len(clms)):
                 #update the column
-                cursor.execute(db.update("user_payment", str(clms[i]), str(chng[i]), "userId",
+                cursor.execute(self.update("user_payment", str(clms[i]), str(chng[i]), "userId",
                                       str(userId), "card_name", str(name)))
                 cnx.commit()
                 return
@@ -200,41 +200,40 @@ class DataB:
 
     # CREATE NEW USER
     def newUser(self, cnx, cursor, data):
-        userClms = ''.join(("username, passwordId, first_name, last_name,",
+        try:
+            userClms = ''.join(("username, passwordId, first_name, last_name,",
                             "email, address, zipcode, city, state, phone"))
-        cursor.execute(DataB.insert(self, "users", userClms, data))
-        cnx.commit()
-        return
+            cursor.execute(self.insert( "users", userClms, data))
+            cnx.commit()
+            return
+        except Exception as e:
+            return e
+        
 
   
 
     #REMOVE USER
     def removeUser(self, cnx, cursor, userId, passwordId):
         try:
-            cursor.execute(db.remove("users", "userId", userId, "passwordId", passwordId))
+            cursor.execute(self.remove("users", "userId", userId, "passwordId", passwordId))
             cnx.commit()
             return
         except Exception as e:
             return e
-        
-    # UPDATE USER: List of coulmns, and list of changes
-    def updateUser(self, cnx, cursor,userId, passwordId, clms, chng):
+
+    #UPDATE USER    
+    def updateUser(self, cnx, cursor, userId, passwordId, uC):
         try:
-            #for all elements in list: if password hash password given
-            for i in range (0, len(clms)):
-                if (clms[i] == "passwordId"):
-                    chng[i] = db.hashIt(str(chng[i]))
-                    passwordId = chng[i]
-                #update the column
-                cursor.execute(self.update("users", str(clms[i]), str(chng[i]), "userId",
-                                        str(userId), "passwordId", str(passwordId)))
-                print(cursor)
-                cnx.commit()
+            uU = ''.join(("UPDATE users SET username = '%s', passwordId = '%s',"%(str(uC[0]),str(uC[1])),
+                      " first_name = '%s', last_name = '%s',"%(str(uC[2]),str(uC[3])),
+                      " email = '%s', address = '%s', zipcode = '%s',"%(str(uC[4]),str(uC[5]), str(uC[6])),
+                      " city = '%s', state = '%s', phone = '%s'"%(str(uC[7]),str(uC[8]), str(uC[9])),
+                      " WHERE userId ='%s' AND passwordId = '%s'"%(str(userId),str(passwordId))))
+            cursor.execute(uU)
+            cnx.commit()
             return True
         except Exception as e:
-            return e       
-
-
+            return e        
 
     #GET USER
     def getUser(self, cursor, username, pswd):
@@ -251,9 +250,12 @@ class DataB:
     #ADD EVENT
     def newEvent(self, cnx, cursor, data):
         try:
-            eventClms = ''.join(("name, date, deadlineDate, price, desc, capacity,",
-                                "iTag, address, zipcode, state, userId"))
-            cursor.execute(db.insert("events", eventClms, data))
+            eventClms = ''.join(("name, sDate, eDate, deadlineDate, price, des,",
+                                 " capacity, occupants, iTag, address,",
+                                 " city, state, zipcode, userId"))
+            ts = self.insert("events", eventClms, data)
+            cursor.execute(ts)
+            print(cursor)
             cnx.commit()
             return
         except Exception as e:
@@ -262,24 +264,26 @@ class DataB:
     #REMOVE EVENT
     def removeEvent(self, cnx, cursor, eventId, userId):
         try:
-            cursor.execute(db.remove("events", "eventId", eventId, "userId", userId))
+            cursor.execute(self.remove("events", "eventId", eventId, "userId", userId))
             cnx.commit()
             return
         except Exception as e:
             return e
-
-    #UPDATE EVENTS: ALL INFO as list
-    def updateEvent(self, cnx, cursor, eventId, userId, clms, chng):
+        
+    #UPDATE EVENT    
+    def updateEvent(self, cnx, cursor, eventId, userId, uC):
         try:
-            #for all elements in list
-            for i in range (0, len(clms)):
-                #update the column
-                cursor.execute(db.update("events", str(clms[i]), str(chng[i]), "eventId",
-                                      str(eventId), "userId", str(userId)))
-                cnx.commit()
-                return
-        except:
-            return -99
+            uU = ''.join(("UPDATE events SET name = '%s', sDate = '%s',"%(str(uC[0]),str(uC[1])),
+                      " eDate = '%s', deadlineDate = '%s',"%(str(uC[2]),str(uC[3])),
+                      " price = '%s', des = '%s', capacity = '%s',"%(str(uC[4]),str(uC[5]), str(uC[6])),
+                      " occupants = '%s', iTag = '%s', address = '%s'"%(str(uC[7]),str(uC[8]), str(uC[9])),
+                      " city = '%s', state = '%s', zipcode = '%s'"%(str(uC[10]),str(uC[11]), str(uC[12])),
+                      " WHERE eventId ='%s' AND userId = '%s'"%(str(eventId),str(userId))))
+            cursor.execute(uU)
+            cnx.commit()
+            return True
+        except Exception as e:
+            return e
 
     #UPDATE OCCUPANTS BY 1
     def updateEventOcp(self, cnx, cursor, eventId, pastOcp):
@@ -287,7 +291,7 @@ class DataB:
             #get occupant as old plus 1
             ocp = int(pastOcp) + 1
             #update
-            cursor.execute(db.update("events", "occupants", str(ocp), "eventId",
+            cursor.execute(self.update("events", "occupants", str(ocp), "eventId",
                                       str(eventId), "eventId", str(eventId)))
             cnx.commit()
             return
@@ -298,14 +302,14 @@ class DataB:
     def removeEventOcp(self,cnx, cursor, eventId):
         try:
             #get event info
-            event = db.getEventByEId(cursor, eventId)
+            event = self.getEventByEId(cursor, eventId)
             if(event[8] == 0):
                 return
             else:
                 #get occupant as old minus 1
                 ocp = int(event[8]) - 1
                 #update
-                cursor.execute(db.update("events", "occupants", str(ocp),
+                cursor.execute(self.update("events", "occupants", str(ocp),
                                          "eventId", str(eventId),
                                          "eventId", str(eventId)))
                 cnx.commit()
@@ -381,7 +385,7 @@ class DataB:
     def newEventTag(self, cnx, cursor, data):
         try:
             userClms = ''.join(("eventId, tagId"))
-            cursor.execute(db.insert("event_tags", userClms, data))
+            cursor.execute(self.insert("event_tags", userClms, data))
             cnx.commit()
             return
         except Exception as e:
@@ -391,7 +395,7 @@ class DataB:
     #REMOVE EVENT TAGS
     def removeEventTag(self, cnx, cursor, eventId, tagId):
         try:
-            cursor.execute(db.remove("event_tags", "eventId", eventId, "tagId", tagId))
+            cursor.execute(self.remove("event_tags", "eventId", eventId, "tagId", tagId))
             cnx.commit()
             return
         except Exception as e:
@@ -443,17 +447,24 @@ class DataB:
             return False
 
 
+
+    
 ##
-db = DataB()
-cnx, cursor = db.openDatabase()
-userId = "7"
-passwordId = "HoHoH0"
-eU =["Santa", "hohoho", "Santa", "Claus", "HOHOHO@cheers.cheers", "01 North Pole", "00001", "North Pole", "NP", 1234567890]
-uC =["username","passwordId", "first_name", "last_name", "email", "address", "zipcode",
-                 "city", "state", "phone"]
+#db = DataB()
+#cnx, cursor = db.openDatabase()
+
+
+#cE = "'Test', '2022-04-04', '2022-04-04', '2022-04-04', '0', 'test', '23', '18', '3', '123 main st', 'Town', 'IL', '12345', '30'"
+#print(db.newEvent(cnx, cursor, cE))
+
+#userId = "7"
+#passwordId = "hohoho"
+#eU =["Santa", "hohoho", "Santa", "Claus", "HOHOHO@cheers.cheers", "01 North Pole", "00001", "North Pole", "NP", 1234567890]
+#uC =["username","passwordId", "first_name", "last_name", "email", "address", "zipcode",
+                # "city", "state", "phone"]
             #update user
-rt = db.updateUser(cnx, cursor, userId, passwordId, uC, eU)
-print(rt)
+#rt = db.updateUser(cnx, cursor, userId, passwordId, eU)
+#print(rt)
 #cursor.execute(db.updateOld("users", "phone", "1234567890", "userId", "6", "passwordId", "12345"))
 #cnx.commit()
 #print(db.getEventsByKeyword(cursor, "%t%"))
