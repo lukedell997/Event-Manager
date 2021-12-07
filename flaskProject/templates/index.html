@@ -146,7 +146,7 @@
                 <div class="owl-carousel owl-theme">
 
                     <div class="ms-2 me-2">
-                        <div class="card">
+                        <div class="card" id="nearEvent0">
                             <img src="{{ url_for('static', filename='img/concertEvent.jpg')}}" alt="Concert Event" class="card-img-top">    <!--outgoing event image-->
                             <div class="card-body">
                                 <h4 class="card-title">{{ nearEventsTitle[0] }}</h4>                                                                  <!--outgoing event title-->
@@ -159,7 +159,7 @@
                     </div>  <!--ms-2 me-2-->
 
                     <div class="ms-2 me-2">
-                        <div class="card">
+                        <div class="card" id="nearEvent1">
                             <img src="{{ url_for('static', filename='img/conferenceEvent.jpg')}}" alt="Conference Event" class="card-img-top">  <!--outgoing event image-->
                             <div class="card-body">
                                 <h4 class="card-title">{{ nearEventsTitle[1] }}</h4>                                                                   <!--outgoing event title-->
@@ -172,7 +172,7 @@
                     </div>  <!--ms-2 me-2-->
 
                     <div class="ms-2 me-2">
-                        <div class="card">
+                        <div class="card" id="nearEvent2">
                             <img src="{{ url_for('static', filename='img/dinnerEvent.jpg')}}" alt="Dinner Event" class="card-img-top">  <!--outgoing event image-->
                             <div class="card-body">
                                 <h4 class="card-title">{{ nearEventsTitle[2] }}</h4>                                                               <!--outgoing event title-->
@@ -185,7 +185,7 @@
                     </div>  <!--ms-2 me-2-->
 
                     <div class="ms-2 me-2">
-                        <div class="card">
+                        <div class="card" id="nearEvent3">
                             <img src="{{ url_for('static', filename='img/festivalEvent.jpg')}}" alt="Festival Event" class="card-img-top">  <!--outgoing event image-->
                             <div class="card-body">
                                 <h4 class="card-title">{{ nearEventsTitle[3] }}</h4>                                                                 <!--outgoing event title-->
@@ -247,5 +247,6 @@
 
         <!-- Custom Scripts-->
         <script src="{{ url_for('static', filename='js/scripts.js')}}"></script>
+		<script src="{{ url_for('static', filename='js/eventLoop.js')}}"></script>
     </body>
 </html>

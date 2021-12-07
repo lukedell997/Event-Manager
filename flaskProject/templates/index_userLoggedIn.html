@@ -74,15 +74,15 @@
             <div class="row row-content">
                 <!-- YOUR EVENTS -->
                 <div class="col-12 col-md-6 mx-auto">  
-                    <h2>Your Events</h2>
+                    <h2>{{ name }}'s Events</h2>
                     <div id="homeCarousel" class="carousel slide" data-ride="carousel"> 
                         <div class="carousel-inner">   
                             <div class="carousel-item active"> 
                                 <a href="eventDetails.html">
                                     <img class="d-block w-100" src="{{ url_for('static', filename='img/concertEvent.jpg')}}" alt="Concert Event" />                <!--outgoing event image-->
                                     <div class="carousel-caption">
-                                        <h3>Event 1</h3>                                                                        <!--outgoing event title-->
-                                        <p class="d-none d-sm-block">Date & Time</p>                                            <!--outgoing event date & time-->
+                                        <h3>{{ adEventsTitle[0] }}</h3>                                                                        <!--outgoing event title-->
+                                        <p class="d-none d-sm-block">Date: {{ adEventsSDate[0] }}-{{ adEventsEDate[0] }} & Time: </p>                                            <!--outgoing event date & time-->
                                     </div>  <!--carousel-caption-->
                                 </a>
                             </div>  <!--carousel-item-->
@@ -90,8 +90,8 @@
                                 <a href="eventDetails.html">
                                     <img class="d-block w-100" src="{{ url_for('static', filename='img/conferenceEvent.jpg')}}" alt="Conference Event" />          <!--outgoing event image-->
                                     <div class="carousel-caption">
-                                        <h3>Event 2</h3>                                                                        <!--outgoing event title-->
-                                        <p class="d-none d-sm-block">Date & Time</p>                                            <!--outgoing event date & time-->
+                                        <h3>{{ adEventsTitle[1] }}</h3>                                                                        <!--outgoing event title-->
+                                        <p class="d-none d-sm-block">Date: {{ adEventsSDate[1] }}-{{ adEventsEDate[1] }} & Time: </p>                                            <!--outgoing event date & time-->
                                     </div>  <!--carousel-caption-->
                                 </a>
                             </div>  <!--carousel-item-->
@@ -99,8 +99,8 @@
                                 <a href="eventDetails.html">
                                     <img class="d-block w-100" src="{{ url_for('static', filename='img/dinnerEvent.jpg')}}"" alt="Dinner Event" />                  <!--outgoing event image-->
                                     <div class="carousel-caption">
-                                        <h3>Event 3</h3>                                                                        <!--outgoing event title-->
-                                        <p class="d-none d-sm-block">Date & Time</p>                                            <!--outgoing event date & time-->
+                                        <h3>{{ adEventsTitle[2] }}</h3>                                                                        <!--outgoing event title-->
+                                        <p class="d-none d-sm-block">Date: {{ adEventsSDate[2] }}-{{ adEventsEDate[2] }} & Time: </p>                                            <!--outgoing event date & time-->
                                     </div>  <!--carousel-caption-->
                                 </a>
                             </div>  <!--carousel item-->
@@ -108,8 +108,8 @@
                                 <a href="eventDetails.html">
                                     <img class="d-block w-100" src="{{ url_for('static', filename='img/festivalEvent.jpg')}}" alt="Festival Event" />              <!--outgoing event image-->
                                     <div class="carousel-caption">
-                                        <h3>Event 4</h3>                                                                        <!--outgoing event title-->
-                                        <p class="d-none d-sm-block">Date & Time</p>                                            <!--outgoing event date & time-->
+                                        <h3>{{ adEventsTitle[3] }}</h3>                                                                        <!--outgoing event title-->
+                                        <p class="d-none d-sm-block">Date: {{ adEventsSDate[3] }}-{{ adEventsEDate[3] }} & Time: </p>                                            <!--outgoing event date & time-->
                                     </div>  <!--carousel-caption-->
                                 </a>
                             </div>  <!--carousel-item-->
@@ -134,26 +134,26 @@
                         <div class="scrollable">
                             <ul class="list-group list-group-hover">
                                 <li class="list-group-item w-100">
-                                    <a id="event1" class="lead" href="eventDetails.html">Event #1</a> </br>                 <!--outgoing event title-->
-                                    <i class="fa fa-calendar" aria-hidden="true"></i> Event Date (From-To)                  <!--outgoing event date & time-->
+                                    <a id="event1" class="lead" href="eventDetails.html">{{ atEventsTitle[0] }}</a> </br>                 <!--outgoing event title-->
+                                    <i class="fa fa-calendar" aria-hidden="true"></i>Date: {{ atEventsSDate[0] }}-{{ atEventsEDate[0] }}                  <!--outgoing event date & time-->
                                     <span class="text-muted"></span> </br>
                                     <i class="fa fa-clock-o" aria-hidden="true"></i> Deadline                               <!--outgoing event deadline-->
                                 </li>
                                 <li class="list-group-item w-100">
-                                    <a id="event2" class="lead" href="eventDetails.html">Event #2</a> </br>                 <!--outgoing event title-->
-                                    <i class="fa fa-calendar" aria-hidden="true"></i> Event Date (From-To)                  <!--outgoing event date & time-->
+                                    <a id="event2" class="lead" href="eventDetails.html">{{ atEventsTitle[1] }}</a> </br>                 <!--outgoing event title-->
+                                    <i class="fa fa-calendar" aria-hidden="true"></i> Date: {{ atEventsSDate[1] }}-{{ atEventsEDate[1] }}                <!--outgoing event date & time-->
                                     <span class="text-muted"></span> </br>
                                     <i class="fa fa-clock-o" aria-hidden="true"></i> Deadline                               <!--outgoing event deadline-->
                                 </li>
                                 <li class="list-group-item w-100">
-                                    <a id="event3" class="lead" href="eventDetails.html">Event #3</a> </br>                 <!--outgoing event title-->
-                                    <i class="fa fa-calendar" aria-hidden="true"></i> Event Date (From-To)                  <!--outgoing event date & time-->
+                                    <a id="event3" class="lead" href="eventDetails.html">{{ atEventsTitle[2] }}</a> </br>                 <!--outgoing event title-->
+                                    <i class="fa fa-calendar" aria-hidden="true"></i>Date: {{ atEventsSDate[2] }}-{{ atEventsEDate[2] }}                  <!--outgoing event date & time-->
                                     <span class="text-muted"></span> </br>
                                     <i class="fa fa-clock-o" aria-hidden="true"></i> Deadline                               <!--outgoing event deadline-->
                                 </li>
                                 <li class="list-group-item w-100">
-                                    <a id="event4" class="lead" href="eventDetails.html">Event #4</a> </br>                 <!--outgoing event title-->
-                                    <i class="fa fa-calendar" aria-hidden="true"></i> Event Date (From-To)                  <!--outgoing event date & time-->
+                                    <a id="event4" class="lead" href="eventDetails.html">{{ atEventsTitle[3] }}</a> </br>                 <!--outgoing event title-->
+                                    <i class="fa fa-calendar" aria-hidden="true"></i>Date: {{ atEventsSDate[3] }}-{{ atEventsEDate[3] }}                  <!--outgoing event date & time-->
                                     <span class="text-muted"></span> </br>
                                     <i class="fa fa-clock-o" aria-hidden="true"></i> Deadline                               <!--outgoing event deadline-->
                                 </li>
@@ -174,8 +174,8 @@
                         <div class="card">
                             <img src="{{ url_for('static', filename='img/concertEvent.jpg')}}" alt="Concert Event" class="card-img-top">    <!--outgoing event image-->
                             <div class="card-body">
-                                <h4 class="card-title">Concert Events</h4>                                                                  <!--outgoing event title-->
-                                <p class="card-text">Concert details</p>                                                                    <!--outgoing event details-->
+                                <h4 class="card-title">{{ popEventsTitle[0] }}</h4>                                                                  <!--outgoing event title-->
+                                <p class="card-text">{{ popEventsDetails[0] }}</p>                                                                    <!--outgoing event details-->
                                 <a href="eventDetails.html">                                                                                    
                                     <button type="button" class="btn btn-danger">Read More</button>             
                                 </a>
@@ -187,8 +187,8 @@
                         <div class="card">
                             <img src="{{ url_for('static', filename='img/conferenceEvent.jpg')}}" alt="Conference Event" class="card-img-top">  <!--outgoing event image-->
                             <div class="card-body">
-                                <h4 class="card-title">Conference Events</h4>                                                                   <!--outgoing event title-->
-                                <p class="card-text">Conference details</p>                                                                     <!--outgoing event details-->
+                                <h4 class="card-title">{{ popEventsTitle[1] }}</h4>                                                                   <!--outgoing event title-->
+                                <p class="card-text">{{ popEventsDetails[1] }}</p>                                                                     <!--outgoing event details-->
                                 <a href="eventDetails.html">                                                                                    
                                     <button type="button" class="btn btn-danger">Read More</button>             
                                 </a>
@@ -200,8 +200,8 @@
                         <div class="card">
                             <img src="{{ url_for('static', filename='img/dinnerEvent.jpg')}}" alt="Dinner Event" class="card-img-top">  <!--outgoing event image-->
                             <div class="card-body">
-                                <h4 class="card-title">Dinner Events</h4>                                                               <!--outgoing event title-->
-                                <p class="card-text">Dinner details</p>                                                                 <!--outgoing event details-->
+                                <h4 class="card-title">{{ popEventsTitle[2] }}</h4>                                                               <!--outgoing event title-->
+                                <p class="card-text">{{ popEventsDetails[2] }}</p>                                                                 <!--outgoing event details-->
                                 <a href="eventDetails.html">                                                                                    
                                     <button type="button" class="btn btn-danger">Read More</button>             
                                 </a>
@@ -213,8 +213,8 @@
                         <div class="card">
                             <img src="{{ url_for('static', filename='img/festivalEvent.jpg')}}" alt="Festival Event" class="card-img-top">  <!--outgoing event image-->
                             <div class="card-body">
-                                <h4 class="card-title">Festival Events</h4>                                                                 <!--outgoing event title-->
-                                <p class="card-text">Festival details</p>                                                                   <!--outgoing event details-->
+                                <h4 class="card-title">{{ popEventsTitle[3] }}</h4>                                                                 <!--outgoing event title-->
+                                <p class="card-text">{{ popEventsDetails[3] }}</p>                                                                   <!--outgoing event details-->
                                 <a href="eventDetails.html">                                                                                    
                                     <button type="button" class="btn btn-danger">Read More</button>             
                                 </a>
@@ -235,8 +235,8 @@
                         <div class="card">
                             <img src="{{ url_for('static', filename='img/concertEvent.jpg')}}" alt="Concert Event" class="card-img-top">    <!--outgoing event image-->
                             <div class="card-body">
-                                <h4 class="card-title">Concert Events</h4>                                                                  <!--outgoing event title-->
-                                <p class="card-text">Concert details</p>                                                                    <!--outgoing event details-->
+                                <h4 class="card-title">{{ nearEventsTitle[0] }}</h4>                                                                  <!--outgoing event title-->
+                                <p class="card-text">{{ nearEventsDetails[0] }}</p>                                                                    <!--outgoing event details-->
                                 <a href="eventDetails.html">                                                                                
                                     <button type="button" class="btn btn-danger">Read More</button>             
                                 </a>
@@ -248,8 +248,8 @@
                         <div class="card">
                             <img src="{{ url_for('static', filename='img/conferenceEvent.jpg')}}" alt="Conference Event" class="card-img-top">  <!--outgoing event image-->
                             <div class="card-body">
-                                <h4 class="card-title">Conference Events</h4>                                                                   <!--outgoing event title-->
-                                <p class="card-text">Conference details</p>                                                                     <!--outgoing event details-->
+                                <h4 class="card-title">{{ nearEventsTitle[1] }}</h4>                                                                   <!--outgoing event title-->
+                                <p class="card-text">{{ nearEventsDetails[1] }}</p>                                                                     <!--outgoing event details-->
                                 <a href="eventDetails.html">                                                                                
                                     <button type="button" class="btn btn-danger">Read More</button>             
                                 </a>
@@ -261,8 +261,8 @@
                         <div class="card">
                             <img src="{{ url_for('static', filename='img/dinnerEvent.jpg')}}" alt="Dinner Event" class="card-img-top">  <!--outgoing event image-->
                             <div class="card-body">
-                                <h4 class="card-title">Dinner Events</h4>                                                               <!--outgoing event title-->
-                                <p class="card-text">Dinner details</p>                                                                 <!--outgoing event details-->
+                                <h4 class="card-title">{{ nearEventsTitle[2] }}</h4>                                                               <!--outgoing event title-->
+                                <p class="card-text">{{ nearEventsDetails[2] }} </p>                                                                 <!--outgoing event details-->
                                 <a href="eventDetails.html">                                                                                
                                     <button type="button" class="btn btn-danger">Read More</button>             
                                 </a>
@@ -274,8 +274,8 @@
                         <div class="card">  
                             <img src="{{ url_for('static', filename='img/festivalEvent.jpg')}}" alt="Festival Event" class="card-img-top">  <!--outgoing event image-->
                             <div class="card-body"> 
-                                <h4 class="card-title">Festival Events</h4>                                                                 <!--outgoing event title-->
-                                <p class="card-text">Festival details</p>                                                                   <!--outgoing event details-->
+                                <h4 class="card-title">{{ nearEventsTitle[3] }}</h4>                                                                 <!--outgoing event title-->
+                                <p class="card-text">{{ nearEventsDetails[3] }}</p>                                                                   <!--outgoing event details-->
                                 <a href="eventDetails.html">                                                                                
                                     <button type="button" class="btn btn-danger">Read More</button>             
                                 </a>

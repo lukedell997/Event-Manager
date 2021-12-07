@@ -76,23 +76,23 @@
                         <h2>Edit Event</h2>                  
 
                         <div class="form-group">
-                            <label for="eventTitle">Event Title</label>
+                            <label for="eventTitle">{{ eventTitle }}</label>
                             <input type="text" class="form-control" id="eventTitle" placeholder="Event Name" name="title">          <!--outgoing event title-->
                         </div>  <!--row-->
 
                         <div class="form-group">
-                            <label for="eventAddress">Address</label>
+                            <label for="eventAddress">{{ eventAddress }}</label>
                             <input type="text" class="form-control" id="eventAddress" placeholder="Street" name="address">           <!--outgoing event street-->
                         </div>                
 
                         <div class="form-row">
                             <div class="form-group col-md-6">
-                                <label for="eventCity">City</label>
+                                <label for="eventCity">{{ eventCity }}</label>
                                 <input type="text" class="form-control" id="eventCity" name="city">                                 <!--outgoing event city-->
                             </div>
 
                             <div class="form-group col-md-4">
-                                <label for="eventState">State</label>
+                                <label for="eventState">{{ eventState }}</label>
                                 <select id="eventState" class="form-control">                                                       <!--outgoing event state-->
                                     <option selected>Select...</option>
                                     <option value="AL">Alabama</option>
@@ -150,20 +150,20 @@
                             </div>
 
                             <div class="form-group col-md-2">
-                                <label for="eventZip">Zip</label>
+                                <label for="eventZip">{{ eventZip }}</label>
                                 <input type="text" class="form-control" id="eventZip" name="zip">                           <!--outgoing event zip-->
                             </div>
                         </div>  <!--row-->     
 
                         <div class="form-row">
                             <div class="form-group col-md-6">
-                                <label for="eventStartDate">Starts</label>
+                                <label for="eventStartDate">{{ eventStartDate }}</label>
                                 <input type="date" class="form-control" id="eventStartDate" name="startDate">               <!--outgoing start date-->
                                 <input type="time" class="form-control" id="eventStartTime" name="startTime">               <!--outgoing start time-->
                             </div>
 
                             <div class="form-group col-md-6">
-                                <label for="eventEndDate">Ends</label>
+                                <label for="eventEndDate">{{ eventEndDate }}</label>
                                 <input type="date" class="form-control" id="eventEndDate" name="endDate">                   <!--outgoing end date-->
                                 <input type="time" class="form-control" id="eventEndTime" name="endTime">                   <!--outgoing end time-->
                             </div>
@@ -173,18 +173,18 @@
                             <div class="form-group col-md-6">
                                 <div class="row">
                                     <div class="col">
-                                        <label for="eventPrice">Price</label>
+                                        <label for="eventPrice">{{ eventPrice }}</label>
                                         <input type="number" step="0.01" min="0.01" class="form-control" id="eventPrice" placeholder="0.00" name="price">    <!--outgoing event price-->
                                     </div>
                                     <div class="col">
-                                        <label for="eventCapacity">Max Capacity</label>
+                                        <label for="eventCapacity">{{ eventCap }}</label>
                                         <input type="number" min="1" class="form-control" id="eventCapacity" name="maxCapacity">                             <!--outgoing event capacity-->
                                     </div>
                                 </div>
                             </div>
 
                             <div class="form-group col-md-6">
-                                <label for="deadlineDate">Registration Deadline</label>
+                                <label for="deadlineDate">{{ eventDeadLine }}</label>
                                 <input type="date" class="form-control" id="deadlineDate" name="deadlineDate">              <!--outgoing deadline date-->
                                 <input type="time" class="form-control" id="deadlineTime" name="deadlineTime">              <!--outgoing deadline time-->
                             </div>
@@ -216,7 +216,7 @@
                             </div>
                        
                             <div class="form-group col-md-9">
-                                <label for="eventDescr">Event Description</label>
+                                <label for="eventDescr">{{ eventDes }}</label>
                                 <textarea class="form-control" id="eventDescr" name="description" rows="6" cols="50"></textarea>          <!--outgoing event description-->
                             </div>  <!--row-->
 
