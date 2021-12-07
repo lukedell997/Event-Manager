@@ -100,7 +100,8 @@ class DataB:
     # CREATE USER EVENTS
     def newUEvents(self, cnx, cursor, data):
         try:
-            userClms = ''.join(("userId, eventId, userName, userEmail, paid, seat, price"))
+            userClms = ''.join(("userId, eventId, userName, userEmail,",
+                                " paid, seat, price"))
             cursor.execute(db.insert("user_events", userClms, data))
             cnx.commit()
             return
@@ -142,17 +143,15 @@ class DataB:
     
     #GET USER EVENTS BY USERID
     def getUEventsByUser(self, cursor, userId):
-        ur =''.join(("SELECT * FROM user_events WHERE userId = '",userId, "'"))
-        cursor.execute(ur)
+        cursor.execute("SELECT * FROM user_events WHERE userId = '%s'",(str(userId),))
         usersEvents = []
         for (idU) in cursor:
             usersEvents.append(idU)
         return usersEvents
     
     #GET USER EVENTS BY EVENTID
-    def getUEventsByEvent(self, cursor, eventId, name):
-        ur =''.join(("SELECT * FROM user_events WHERE eventId = '", eventId, "'"))
-        cursor.execute(ur)
+    def getUEventsByEvent(self, cursor, eventId):
+        cursor.execute("SELECT * FROM user_events WHERE eventId = '%s'",(str(eventId),))
         eventUser = []
         for (idU) in cursor:
             eventUsers.append([idU])
@@ -255,7 +254,7 @@ class DataB:
     def newEvent(self, cnx, cursor, data):
         try:
             eventClms = ''.join(("name, date, deadlineDate, price, desc, capacity,",
-                                "pub_pri, address, zipcode, state, userId"))
+                                "iTag, address, zipcode, state, userId"))
             cursor.execute(db.insert("events", eventClms, data))
             cnx.commit()
             return
@@ -275,7 +274,7 @@ class DataB:
     def updateEvent(self, cnx, cursor, eventId, userId, chngs):
         try:
             clms = ''.join(("name, sDate, eDate, deadlineDate, price, desc,",
-                            " capacity, occupants, pub_pri, address, city,",
+                            " capacity, occupants, iTag, address, city,",
                             " state, zipcode, userId"))
             cursor.execute(db.update2("events", str(clms), str(chngs),
                                       "eventId", str(eventId), "userId", str(userId)))
