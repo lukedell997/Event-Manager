@@ -573,6 +573,11 @@ def editEvent(eventId):
                 #otherwise send back to search
                 return redirect(url_for('search_browseEvents'))
 # END UPDATE EVENT---------------------------------------------------
+            if 'removeEvent' in request.form:
+                print() #REMOVE THE EVENT!!!!!!!!
+            for i in usersId:
+                if str(i) in session:
+                    print() # REMOVE USER FROM EVENT
 
 # NEED REMOVE EVENT BUTTON--------------------------------------------------*****
 # NEED REMOVE EVENT BUTTON--------------------------------------------------*****
@@ -634,6 +639,7 @@ def updatePersonalInfo():
     if 'user' in session:
         user = session["user"]
         userId = session["userId"]
+
 #^GET USER^-------------------------------------------------------------^
         #: check if user found, then get user info into variables
         if (db.checkAny(cursor, "userId", "users", "username", str(user),
@@ -665,9 +671,14 @@ def updatePersonalInfo():
             userUpdate(cnx, cursor, userId, passwordId)
 #END UPDATE USER-------------------------------------------
 # NEED BUTTON TO REMOVE USER---------------------------------------****
-            userRemove(cnx, cursor, userId, passwordId)
+            if 'remove' in request.form:
+
+                userRemove(cnx, cursor, userId, passwordId)
+                return redirect(url_for("user"))
+            else:
 # NEED BUTTON TO REMOVE USER---------------------------------------****
-            return redirect(url_for("user"))
+                return render_template("updatePersonalInfo.html", firstName=firstName, lastName=lastName, username=username, password=
+                                   password, address=address, city=city, state=state, email=email, phone=phone)
         else:
             firstName = []
             lastName = []
@@ -678,7 +689,7 @@ def updatePersonalInfo():
             state = []
             email = []
             phone = []
-            return render_template("eventDetails.html", firstName=firstName, lastName=lastName, username=username, password=
+            return render_template("updatePersonalInfo.html", firstName=firstName, lastName=lastName, username=username, password=
                                    password, address=address, city=city, state=state, email=email, phone=phone)
     else:
         redirect(url_for("loginPage"))
