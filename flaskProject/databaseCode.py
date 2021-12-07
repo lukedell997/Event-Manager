@@ -143,7 +143,7 @@ class DataB:
     
     #GET USER EVENTS BY USERID
     def getUEventsByUser(self, cursor, userId):
-        cursor.execute("SELECT * FROM user_events WHERE userId = '%s'",(str(userId),))
+        cursor.execute("SELECT * FROM user_events WHERE userId = %s",(str(userId),))
         usersEvents = []
         for (idU) in cursor:
             usersEvents.append(idU)
@@ -151,7 +151,7 @@ class DataB:
     
     #GET USER EVENTS BY EVENTID
     def getUEventsByEvent(self, cursor, eventId):
-        cursor.execute("SELECT * FROM user_events WHERE eventId = '%s'",(str(eventId),))
+        cursor.execute("SELECT * FROM user_events WHERE eventId = %s",(str(eventId),))
         eventUser = []
         for (idU) in cursor:
             eventUsers.append([idU])
@@ -371,7 +371,7 @@ class DataB:
     
     def getEventsByKeyword(self, cursor, word):
         events = []
-        cursor.execute("SELECT * FROM events WHERE name LIKE '%s'"%(str(word,)))
+        cursor.execute("SELECT * FROM events WHERE name LIKE %s"%(str(word,)))
         print(cursor)
 
         for (event) in cursor:
@@ -402,14 +402,14 @@ class DataB:
 
     #GET EVENT TAGS BY EVENT
     def getEventTagByEvent(self, cursor, eventId):
-        ur =''.join(("SELECT * FROM event_tags WHERE eventId = '%s'"%(str(eventId),)))
+        ur =''.join(("SELECT * FROM event_tags WHERE eventId = %s"%(str(eventId),)))
         cursor.execute(ur)
         for (idU) in cursor:
             tags = [idU]
         return tags
 
     def getEventTagByTagId(self, cursor, tagId):
-        ur =''.join(("SELECT * FROM event_tags WHERE tagId = '%s'"%(str(tagId),)))
+        ur =''.join(("SELECT * FROM event_tags WHERE tagId = %s"%(str(tagId),)))
         cursor.execute(ur)
         for (idU) in cursor:
             events = idU
