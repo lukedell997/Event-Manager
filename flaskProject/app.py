@@ -454,8 +454,11 @@ def editEvent(eventId):
     eventDes = []
     userToAdd = []
     userToDelete = []
-    
-    userId = session["userId"]
+
+    if 'user' in session:
+        userId = session["userId"]
+    else:
+        redirect(url_for('loginPage'))
 # GET EVENT-----------------------------------------
     #check if event found by eventId
     if (db.checkAny(cursor, "eventId", "events", "eventId", str(eventId),
