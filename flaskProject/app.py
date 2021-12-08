@@ -35,58 +35,62 @@ def getInputString(ItemList):
 @app.route('/', methods=["POST", "GET"])
 @app.route('/index.html', methods=["POST", "GET"])
 def index():  # put application's code here
-    popEventsTitle = []
-    popEventsDetails = []
-    popEventsButton = []
+    if 'user' in session:
+        return redirect(url_for('user'))
+    else:
+        popEventsTitle = []
+        popEventsDetails = []
+        popEventsButton = []
 
-    nearEventsTitle = []
-    nearEventsDetails = []
-    nearEventsButton = []
-#GET ALL POPULAR EVENTS----------------------------------------------
-    popEventsId = []
-    popEventsTitle = []
-    popEventsSDate = []
-    popEventsEDate = []
-    popEventsDetails = []
-    popEventsState = []
+        nearEventsTitle = []
+        nearEventsDetails = []
+        nearEventsButton = []
+    #GET ALL POPULAR EVENTS----------------------------------------------
+        popEventsId = []
+        popEventsTitle = []
+        popEventsSDate = []
+        popEventsEDate = []
+        popEventsDetails = []
+        popEventsState = []
 
-    popEvents = db.getEventsByPop(cursor)
-    for tupleEvent3 in popEvents:
-        popEventsId.append(tupleEvent3[0])
-        popEventsTitle.append(tupleEvent3[1])
-        popEventsSDate.append(tupleEvent3[2])
-        popEventsEDate.append(tupleEvent3[3])
-        popEventsDetails.append(tupleEvent3[6])
-        popEventsState.append(tupleEvent3[12])
-        
-    
-#END ALL POPULAR EVENTS----------------------------------------------
-#GET ALL LOCATION EVENTS----------------------------------------------
-    nearEventsId = []
-    nearEventsTitle = []
-    nearEventsSDate = []
-    nearEventsEDate = []
-    nearEventsDetails = []
-    nearEventsState = []
+        popEvents = db.getEventsByPop(cursor)
+        for tupleEvent3 in popEvents:
+            popEventsId.append(tupleEvent3[0])
+            popEventsTitle.append(tupleEvent3[1])
+            popEventsSDate.append(tupleEvent3[2])
+            popEventsEDate.append(tupleEvent3[3])
+            popEventsDetails.append(tupleEvent3[6])
+            popEventsState.append(tupleEvent3[12])
 
-    locEvents = db.getEventsByLoc(cursor, str("IL"))
-    for tEvent in locEvents:
-        nearEventsId.append(tEvent[0])
-        nearEventsTitle.append(tEvent[1])
-        nearEventsSDate.append(tEvent[2])
-        nearEventsEDate.append(tEvent[3])
-        nearEventsDetails.append(tEvent[6])
-        nearEventsState.append(tEvent[12])
-        
-#END ALL LOCATION EVENTS----------------------------------------------
-    search = None
-    if request.method == "POST":
-        search = request.form["searchbar"]
-        # DO A SEARCH IDK HOW YET
 
-    return render_template("index.html", popEventsTitle=popEventsTitle, popEventsDetails=popEventsDetails,
-                           popEventsId=popEventsId, nearEventsTitle=nearEventsTitle,
-                           nearEventsDetails=nearEventsDetails, nearEventsId=nearEventsId, search=search)
+    #END ALL POPULAR EVENTS----------------------------------------------
+    #GET ALL LOCATION EVENTS----------------------------------------------
+        nearEventsId = []
+        nearEventsTitle = []
+        nearEventsSDate = []
+        nearEventsEDate = []
+        nearEventsDetails = []
+        nearEventsState = []
+
+        locEvents = db.getEventsByLoc(cursor, str("IL"))
+        for tEvent in locEvents:
+            nearEventsId.append(tEvent[0])
+            nearEventsTitle.append(tEvent[1])
+            nearEventsSDate.append(tEvent[2])
+            nearEventsEDate.append(tEvent[3])
+            nearEventsDetails.append(tEvent[6])
+            nearEventsState.append(tEvent[12])
+
+    #END ALL LOCATION EVENTS----------------------------------------------
+        search = None
+        if request.method == "POST":
+            search = request.form["searchbar"]
+            # DO A SEARCH IDK HOW YET
+
+
+        return render_template("index.html", popEventsTitle=popEventsTitle, popEventsDetails=popEventsDetails,
+                               popEventsId=popEventsId, nearEventsTitle=nearEventsTitle,
+                               nearEventsDetails=nearEventsDetails, nearEventsId=nearEventsId, search=search)
 
 ########################################################################--REGISTER PAGE--############
 @app.route('/registerPage.html', methods=["POST", "GET"])
@@ -120,14 +124,22 @@ def registerPage():  # put application's code here
             return redirect(url_for("loginPage"))
         else:
             print("ERROR: username already exists")
-            return render_template("registerPage.html")
+            if 'user' in session:
+                logedIn = True
+            else:
+                logedIn = False
+            return render_template("registerPage.html", logedIn = logedIn)
 #^END NEW USER^------------------------------------------------------^
         
         if 'submit' in request.form:
             # PUSH THE DATA TO THE DATABASE!!!!!!!!!
             return redirect(url_for("loginPage"))  # ????
     else:
-        return render_template("registerPage.html")
+        if 'user' in session:
+            logedIn = True
+        else:
+            logedIn = False
+        return render_template("registerPage.html", logedIn = logedIn)
 
 ########################################################################--LOG IN PAGE--############
 @app.route('/loginPage.html', methods=["POST", "GET"])
@@ -161,11 +173,19 @@ def loginPage():  # put application's code here
             
         else:
             print("Error: The username or password is incorrect")
-            return render_template("loginPage.html")
+            if 'user' in session:
+                logedIn = True
+            else:
+                logedIn = False
+            return render_template("loginPage.html", logedIn = logedIn)
             
 #^END GET USER^-----------------------------------------------^
     else:
-        return render_template("loginPage.html")
+        if 'user' in session:
+            logedIn = True
+        else:
+            logedIn = False
+        return render_template("loginPage.html", logedIn = logedIn)
 
 ########################################################################--INDEX_USER LOGGED IN--############
 @app.route("/index_userLoggedIn.html", methods=["POST", "GET"])
@@ -312,7 +332,11 @@ def eventDetails():  # put application's code here
             eventZip= event[13]
     else:
         #otherwise send back to search
-        return redirect(url_for('search_browseEvents'))
+        if 'user' in session:
+            logedIn = True
+        else:
+            logedIn = False
+        return redirect(url_for('search_browseEvents', logedIn=logedIn))
     
 
 #END ALL EVENT INFO------------------------------------------------------------
@@ -350,16 +374,25 @@ def eventDetails():  # put application's code here
             else:
                 #give error(filled or user already signed up)
                 print("ERROR: event filled or already signed up")
+                if 'user' in session:
+                    logedIn = True
+                else:
+                    logedIn = False
                 return render_template("eventDetails.html", eventStartDate=eventStartDate, eventEndDate=eventEndDate,
                                        eventTitle=eventTitle, eventPrice=eventPrice, eventDescription=eventDescription,
-                                       eventAddress=eventAddress, eventITag=eventITag)
+                                       eventAddress=eventAddress, eventITag=eventITag, logedIn=logedIn)
 # END ADD USER FROM ATTENDING EVENT--------------------------
             return redirect(url_for("index_userLoggedIn"))
         else:
             return redirect(url_for("loginPage"))
+
+    if 'user' in session:
+        logedIn = True
+    else:
+        logedIn = False
     return render_template("eventDetails.html", eventStartDate=eventStartDate, eventEndDate=eventEndDate,
                            eventTitle=eventTitle, eventPrice=eventPrice, eventDescription=eventDescription,
-                           eventAddress=eventAddress, eventITag=eventITag)
+                           eventAddress=eventAddress, eventITag=eventITag, logedIn = logedIn)
 
 
 ########################################################################--MANAGE EVENTS--############
@@ -433,22 +466,32 @@ def manageEvents():  # put application's code here
                 return redirect(url_for("manageEvents"))
             else:
                 print("Attendant Not found for event")
+
+                if 'user' in session:
+                    logedIn = True
+                else:
+                    logedIn = False
+
                 return render_template("manageEvents.html",
                                        userAttendingEvents=atEventsTitle, atEventsSDate=atEventsSDate,
                                        atEventsEDate=atEventsEDate, atEventsId=atEventsId,
                                        atEventsCap=atEventsCap, atEventsOcp=atEventsOcp,
                                        usersEvents=adEventsTitle, adEventsSDate=adEventsSDate,
                                        adEventsEDate=adEventsEDate, adEventsId=adEventsId,
-                                       eventsMaxPop=adEventsCap, adEventsOcp=adEventsOcp)
+                                       eventsMaxPop=adEventsCap, adEventsOcp=adEventsOcp, logedIn= logedIn)
             
 #END REMOVE USER FROM ATTENDING EVENT------------------------------------
+        if 'user' in session:
+            logedIn = True
+        else:
+            logedIn = False
         return render_template("manageEvents.html",
                                userAttendingEvents=atEventsTitle, atEventsSDate=atEventsSDate,
                                atEventsEDate=atEventsEDate, atEventsId=atEventsId,
                                atEventsCap=atEventsCap, atEventsOcp=atEventsOcp,
                                usersEvents=adEventsTitle, adEventsSDate=adEventsSDate,
                                adEventsEDate=adEventsEDate, adEventsId=adEventsId,
-                               eventsMaxPop=adEventsCap, adEventsOcp=adEventsOcp)
+                               eventsMaxPop=adEventsCap, adEventsOcp=adEventsOcp, logedIn=logedIn)
 
     else:
         return redirect(url_for("login"))  # ????
@@ -521,10 +564,14 @@ def search_browseEvents():  # put application's code here
         search = request.form["searchbar"]
         # DO A SEARCH
     else:
+        if 'user' in session:
+            logedIn = True
+        else:
+            logedIn = False
         return render_template("search_browseEvents.html", events=events, eventDates=eventDates, eventTimes=eventTimes,
                                eventLocations=eventLocations, eventPrices=eventPrices, eventImage=eventImage, eventTitle=eventTitle,
                                eventStartDate=eventStartDate, eventEndDate=eventEndDate, eventAddress=eventAddress, eventPrice=eventPrice,
-                               eventTime=eventTime, eventOccupants=eventOccupants, eventCapacity=eventCapacity, eventRange=eventRange)
+                               eventTime=eventTime, eventOccupants=eventOccupants, eventCapacity=eventCapacity, eventRange=eventRange, logedIn=logedIn)
 
 
 ###########################################################--EDIT EVENT--########################################
@@ -634,12 +681,16 @@ def editEvent(eventId):
 #NEED USER TO DELETE BUTTON--------------------------------------------------*****(Not sure how to go about it)
 #NEED USER TO DELETE BUTTON--------------------------------------------------*****
     else:
+        if 'user' in session:
+            logedIn = True
+        else:
+            logedIn = False
         return render_template("editEvent.html", eventTitle=eventTitle, eventAddress=eventAddress, eventCity=eventCity,
                                eventState=eventState, eventZip=eventZip, eventStartDate=eventStartDate,
                                eventEndDate=eventEndDate, eventPrice=eventPrice, eventCap=eventCap,
                                eventDeadline=eventDeadline,
                                eventDeadlineTime=eventDeadlineTime, eventDes=eventDes, userToAdd=userToAdd,
-                               userToDelete=userToDelete)
+                               userToDelete=userToDelete, logedIn=logedIn)
 
 #########################################################################################################
 @app.route('/createEvent.html', methods=["POST", "GET"])
@@ -679,7 +730,11 @@ def createEvent():
                 return redirect(url_for("user"))
             else:
                 print("ERROR: event already created by you")
-                return render_template("create_editEvents.html")
+                if 'user' in session:
+                    logedIn = True
+                else:
+                    logedIn = False
+                return render_template("create_editEvents.html", logedIn = logedIn) #THIS PAGE DOES NOT EXSIT AND THIS NEEDS AND UPDATE
 #END NEW EVENT--------------------------------------------------------------^
             return redirect(url_for("index_userLoggedIn"))
         else:
@@ -704,7 +759,11 @@ def updatePersonalInfo():
             
         else:
             print("Error: The username does not match the userId")
-            return render_template("index_userLoggedIn.html")
+            if 'user' in session:
+                logedIn = True
+            else:
+                logedIn = False
+            return render_template("index_userLoggedIn.html", logedIn=logedIn)
             
 #^END GET USER^-----------------------------------------------^
         if request.method == "POST":
@@ -744,8 +803,12 @@ def updatePersonalInfo():
             zipcode = uZip
             email = uEmail
             phone = uPhone
+            if 'user' in session:
+                logedIn = True
+            else:
+                logedIn = False
             return render_template("updatePersonalInfo.html", firstName=firstName, lastName=lastName, username=username, password=
-                                   password, address=address, city=city, state=state, email=email, phone=phone)
+                                   password, address=address, city=city, state=state, email=email, phone=phone, logedIn=logedIn)
     else:
         redirect(url_for("loginPage"))
 
