@@ -67,9 +67,9 @@
                     <div class="media">
                         <img class="d-flex mr-5 img-fluid img-thumbnail" src="{{ url_for('static', filename='img/concertEvent.jpg')}}" alt="Event Image" />     <!--outgoing event image-->
                         <div class="media-body align-self-center">
-                            <h3>{{ eventDate }}</h3>                                                     <!--outgoing event date-->
-                            <h2>{{ eventTitle }}</h2>                                              <!--outgoing event title-->
-                            <h4>{{ eventPrice }}</h4>                                                        <!--outgoing event price-->
+                            <h3>{{ eventDate[0] }}</h3>                                                     <!--outgoing event date-->
+                            <h2>{{ eventTitle[0] }}</h2>                                              <!--outgoing event title-->
+                            <h4>{{ eventPrice[0] }}</h4>                                                        <!--outgoing event price-->
                             <form method="POST">                                  <!--action="loginPage.html" if user is not logged in yet, action="index_userLoggedIn.html" if user is logged in-->
                                 <div class="form-group">
                                     <input type="submit" value="ATTEND" name="attend"/>                     

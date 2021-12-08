@@ -80,6 +80,7 @@
 
                 <div class="col-12" id="events">
                     <!--Events Generated with parent class "card"-->
+                    {% for i in range (0,eventRange) %}
                     <div class="card">
                         <div class="row">
                             <a href="eventDetails.html" class="stretched-link"></a>     
@@ -88,98 +89,19 @@
                             </div>
                             <div class="card-body">
                                 <div class="d-flex justify-content-between">
-                                    <h4 class="card-title">{{ eventTitle[0] }}</h4>                                               <!--outgoing event title-->
-                                    <span id="capacity" class="text-success mr-4">163/300</span>                            <!--outgoing event capacity-->
+                                    <h4 class="card-title">{{ eventTitle[i] }}</h4>                                               <!--outgoing event title-->
+                                    <span id="capacity" class="text-success mr-4">{{ eventOccupants[i] }}/{{ eventCapacity[i] }}</span>                            <!--outgoing event capacity-->
                                 </div>
                                 <p>
-                                    <span>Date: {{ eventStartDate[0] }}-{{ eventEndDate[0] }} Time:</span>                                                                <!--outgoing event date/time-->
-                                    <span>Location: {{ eventAddress[0] }}</span>                                                                   <!--outgoing event location-->
-                                    <span>Price: {{ eventPrice[0] }}</span>                                                                      <!--outgoing event price-->
+                                    <span>Date: {{ eventStartDate[i] }}-{{ eventEndDate[i] }} &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Time: {{ eventTime[i] }}</span>                                                                <!--outgoing event date/time-->
+                                    <span>Location: {{ eventAddress[i] }}</span>                                                                   <!--outgoing event location-->
+                                    <span>Price: {{ eventPrice[i] }}</span>                                                                      <!--outgoing event price-->
                                 </p>                                                   
                             </div>  <!--card-body-->      
                         </div> <!--row-->                 
                     </div>  <!--card-->
-                    <!------------------------------------------------>
-
-                    <div class="card">
-                        <div class="row">
-                            <a href="eventDetails.html" class="stretched-link"></a> 
-                            <div class="col-md-4">
-                                <img src="{{ url_for('static', filename='img/conferenceEvent.jpg')}}" class="img-fluid">    <!--outgoing event image-->
-                            </div>
-                            <div class="card-body">
-                                <div class="d-flex justify-content-between">
-                                    <h4 class="card-title">{{ eventTitle[1] }}</h4>                                            <!--outgoing event title-->
-                                    <span id="capacity" class="text-success mr-4">47/50</span>                              <!--outgoing event capacity-->
-                                </div>
-                                <p>
-                                    <span>Date: {{ eventStartDate[1] }}-{{ eventEndDate[1] }} Time:</span>                                                                <!--outgoing event date/time-->
-                                    <span>Location: {{ eventAddress[1] }}</span>                                                                   <!--outgoing event location-->
-                                    <span>Price: {{ eventPrice[1] }}</span>                                                                       <!--outgoing event price-->
-                                </p>                                                   
-                            </div>  <!--card-body-->      
-                        </div> <!--row-->                 
-                    </div>  <!--card-->
-
-                    <div class="card">
-                        <div class="row">
-                            <a href="eventDetails.html" class="stretched-link"></a> 
-                            <div class="col-md-4">
-                                <img src="{{ url_for('static', filename='img/dinnerEvent.jpg')}}" class="img-fluid">        <!--outgoing event image-->
-                            </div>
-                            <div class="card-body">
-                                <div class="d-flex justify-content-between">
-                                    <h4 class="card-title">{{ eventTitle[2] }}</h4>                                                <!--outgoing event title-->
-                                    <span id="capacity" class="text-success mr-4">75/100</span>                             <!--outgoing event capacity-->
-                                </div>
-                                <p>
-                                    <span>Date: {{ eventStartDate[2] }}-{{ eventEndDate[2] }} Time:</span>                                                                <!--outgoing event date/time-->
-                                    <span>Location: {{ eventAddress[2] }}</span>                                                                   <!--outgoing event location-->
-                                    <span>Price: {{ eventPrice[2] }}</span>                                                                        <!--outgoing event price-->
-                                </p>                                                   
-                            </div>  <!--card-body-->      
-                        </div> <!--row-->                 
-                    </div>  <!--card-->
-
-                    <div class="card">
-                        <div class="row">
-                            <a href="eventDetails.html" class="stretched-link"></a> 
-                            <div class="col-md-4">
-                                <img src="{{ url_for('static', filename='img/festivalEvent.jpg')}}" class="img-fluid">      <!--outgoing event image-->
-                            </div>
-                            <div class="card-body">
-                                <div class="d-flex justify-content-between">
-                                    <h4 class="card-title">{{ eventTitle[3] }}</h4>                                              <!--outgoing event title-->
-                                    <span id="capacity" class="text-success mr-4">765/1000</span>                           <!--outgoing event capacity-->
-                                </div>
-                                <p>
-                                    <span>Date: {{ eventStartDate[3] }}-{{ eventEndDate[3] }} Time:</span>                                                                <!--outgoing event date/time-->
-                                    <span>Location: {{ eventAddress[3] }}</span>                                                                   <!--outgoing event location-->
-                                    <span>Price: {{ eventPrice[3] }}</span>                                                                       <!--outgoing event price-->
-                                </p>                                                   
-                            </div>  <!--card-body-->      
-                        </div> <!--row-->                 
-                    </div>  <!--card-->
-
-                    <div class="card">
-                        <div class="row">
-                            <a href="eventDetails.html" class="stretched-link"></a> 
-                            <div class="col-md-4">
-                                <img src="{{ url_for('static', filename='img/movieEvents.jpg')}}" class="img-fluid">         <!--outgoing event image-->
-                            </div>
-                            <div class="card-body">
-                                <div class="d-flex justify-content-between">
-                                    <h4 class="card-title">{{ eventTitle[4] }}</h4>                                                 <!--outgoing event title-->
-                                    <span id="capacity" class="text-success mr-4">23/70</span>                              <!--outgoing event capacity-->
-                                </div>
-                                <p>
-                                    <span>Date: {{ eventStartDate[4] }}-{{ eventEndDate[4] }} Time:</span>                                                                <!--outgoing event date/time-->
-                                    <span>Location: {{ eventAddress[4] }}</span>                                                                   <!--outgoing event location-->
-                                    <span>Price: {{ eventPrice[4] }}</span>                                                                       <!--outgoing event price-->
-                                </p>                                                   
-                            </div>  <!--card-body-->      
-                        </div> <!--row-->                 
-                    </div>  <!--card-->
+                    {% endfor %}
+    
                 </div>  <!--col-->
             </div>  <!--row-->
         </div>  <!--container-->
