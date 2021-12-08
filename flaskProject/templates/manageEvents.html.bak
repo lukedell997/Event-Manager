@@ -189,7 +189,7 @@
                                         <p><span id='date-time'></span>                                                             <!--outgoing event date & time-->
                                             <div class="row">
                                                 <div class="col-md-8 mr-5">
-                                                    <a class="edit-delete" href="#" name="leaveEvent">
+                                                    <a class="edit-delete" href="manageEvents.html" name="leaveEvent">
                                                         <button type="button" class="btn btn-danger">LEAVE EVENT</button>           <!--incoming leave event-->
                                                     </a> 
                                                 </div>
@@ -219,7 +219,7 @@
                                         <p><span id='date-time'></span>                                                             <!--outgoing event date & time-->
                                             <div class="row">
                                                 <div class="col-md-8 mr-5">
-                                                    <a class="edit-delete" href="#" name="leaveEvent">
+                                                    <a class="edit-delete" href="manageEvents.html" name="leaveEvent">
                                                         <button type="button" class="btn btn-danger">LEAVE EVENT</button>           <!--incoming leave event-->
                                                     </a> 
                                                 </div>
