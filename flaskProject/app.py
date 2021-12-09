@@ -438,7 +438,7 @@ def manageEvents():  # put application's code here
         
         adminEvents = db.getEventsByUser(cursor, str(userId))
         for tupleEvent2 in adminEvents:
-            adEventsId.append(tupleEvent[0])
+            adEventsId.append(tupleEvent2[0])
             adEventsTitle.append(tupleEvent2[1])
             adEventsSDate.append(tupleEvent2[2])
             adEventsEDate.append(tupleEvent2[3])
