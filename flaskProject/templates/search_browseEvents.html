@@ -43,12 +43,28 @@
                             <li class="nav-item">
                                 <a class="nav-link" href="search_browseEvents.html" style="border-right: 1px solid #FFF; padding-right: 20px; margin-right: 10px">Browse Events</a>
                             </li>
+                            {% if logedIn == True %}
+                            <li class="nav-item">
+                                <div class="btn-group">
+                                    <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                        <img class="img-circle" src="{{ url_for('static', filename='img/logo.png')}}">     
+                                    </button>
+                                    <div class="dropdown-menu dropdown-menu-right">
+                                        <a class="dropdown-item" href="updatePersonalInfo.html"><i class="fa fa-user fa-md"></i> My Account</a>
+                                        <a class="dropdown-item" href="createEvent.html"><i class="fa fa-calendar-plus-o fa-md"></i> Create An Event</a>
+                                        <a class="dropdown-item" href="manageEvents.html"><i class="fa fa-edit fa-md"></i> Edit Events</a>
+                                        <a class="dropdown-item" href="index.html"><i class="fa fa-sign-out fa-md"></i> Log Out</a>
+                                    </div>
+                                </div>    
+                            </li>
+                            {% else %}
                             <li class="nav-item">
                                 <a class="nav-link" href="registerPage.html"><i class="fa fa-user-plus"></i> Sign-Up</a>
                             </li>
                             <li class="nav-item">
                                 <a class="nav-link" href="loginPage.html"><i class="fa fa-sign-in"></i> Login</a>
                             </li>
+                            {% endif %}
                         </ul>
                     </div>  <!--collapse-->
                 </div>  <!--container-->
@@ -82,8 +98,7 @@
                     <!--Events Generated with parent class "card"-->
                     {% for i in range (0,eventRange) %}
                     <div class="card">
-                        <div class="row">
-                            <a href="eventDetails.html" class="stretched-link"></a>     
+                        <div class="row">     
                             <div class="col-md-4">
                                 <img src="{{ url_for('static', filename='img/concertEvent.jpg')}}" class="img-fluid">       <!--outgoing event image-->
                             </div>
@@ -96,7 +111,11 @@
                                     <span>Date: {{ eventStartDate[i] }}-{{ eventEndDate[i] }} &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Time: {{ eventTime[i] }}</span>                                                                <!--outgoing event date/time-->
                                     <span>Location: {{ eventAddress[i] }}</span>                                                                   <!--outgoing event location-->
                                     <span>Price: {{ eventPrice[i] }}</span>                                                                      <!--outgoing event price-->
-                                </p>                                                   
+                                </p>
+                                <form action="{{url_for('eventDetails')}}" id="eventDetailForm", method="POST">
+                                    <input type="text" name="eventId" value="{{eventId[0]}}" hidden>
+                                    <input type="submit" value="Read More">
+                                </form>                                                   
                             </div>  <!--card-body-->      
                         </div> <!--row-->                 
                     </div>  <!--card-->
