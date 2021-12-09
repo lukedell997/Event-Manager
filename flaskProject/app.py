@@ -593,7 +593,7 @@ def editEvent():
         if (db.checkAny(cursor, "eventId", "events", "eventId", str(eventId),
                 "userId", str(userId)) == True):
             #get all variables in event
-            event = db.getEventsByEId(cursor, eventId)
+            event = db.getEventsByEId(cursor, str(eventId))
 
             eventTitle = event[1]
             eventStartDate = event[2]
@@ -617,7 +617,7 @@ def editEvent():
             usersEmail = []
             
             #get user_events by userId
-            eventsUsers = db.getUEventsByEvent(cursor, str(eId))
+            eventUsers = db.getUEventsByEvent(cursor, str(eventId))
 
             #for all user_events, get the event
             for tupleEvent in eventUsers:
