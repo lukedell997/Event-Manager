@@ -588,7 +588,40 @@ def editEvent():
         userToDelete = []
     
         userId = session["userId"]
-        
+        print(eventId)
+        if "saveEvent" in request.form and request.method == "POST":
+            eventTitle = request.form["title"]
+            eventAddress = request.form["address"]
+            eventCity = request.form["city"]
+            eventState = request.form.get("state")
+            eventZip = request.form["zip"]
+            eventStartDate = request.form["startDate"]
+            eventStartTime = request.form["startTime"]
+            eventEndDate = request.form["endDate"]
+            eventEndTime = request.form["endTime"]
+            eventPrice = request.form["price"]
+            eventCap = request.form["maxCapacity"]
+            
+            eventDeadline = request.form["deadlineDate"]
+            eventDeadlineTime = request.form["deadlineTime"]
+            eventITag = request.form.get("eventTag")   #NEEDS CHECKING
+            eventDes = request.form["description"]
+            #userToAdd = request.form["addUser"]
+            #userToDelete = request.form["deleteUser"]
+                
+# UPDATE EVENT---------------------------------------------------
+            #check if event found by eventId
+            if (db.checkAny(cursor, "eventId", "events", "eventId", str(eventId),
+                    "eventId", str(eventId)) == True):
+                #update all variables
+                eE = getInputString([eventTitle, eventStartDate, eventEndDate, eventDeadline, eventPrice,
+                                     eventDes, eventCap, eventITag, eventAddress, eventCity, eventState,
+                                     eventZip, userId])
+                db.updateEvent(cnx,cursor,eE, userId, eventId)
+            else:
+                #otherwise send back to search
+                return redirect(url_for('search_browseEvents'))
+# END UPDATE EVENT---------------------------------------------------
 # GET EVENT----------------------------------------------------------------^
         #check if event found by eventId
         if (db.checkAny(cursor, "eventId", "events", "eventId", str(eventId),
@@ -655,14 +688,13 @@ def editEvent():
         
 #END ALL POPULAR EVENTS----------------------------------------------
 
-        if "saveEvent" in request.form and request.method == "POST":
-            return f"{eventId}"
+        
 
 
     #NEED USER TO DELETE BUTTON--------------------------------------------------*****(Not sure how to go about it)
     #NEED USER TO DELETE BUTTON--------------------------------------------------*****
         else:
-            return render_template("editEvent.html", eventTitle=eventTitle,
+            return render_template("editEvent.html", eventId=eventId, eventTitle=eventTitle,
                                    eventStartDate=eventStartDate, eventEndDate=eventEndDate,eventDeadline=eventDeadline,
                                    eventPrice=eventPrice, eventDes=eventDes, eventCap=eventCap,
                                    eventITag=eventITag, eventAddress=eventAddress, eventCity=eventCity,
@@ -803,4 +835,4 @@ def updatePersonalInfo():
         redirect(url_for("loginPage"))
 
 if __name__ == '__main__':
-    app.run(host="127.0.0.1", port="3000")
+    app.run(debug=True)

@@ -276,8 +276,8 @@ class DataB:
             uU = ''.join(("UPDATE events SET name = '%s', sDate = '%s',"%(str(uC[0]),str(uC[1])),
                       " eDate = '%s', deadlineDate = '%s',"%(str(uC[2]),str(uC[3])),
                       " price = '%s', des = '%s', capacity = '%s',"%(str(uC[4]),str(uC[5]), str(uC[6])),
-                      " occupants = '%s', iTag = '%s', address = '%s'"%(str(uC[7]),str(uC[8]), str(uC[9])),
-                      " city = '%s', state = '%s', zipcode = '%s'"%(str(uC[10]),str(uC[11]), str(uC[12])),
+                      " iTag = '%s', address = '%s'"%(str(uC[7]),str(uC[8])),
+                      " city = '%s', state = '%s', zipcode = '%s'"%(str(uC[9]),str(uC[10]), str(uC[12])),
                       " WHERE eventId ='%s' AND userId = '%s'"%(str(eventId),str(userId))))
             cursor.execute(uU)
             cnx.commit()
