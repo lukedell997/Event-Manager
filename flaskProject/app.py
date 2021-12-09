@@ -3,6 +3,7 @@ from datetime import timedelta
 from databaseCode import DataB
 
 app = Flask(__name__)
+
 app.permanent_session_lifetime = timedelta(hours=5)
 
 app.secret_key = "hello"
@@ -35,6 +36,7 @@ def getInputString(ItemList):
 @app.route('/', methods=["POST", "GET"])
 @app.route('/index.html', methods=["POST", "GET"])
 def index():  # put application's code here
+    session.pop("user", None)
     if 'user' in session:
         return redirect(url_for('user'))
     else:
@@ -409,10 +411,13 @@ def manageEvents():  # put application's code here
         atEventsEDate = []  
         atEventsCap = []
         atEventsOcp = []
-        
+
+
+
         
         #get user_events by userId
         userEvents = db.getUEventsByUser(cursor, str(userId))
+        eventRange = len(userEvents)
 
         #for all user_events, get the event
         for tupleEvent in userEvents:
@@ -491,7 +496,7 @@ def manageEvents():  # put application's code here
                                atEventsCap=atEventsCap, atEventsOcp=atEventsOcp,
                                usersEvents=adEventsTitle, adEventsSDate=adEventsSDate,
                                adEventsEDate=adEventsEDate, adEventsId=adEventsId,
-                               eventsMaxPop=adEventsCap, adEventsOcp=adEventsOcp, logedIn=logedIn)
+                               eventsMaxPop=adEventsCap, adEventsOcp=adEventsOcp, logedIn=logedIn, eventRange=eventRange)
 
     else:
         return redirect(url_for("login"))  # ????
@@ -681,6 +686,22 @@ def editEvent(eventId):
 #NEED USER TO DELETE BUTTON--------------------------------------------------*****(Not sure how to go about it)
 #NEED USER TO DELETE BUTTON--------------------------------------------------*****
     else:
+        # GET ALL POPULAR EVENTS----------------------------------------------
+        popEventsId = []
+        popEventsTitle = []
+        popEventsSDate = []
+        popEventsEDate = []
+        popEventsDetails = []
+        popEventsState = []
+
+        popEvents = db.getEventsByPop(cursor)
+        for tupleEvent3 in popEvents:
+            popEventsId.append(tupleEvent3[0])
+            popEventsTitle.append(tupleEvent3[1])
+            popEventsSDate.append(tupleEvent3[2])
+            popEventsEDate.append(tupleEvent3[3])
+            popEventsDetails.append(tupleEvent3[6])
+            popEventsState.append(tupleEvent3[12])
         if 'user' in session:
             logedIn = True
         else:
@@ -690,7 +711,9 @@ def editEvent(eventId):
                                eventEndDate=eventEndDate, eventPrice=eventPrice, eventCap=eventCap,
                                eventDeadline=eventDeadline,
                                eventDeadlineTime=eventDeadlineTime, eventDes=eventDes, userToAdd=userToAdd,
-                               userToDelete=userToDelete, logedIn=logedIn)
+                               userToDelete=userToDelete, logedIn=logedIn, popEventsId = popEventsId, popEventsTitle = popEventsTitle,
+                               popEventsSDate= popEventsSDate, popEventsEDate=popEventsEDate, popEventsDetails= popEventsDetails,
+                               popEventsState = popEventsState)
 
 #########################################################################################################
 @app.route('/createEvent.html', methods=["POST", "GET"])
