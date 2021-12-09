@@ -588,6 +588,7 @@ def editEvent():
         userToDelete = []
     
         userId = session["userId"]
+        
 # GET EVENT----------------------------------------------------------------^
         #check if event found by eventId
         if (db.checkAny(cursor, "eventId", "events", "eventId", str(eventId),
@@ -609,8 +610,8 @@ def editEvent():
             eventState = event[12]
             eventZip = event[13]
             eventUId = event[14]
-         
-            
+            eventDeadlineTime = 0
+
 #GET ALL ATTENDING EVENT--------------------------------------
             usersId = []
             usersName = []
@@ -628,88 +629,51 @@ def editEvent():
                 usersEmail.append(tupleEvent[4])
                 
 #END GET ALL ATTENDING EVENT--------------------------------------
-                
+              
         else:
             #otherwise send back to search
             print("You are not authorized to edit event")
             return redirect(url_for('index'))
 # END GET EVENT-------------------------------------------------------------^
+#GET ALL POPULAR EVENTS----------------------------------------------
+        popEventsId = []
+        popEventsTitle = []
+        popEventsSDate = []
+        popEventsEDate = []
+        popEventsDetails = []
+        popEventsState = []
 
-        if request.method == "POST":
-            if 'searchbar' in request.form:
-                search = request.form["searchbar"]
-                # DO A SEARCH
-            else:
-                eventTitle = request.form["title"]
-                eventAddress = request.form["address"]
-                eventCity = request.form["city"]
-                eventState = request.form["state"]
-                eventZip = request.form["zip"]
-                eventStartDate = request.form["startDate"]
-                eventStartTime = request.form["startTime"]
-                eventEndDate = request.form["endDate"]
-                eventEndTime = request.form["endTime"]
-                eventPrice = request.form["price"]
-                eventCap = request.form["maxCapacity"]
-                eventDeadline = request.form["deadlineDate"]
-                eventDeadlineTime = request.form["deadlineTime"]
-                eventITag = request.form.get("eventTag")   #NEEDS CHECKING
-                eventDes = request.form["description"]
-                userToAdd = request.form["addUser"]
-                userToDelete = request.form["deleteUser"]
-                
-            if 'saveEvent' in request.form:
-    # UPDATE EVENT---------------------------------------------------
-                    #check if event found by eventId
-                    if (db.checkAny(cursor, "eventId", "events", "eventId", str(eventId),
-                            "eventId", str(eventId)) == True):
-                        #update all variables
-                        eE = getInputString([eventTitle, eventStartDate, eventEndDate, eventDeadline, eventPrice,
-                                             eventDes, eventCap, eventOcp, eventITag, eventAddress, eventCity, eventState,
-                                             eventZip, userId])
-                    else:
-                        #otherwise send back to search
-                        return redirect(url_for('search_browseEvents'))
-    # END UPDATE EVENT---------------------------------------------------
-                
+        popEvents = db.getEventsByPop(cursor)
+        for tupleEvent3 in popEvents:
+            popEventsId.append(tupleEvent3[0])
+            popEventsTitle.append(tupleEvent3[1])
+            popEventsSDate.append(tupleEvent3[2])
+            popEventsEDate.append(tupleEvent3[3])
+            popEventsDetails.append(tupleEvent3[6])
+            popEventsState.append(tupleEvent3[12])
+            
+        
+#END ALL POPULAR EVENTS----------------------------------------------
 
-            if 'removeEvent' in request.form:
-                    print() #REMOVE THE EVENT!!!!!!!!
-                    # NEED REMOVE EVENT BUTTON--------------------------------------------------*****
-                    # NEED REMOVE EVENT BUTTON--------------------------------------------------*****
-                    for i in usersId:
-                        if str(i) in session:
-                            print() # REMOVE USER FROM EVENT
+        if "saveEvent" in request.form and request.method == "POST":
+            return f"{eventId}"
 
 
     #NEED USER TO DELETE BUTTON--------------------------------------------------*****(Not sure how to go about it)
     #NEED USER TO DELETE BUTTON--------------------------------------------------*****
         else:
-            # GET ALL POPULAR EVENTS----------------------------------------------
-            popEventsId = []
-            popEventsTitle = []
-            popEventsSDate = []
-            popEventsEDate = []
-            popEventsDetails = []
-            popEventsState = []
-
-            popEvents = db.getEventsByPop(cursor)
-            for tupleEvent3 in popEvents:
-                popEventsId.append(tupleEvent3[0])
-                popEventsTitle.append(tupleEvent3[1])
-                popEventsSDate.append(tupleEvent3[2])
-                popEventsEDate.append(tupleEvent3[3])
-                popEventsDetails.append(tupleEvent3[6])
-                popEventsState.append(tupleEvent3[12])
-
-            return render_template("editEvent.html", eventTitle=eventTitle, eventAddress=eventAddress, eventCity=eventCity,
-                                   eventState=eventState, eventZip=eventZip, eventStartDate=eventStartDate,
-                                   eventEndDate=eventEndDate, eventPrice=eventPrice, eventCap=eventCap,
-                                   eventDeadline=eventDeadline,
-                                   eventDeadlineTime=eventDeadlineTime, eventDes=eventDes, userToAdd=userToAdd,
-                                   userToDelete=userToDelete, logedIn=logedIn, popEventsId = popEventsId, popEventsTitle = popEventsTitle,
-                                   popEventsSDate= popEventsSDate, popEventsEDate=popEventsEDate, popEventsDetails= popEventsDetails,
+            return render_template("editEvent.html", eventTitle=eventTitle,
+                                   eventStartDate=eventStartDate, eventEndDate=eventEndDate,eventDeadline=eventDeadline,
+                                   eventPrice=eventPrice, eventDes=eventDes, eventCap=eventCap,
+                                   eventITag=eventITag, eventAddress=eventAddress, eventCity=eventCity,
+                                   eventState=eventState, eventZip=eventZip,
+                                   eventDeadlineTime=eventDeadlineTime, userToAdd=userToAdd, userToDelete=userToDelete,
+                                   logedIn=logedIn,
+                                   popEventsId = popEventsId, popEventsTitle = popEventsTitle,
+                                   popEventsSDate= popEventsSDate, popEventsEDate=popEventsEDate,
+                                   popEventsDetails= popEventsDetails,
                                    popEventsState = popEventsState)
+
     else:
         logedIn = False
         redirect(url_for('loginPage', logedIn=logedIn))
