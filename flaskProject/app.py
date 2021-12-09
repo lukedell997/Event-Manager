@@ -768,6 +768,7 @@ def createEvent():
 @app.route('/updatePersonalInfo', methods=["POST", "GET"])
 def updatePersonalInfo():
     if 'user' in session:
+        logedIn = True
         user = session["user"]
         userId = session["userId"]
 #^GET USER^-------------------------------------------------------------^   
@@ -777,14 +778,20 @@ def updatePersonalInfo():
             password = "password"                       #NEED TO GET PASSWORD(SESSION or LOGIN)
             [uId, user, passwordId, uFN, uLN, uEmail,
              uAd, uZip, uCity, uState,
-             uPhone] = db.getUser(cursor, str(user), str(password)) 
+             uPhone]
+            user= db.getUser(cursor, str(user), str(password))
+            username= user[1]
+            firstName= user[3]
+            lastName= user[4]
+            password= user[2]
+            address= user[6]
+            city= user[8]
+            state= user[9]
+            email= user[5]
+            phone= user[9]
             
         else:
             print("Error: The username does not match the userId")
-            if 'user' in session:
-                logedIn = True
-            else:
-                logedIn = False
             return render_template("index_userLoggedIn.html", logedIn=logedIn)
             
 #^END GET USER^-----------------------------------------------^
@@ -832,6 +839,7 @@ def updatePersonalInfo():
             return render_template("updatePersonalInfo.html", firstName=firstName, lastName=lastName, username=username, password=
                                    password, address=address, city=city, state=state, email=email, phone=phone, logedIn=logedIn)
     else:
+        logedIn = False
         redirect(url_for("loginPage"))
 
 if __name__ == '__main__':
