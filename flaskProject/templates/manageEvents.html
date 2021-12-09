@@ -92,7 +92,7 @@
                         <div class="tab-pane fade in show active" role="tabpanel" id="yourEvents">
 
                             <!--My Events Generated with parent class "card"-->
-                            {% for i in range (0,eventRange) %}
+                            {% for i in range (0,eventRangeAdmin) %}
                             <div class="card">
                                 <div class="row">
                                     <a href="eventDetails.html" class="stretched-link"></a>    
@@ -104,7 +104,11 @@
                                         <p><span id='date-time'></span>                                                         <!--outgoing event date & time-->
                                             <div class="row">
                                                 <div class="col-md-8 mr-5">
-                                                    <a class="edit-delete" href="editEvent.html">EDIT</a>               
+                                                    <form action="{{url_for('editEvent')}}" id="editEventForm", method="POST">
+                                                        <input type="text" name="eventId" value="{{adEventsId[i]}}" hidden>
+                                                        <input type="submit" value="Edit">
+                                                    </form>
+                                                    <a class="edit-delete" href="editEvent.html">EDIT</a>
                                                 </div>
                                                 <div class="col">
                                                     <div class="progress mt-2">

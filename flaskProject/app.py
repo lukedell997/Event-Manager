@@ -36,7 +36,7 @@ def getInputString(ItemList):
 @app.route('/', methods=["POST", "GET"])
 @app.route('/index.html', methods=["POST", "GET"])
 def index():  # put application's code here
-    session.pop("user", None)
+    #session.pop("user", None)
     if 'user' in session:
         return redirect(url_for('user'))
     else:
@@ -417,7 +417,7 @@ def manageEvents():  # put application's code here
         
         #get user_events by userId
         userEvents = db.getUEventsByUser(cursor, str(userId))
-        eventRange = len(userEvents)
+        eventRangeAttend = len(userEvents)
 
         #for all user_events, get the event
         for tupleEvent in userEvents:
@@ -442,6 +442,7 @@ def manageEvents():  # put application's code here
         adEventsOcp = []
         
         adminEvents = db.getEventsByUser(cursor, str(userId))
+        eventRangeAdmin = len(adminEvents)
         for tupleEvent2 in adminEvents:
             adEventsId.append(tupleEvent2[0])
             adEventsTitle.append(tupleEvent2[1])
@@ -496,7 +497,8 @@ def manageEvents():  # put application's code here
                                atEventsCap=atEventsCap, atEventsOcp=atEventsOcp,
                                usersEvents=adEventsTitle, adEventsSDate=adEventsSDate,
                                adEventsEDate=adEventsEDate, adEventsId=adEventsId,
-                               eventsMaxPop=adEventsCap, adEventsOcp=adEventsOcp, logedIn=logedIn, eventRange=eventRange)
+                               eventsMaxPop=adEventsCap, adEventsOcp=adEventsOcp, logedIn=logedIn, eventRange=eventRangeAttend,
+                               eventRangeAdmin=eventRangeAdmin)
 
     else:
         return redirect(url_for("login"))  # ????
@@ -539,14 +541,13 @@ def search_browseEvents():  # put application's code here
     # tagEvents = db.getEventTagByTagId(cursor, str(tagName))
     tagEvents = db.getEvents(cursor)
     eventRange = len(tagEvents)
-    print(tagEvents)
+
 
     #for all user_events, get the event
     for tgEvent in tagEvents:
         # evInfo = db.getEventsByEId(cursor, str(tgEvent))
         evInfo = tgEvent
-        print(str(type(evInfo)))
-        print(str(evInfo))
+
 
         if evInfo is not None:
             #add each section to list
@@ -581,9 +582,9 @@ def search_browseEvents():  # put application's code here
 
 ###########################################################--EDIT EVENT--########################################
 @app.route('/editEvent.html', methods=["POST", "GET"])
-@app.route('/editEvent.html', methods=["POST", "GET"])
-def editEvent(eventId):
-    
+@app.route('/editEvent', methods=["POST", "GET"])
+def editEvent():
+    eventId = request.form.get("eventId")
     userId = session["userId"]
     eventTitle = []
     eventAddress = []
@@ -599,7 +600,7 @@ def editEvent(eventId):
     eventDes = []
     userToAdd = []
     userToDelete = []
-
+    print(eventId)
     if 'user' in session:
         userId = session["userId"]
     else:
