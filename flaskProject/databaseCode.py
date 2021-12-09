@@ -146,8 +146,8 @@ class DataB:
         cursor.execute("SELECT * FROM user_events WHERE eventId = %s",(str(eventId),))
         eventUser = []
         for (idU) in cursor:
-            eventUser.append([idU])
-        return eventUser
+            eventUsers.append([idU])
+        return eventUsers
 
 #***************************USER PAYMENT************************************
     # CREATE USER PAYMENT
