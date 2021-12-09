@@ -712,7 +712,7 @@ def editEvent():
                                    popEventsState = popEventsState)
     else:
         logedIn = False
-        redirect(url_for('loginPage'))
+        redirect(url_for('loginPage', logedIn=logedIn))
         
 
 
