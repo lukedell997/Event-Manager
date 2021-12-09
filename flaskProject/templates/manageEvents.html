@@ -95,7 +95,7 @@
                             {% for i in range (0,eventRangeAdmin) %}
                             <div class="card">
                                 <div class="row">
-                                    <a href="eventDetails.html" class="stretched-link"></a>    
+
                                     <div class="col-md-4">
                                         <img src="{{ url_for('static', filename='img/concertEvent.jpg')}}" class="img-fluid">   <!--outgoing event image-->
                                     </div>
@@ -104,7 +104,7 @@
                                         <p><span id='date-time'></span>                                                         <!--outgoing event date & time-->
                                             <div class="row">
                                                 <div class="col-md-8 mr-5">
-                                                    <form action="{{url_for('editEvent')}}" id="editEventForm", method="POST">
+                                                    <form action="{{url_for('editEvent')}}" id="editEventsForm", method="POST">
                                                         <input type="text" name="eventId" value="{{adEventsId[i]}}" hidden>
                                                         <input type="submit" value="Edit">
                                                     </form>

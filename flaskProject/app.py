@@ -311,7 +311,7 @@ def logout():
 def eventDetails():  # put application's code here
 
     eventId = request.form.get("eventId")
-    print(eventId)
+    print("This is in eventDetails:", eventId)
 #GET ALL EVENT INFO------------------------------------------------------------
     #check if event found by eventId
     if (db.checkAny(cursor, "eventId", "events", "eventId", str(eventId),
@@ -445,6 +445,7 @@ def manageEvents():  # put application's code here
         eventRangeAdmin = len(adminEvents)
         for tupleEvent2 in adminEvents:
             adEventsId.append(tupleEvent2[0])
+            print("This is the id: ",tupleEvent2[0])
             adEventsTitle.append(tupleEvent2[1])
             adEventsSDate.append(tupleEvent2[2])
             adEventsEDate.append(tupleEvent2[3])
@@ -521,6 +522,7 @@ def search_browseEvents():  # put application's code here
     eventLocations = []
     eventPrices = []
     eventImage = []
+    eventId = []
     #eventPopulation = []
     #eventMaxPop = []
 
@@ -551,6 +553,7 @@ def search_browseEvents():  # put application's code here
 
         if evInfo is not None:
             #add each section to list
+            eventId.append(evInfo[0])
             eventTitle.append(evInfo[1])
             eventStartDate.append(evInfo[2])
             eventEndDate.append(evInfo[3])
@@ -600,7 +603,7 @@ def editEvent():
     eventDes = []
     userToAdd = []
     userToDelete = []
-    print(eventId)
+    print("This is in editEvent: ", eventId)
     if 'user' in session:
         userId = session["userId"]
     else:
@@ -612,7 +615,7 @@ def editEvent():
         #get all variables in event
         [eId, eventTitle, eventStartDate, eventEndDate, eventDeadline, eventPrice, eventDescription,
          eventCap, eventOcp, eventITag, eventAddress,
-         eventCity, eventState, eventZip] = db.getEventByEId(cursor, eventId)
+         eventCity, eventState, eventZip] = db.getEventsByEId(cursor, eventId)
         
 #GET ALL ATTENDING EVENT--------------------------------------
         usersId = []
@@ -798,7 +801,7 @@ def updatePersonalInfo():
             password = request.form["pw"]
             address = request.form["address"]
             city = request.form["city"]
-            state = request.form["state"] #request.form.get("state")&
+            state = request.form.get("state") #request.form.get("state")&
             #zipcode = request.form["zipcode"]&
             zipcode = "12345"
             email = request.form["email"]
