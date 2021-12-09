@@ -328,14 +328,12 @@ class DataB:
         
     #GET EVENT BY EVENT ID
     def getEventsByEId(self, cursor, eId):
-        event = None
-        # ur =''.join(("SELECT * FROM events WHERE eventId = '", eId, "'"))
-        ur = "SELECT * FROM events where eventId=" + eId + ";"
+        ur =''.join(("SELECT * FROM events WHERE eventId = '", eId, "'"))
         cursor.execute(ur)
         for (idU) in cursor:
             event = idU
         return event
-    
+
     #GET EVENTS
     def getEvents(self, cursor):
         events = []
@@ -346,7 +344,6 @@ class DataB:
         for meme in memes:
             events.append(meme)
         return events
-    
     #GET EVENTS BY STATE
     #(from outside: state)-> get events in state after 
     def getEventsByLoc(self, cursor, state):
@@ -465,7 +462,6 @@ class DataB:
 ##
 #db = DataB()
 #cnx, cursor = db.openDatabase()
-
 
 #cE = "'Test', '2022-04-04', '2022-04-04', '2022-04-04', '0', 'test', '23', '18', '3', '123 main st', 'Town', 'IL', '12345', '30'"
 #print(db.newEvent(cnx, cursor, cE))
