@@ -55,15 +55,22 @@
                 </div>  <!--form-group-->
 
                 <div class="form-group">
-                    <input type="address" class="form-control" name="address" placeholder="Address" required="required">        <!--incoming address-->
+                    <div class="row">
+                        <div class="col-md-7">
+                            <input type="address" class="form-control" name="address" placeholder="Address" required="required">        <!--incoming address-->
+                        </div>
+                        <div class="col">
+                            <input type="text" class="form-control" name="city" placeholder="City" required="required">         <!--incoming city-->
+                        </div>
+                    </div>
                 </div>  <!--form-group-->
 
                 <div class="form-group">
                     <div class="row">
-                        <div class="col-md-6">
-                            <input type="text" class="form-control" name="city" placeholder="City" required="required">         <!--incoming city-->
+                        <div class="col">
+                            <input type="text" class="form-control" name="zip" placeholder="Zip" required="required">         <!--incoming zip-->
                         </div>  <!--col-->
-                        <div class="form-group col">
+                        <div class="form-group col-md-7">
                             <select id="eventState" class="form-control">                                                       <!--incoming event state-->
                                 <option disabled selected>Select State...</option>
                                 <option value="AL">Alabama</option>
