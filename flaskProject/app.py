@@ -4,7 +4,7 @@ from databaseCode import DataB
 
 app = Flask(__name__)
 
-#app.permanent_session_lifetime = timedelta(hours=5)
+app.permanent_session_lifetime = timedelta(seconds=30)
 
 app.secret_key = "hello"
 
@@ -202,14 +202,19 @@ def user():
         atEventsSDate = []  # FILL WITH 6 popular EVENTS
         atEventsEDate = []  # FILL WITH 6 NEAR BY EVENTS
         atEventsState = []
-        
+        atEventRange = 0
+        adEventRange = 0
         
         #get user_events by userId
-        userEvents = db.getUEventsByUser(cursor, str(userId))
+        userEvents2 = db.getUEventsByUser(cursor, str(userId))
+        print(userEvents2)
 
         #for all user_events, get the event
-        for tupleEvent in userEvents:
+        for tupleEvent in userEvents2:
+            print("TEST!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!")
             evInfo = db.getEventsByEId(cursor, str(tupleEvent[2]))
+            atEventRange = len(evInfo)
+            print("This was atEventRange", atEventRange)
 
             #add each section to list
             atEventsId.append(evInfo[0])
@@ -218,7 +223,8 @@ def user():
             atEventsEDate.append(evInfo[3])
             atEventsState.append(evInfo[12])
 
-
+        atEventRange = len(atEventsId)
+        print("This is atEventRange", atEventRange)
 #END ALL USER EVENTS ATTENDING----------------------------------------    
 #GET ALL USER EVENTS ADMINISTRATING----------------------------------
         adEventsId = []
@@ -226,15 +232,19 @@ def user():
         adEventsSDate = []
         adEventsEDate = []
         adEventsState = []
+        adEventRange = []
         
         adminEvents = db.getEventsByUser(cursor, str(userId))
+
+
         for tupleEvent2 in adminEvents:
             adEventsId.append(tupleEvent2[0])
             adEventsTitle.append(tupleEvent2[1])
             adEventsSDate.append(tupleEvent2[2])
             adEventsEDate.append(tupleEvent2[3])
             adEventsState.append(tupleEvent2[12])
-            
+        adEventRange = len(adEventsId)
+        print("This is adEventRange", adEventRange)
 #END ALL USER EVENTS ADMINISTRATING----------------------------------
 #GET ALL POPULAR EVENTS----------------------------------------------
         popEventsId = []
@@ -281,11 +291,14 @@ def user():
                 search = request.form["searchbar"]
                 # DO A SEARCH
         else:
+            print("This is now atEventRange", atEventRange)
+            print("This is now adEventRange", adEventRange)
             return render_template("index_userLoggedIn.html", name=user,
                                    atEventsTitle=atEventsTitle, atEventsSDate=atEventsSDate, atEventsEDate=atEventsEDate, atEventsId=atEventsId,
                                    adEventsTitle=adEventsTitle, adEventsSDate=adEventsSDate, adEventsEDate=adEventsEDate, adEventsId=adEventsId,
                                    popEventsTitle=popEventsTitle, popEventsDetails=popEventsDetails,popEventsId=popEventsId,
-                                   nearEventsTitle=locEventsTitle, nearEventsDetails=locEventsDetails, nearEventsId=locEventsId, search=search)
+                                   nearEventsTitle=locEventsTitle, nearEventsDetails=locEventsDetails, nearEventsId=locEventsId, search=search,
+                                   ateventRange = atEventRange, adeventRange=adEventRange)
 
     else:
         logedIn = False
