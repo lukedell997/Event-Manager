@@ -3,7 +3,6 @@ $(document).ready(function() {
         autoplay: true,
         autoplayhoverpause: true,
         autoplaytimeout: 100,
-        //items: 4,
         nav: true,
         loop: true,
         margin: 50,
