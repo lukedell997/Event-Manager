@@ -47,11 +47,11 @@
                 </div>  <!--form-group-->
 
                 <div class="form-group">
-                    <input type="password" class="form-control" name="pw" placeholder="Old Password" value="{{ password }}" required="required">           <!--outgoing password-->
+                    <input type="password" class="form-control" name="opw" placeholder="Old Password" value="" required="required">           <!--outgoing password-->
                 </div>  <!--form-group-->
 
                 <div class="form-group">
-                    <input type="password" class="form-control" name="pw" placeholder="New Password" value="" required="required">                   <!--incoming new password-->
+                    <input type="password" class="form-control" name="pw" placeholder="New/Current Password" value="" required="required">                   <!--incoming new password-->
                 </div>  <!--form-group-->
 
                 <div class="form-group">
@@ -68,7 +68,7 @@
                 <div class="form-group">
                     <div class="row">
                         <div class="col">
-                            <input type="text" class="form-control" name="zip" placeholder="Zip" required="required" onkeypress="numbersOnly(event)">         <!--incoming zip-->
+                            <input type="text" class="form-control" name="zip" placeholder="Zip" value="{{ zipcode }}" required="required" onkeypress="numbersOnly(event)">         <!--incoming zip-->
                         </div>  <!--col-->
                         <div class="form-group col-md-7">
                             <select id="eventState" class="form-control">                                                       <!--incoming event state-->

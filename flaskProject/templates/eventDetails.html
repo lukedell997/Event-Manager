@@ -47,12 +47,21 @@
                             <li class="nav-item">
                                 <a class="nav-link" href="search_browseEvents.html" style="border-right: 1px solid #FFF; padding-right: 20px; margin-right: 10px">Browse Events</a>
                             </li>
+							{% if logedIn == True %}
                             <li class="nav-item">
                                 <a class="nav-link" href="registerPage.html"><i class="fa fa-user-plus"></i> Sign-Up</a>
                             </li>
                             <li class="nav-item">
                                 <a class="nav-link" href="loginPage.html"><i class="fa fa-sign-in"></i> Login</a>
                             </li>
+							{% else %}
+                            <li class="nav-item">
+                                <a class="nav-link" href="registerPage.html"><i class="fa fa-user-plus"></i> Sign-Up</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" href="loginPage.html"><i class="fa fa-sign-in"></i> Login</a>
+                            </li>
+                            {% endif %}
                         </ul>
                     </div>  <!--collapse-->
                 </div>  <!--container-->

@@ -4,7 +4,7 @@ from databaseCode import DataB
 
 app = Flask(__name__)
 
-app.permanent_session_lifetime = timedelta(hours=5)
+#app.permanent_session_lifetime = timedelta(hours=5)
 
 app.secret_key = "hello"
 
@@ -175,25 +175,18 @@ def loginPage():  # put application's code here
             
         else:
             print("Error: The username or password is incorrect")
-            if 'user' in session:
-                logedIn = True
-            else:
-                logedIn = False
-            return render_template("loginPage.html", logedIn = logedIn)
+            return render_template("loginPage.html")
             
 #^END GET USER^-----------------------------------------------^
     else:
-        if 'user' in session:
-            logedIn = True
-        else:
-            logedIn = False
-        return render_template("loginPage.html", logedIn = logedIn)
+        return render_template("loginPage.html")
 
 ########################################################################--INDEX_USER LOGGED IN--############
 @app.route("/index_userLoggedIn.html", methods=["POST", "GET"])
 @app.route("/index_userLoggedIn", methods=["POST", "GET"])
 def user():
     if "user" in session:
+        logedIn = True
         search = None
         if request.method == "POST":
             search = request.form
@@ -295,6 +288,7 @@ def user():
                                    nearEventsTitle=locEventsTitle, nearEventsDetails=locEventsDetails, nearEventsId=locEventsId, search=search)
 
     else:
+        logedIn = False
         return redirect(url_for("loginPage"))  # ????
 
 
@@ -309,9 +303,12 @@ def logout():
 @app.route('/eventDetails.html', methods=["POST", "GET"])
 @app.route('/eventDetails', methods=["POST", "GET"])
 def eventDetails():  # put application's code here
-
+    if "user" in session:
+        logedIn = True
+    else:
+        logedIn = False
     eventId = request.form.get("eventId")
-    print(eventId)
+    
 #GET ALL EVENT INFO------------------------------------------------------------
     #check if event found by eventId
     if (db.checkAny(cursor, "eventId", "events", "eventId", str(eventId),
@@ -333,68 +330,63 @@ def eventDetails():  # put application's code here
             eventState= event[12]
             eventZip= event[13]
     else:
-        #otherwise send back to search
-        if 'user' in session:
-            logedIn = True
-        else:
-            logedIn = False
-        return redirect(url_for('search_browseEvents', logedIn=logedIn))
-    
-
+        print("Problem finding event in server")
+        return redirect(url_for("index"))
 #END ALL EVENT INFO------------------------------------------------------------
 
-    if "attend" in request.form and request.method == "POST":
-        if "user" in session:
-
-            #get all info you need
-            userId = session["userId"]
-            user = session["user"]
-            email = session["userEmail"]
-            paid = 1
-            seat = "O0"
-            price = eventPrice
-            #if free, user has paid
-            if (price != 0):
-                paid = 0
 # ADD USER FROM ATTENDING EVENT--------------------------
+    if "attend" in request.form and request.method == "POST":
+        
+        '''if logedIn == False:
+            print("You must be logged in to attend event")
+            return redirect(url_for("loginPage"))'''
+
             
-            #turn to string
-            cUE = getInputString([userId, eventId, user, email, paid, seat, price])
+        #get all info you need
+        userId = session["userId"]
+        user = session["user"]
+        email = session["userEmail"]
+        paid = 1
+        seat = "O0"
+        price = eventPrice
+        #if free, user has paid
+        if (price != 0):
+            paid = 0
 
-            #check if not already exists: AND if not full
-            if (db.checkAny(cursor, "attendantId", "user_events", "userId",
-                            str(userId), "eventId", str(eventId)) == False
-                and db.checkAvl(cursor, str(eventId)) == True):
+        #turn to string
+        cUE = getInputString([userId, eventId, user, email, paid, seat, price])
+        
+        #check if not already exists: AND if not full
+        if (db.checkAny(cursor, "attendantId", "user_events", "userId",
+                        str(userId), "eventId", str(eventId)) == False
+            and db.checkAvl(cursor, str(eventId)) == True):
 
-                #create new user events
-                db.newUEvents(cnx, cursor, cUE)
-                
-                #add occupant to event
-                db.updateEventOcp(cnx, cursor, eventId, eventOcp)
-                
-                return redirect(url_for("user"))
-            else:
-                #give error(filled or user already signed up)
-                print("ERROR: event filled or already signed up")
-                if 'user' in session:
-                    logedIn = True
-                else:
-                    logedIn = False
-                return render_template("eventDetails.html", eventStartDate=eventStartDate, eventEndDate=eventEndDate,
-                                       eventTitle=eventTitle, eventPrice=eventPrice, eventDescription=eventDescription,
-                                       eventAddress=eventAddress, eventITag=eventITag, logedIn=logedIn)
-# END ADD USER FROM ATTENDING EVENT--------------------------
-            return redirect(url_for("index_userLoggedIn"))
+            #create new user events
+            db.newUEvents(cnx, cursor, cUE)
+            
+            #add occupant to event
+            rt = db.updateEventOcp(cnx, cursor, eventId, eventOcp)
+            return redirect(url_for("user"))
         else:
-            return redirect(url_for("loginPage"))
-
-    if 'user' in session:
-        logedIn = True
+            #give error(filled or user already signed up)
+            print("ERROR: event filled or already signed up")
+            return render_template("eventDetails.html", eventStartDate=eventStartDate, eventEndDate=eventEndDate,
+                                   eventTitle=eventTitle, eventPrice=eventPrice, eventDescription=eventDescription,
+                                   eventAddress=eventAddress, eventITag=eventITag,
+                                   eventCity=eventCity, eventZip=eventZip, eventState=eventState,
+                                   eventCap=eventOcp, eventMaxPop=eventCap,
+                                   logedIn=logedIn)
+# END ADD USER FROM ATTENDING EVENT--------------------------
     else:
-        logedIn = False
-    return render_template("eventDetails.html", eventStartDate=eventStartDate, eventEndDate=eventEndDate,
-                           eventTitle=eventTitle, eventPrice=eventPrice, eventDescription=eventDescription,
-                           eventAddress=eventAddress, eventITag=eventITag, logedIn = logedIn)
+        return render_template("eventDetails.html", eventStartDate=eventStartDate, eventEndDate=eventEndDate,
+                               eventTitle=eventTitle, eventPrice=eventPrice, eventDescription=eventDescription,
+                               eventAddress=eventAddress, eventITag=eventITag,
+                               eventCity=eventCity, eventZip=eventZip, eventState=eventState,
+                               eventCap=eventOcp, eventMaxPop=eventCap,
+                               logedIn=logedIn)
+    
+
+
 
 
 ########################################################################--MANAGE EVENTS--############
@@ -405,6 +397,7 @@ def manageEvents():  # put application's code here
         logedIn = True
         user = session["user"]
         userId = session["userId"]
+        eventId = request.form.get("eventId")
 #GET ALL USER EVENTS ATTENDING-------------------------------
         atEventsId = []
         atEventsTitle = []  
@@ -458,6 +451,7 @@ def manageEvents():  # put application's code here
         if 'leaveEvent' in request.form and request.method == "POST":
             user = session["user"]
             userId = session["userId"]
+            eventId = 24
             
 # REMOVE USER FROM ATTENDING EVENT------------------------------------
             #if user found with event
@@ -473,7 +467,7 @@ def manageEvents():  # put application's code here
                 return redirect(url_for("manageEvents"))
             else:
                 print("Attendant Not found for event")
-                return render_template("manageEvents.html",
+                return render_template("manageEvents.html",eventId=eventId,
                                        userAttendingEvents=atEventsTitle, atEventsSDate=atEventsSDate,
                                        atEventsEDate=atEventsEDate, atEventsId=atEventsId, atEventsDDate=atEventsDDate,
                                        atEventsCap=atEventsCap, atEventsOcp=atEventsOcp,
@@ -485,7 +479,7 @@ def manageEvents():  # put application's code here
             
 #END REMOVE USER FROM ATTENDING EVENT------------------------------------
         else:
-            return render_template("manageEvents.html",
+            return render_template("manageEvents.html",eventId=eventId,
                                    userAttendingEvents=atEventsTitle, atEventsSDate=atEventsSDate,
                                    atEventsEDate=atEventsEDate, atEventsId=atEventsId, atEventsDDate=atEventsDDate,
                                    atEventsCap=atEventsCap, atEventsOcp=atEventsOcp,
@@ -586,7 +580,6 @@ def editEvent():
     if 'user' in session:
         logedIn = True
         eventId = request.form.get("eventId")
-        #eventId = 27
         userId = session["userId"]
 
         userToAdd = []
@@ -621,17 +614,16 @@ def editEvent():
 # UPDATE EVENT---------------------------------------------------
             #check if event found by eventId
             if (db.checkAny(cursor, "eventId", "events", "eventId", str(eventId),
-                    "eventId", str(eventId)) == True):
+                    "userId", str(userId)) == True):
+
                 #update all variables
-                print(eventStartDate)
-                print(eventEndDate)
-                
                 db.updateEvent(cnx,cursor, str(eventId), str(userId),
                                     [str(eventTitle), str(eventStartDate), str(eventEndDate),
                                      str(eventDeadline), str(eventPrice),str(eventDes),
                                      str(eventCap), str(eventITag), str(eventAddress),
                                      str(eventCity), str(eventState),
                                      str(eventZip), str(userId)])
+                
                 return redirect(url_for('manageEvents'))
             else:
                 #otherwise send back to search
@@ -789,65 +781,85 @@ def updatePersonalInfo():
         #: check if user found, then get user info into variables
         if (db.checkAny(cursor, "userId", "users", "username", str(user),
             "userId", str(userId)) == True):
-            user= db.getUser(cursor, str(user), str(password))
-            username= user[1]
-            firstName= user[3]
-            lastName= user[4]
-            password= user[2]
-            address= user[6]
-            city= user[8]
-            state= user[9]
-            email= user[5]
-            phone= user[9]
+            userE = db.getUserById(cursor, str(userId))
+
+            username= userE[1]
+            password= userE[2]
+            firstName= userE[3]
+            lastName= userE[4]
+            email= userE[5]
+            address= userE[6]
+            zipcode= userE[7]
+            city= userE[8]
+            state= userE[9]
+            phone= userE[10]
             
         else:
             print("Error: The username does not match the userId")
-            return render_template("index_userLoggedIn.html", logedIn=logedIn)
+            return redirect(url_for("user"))
             
 #^END GET USER^-----------------------------------------------^
         if request.method == "POST":
-            firstName = request.form["fn"]
-            lastName = request.form["ln"]
-            username = request.form["nm"]
-            #oldPassword = request.form["Opw"]&
-            password = request.form["pw"]
-            address = request.form["address"]
-            city = request.form["city"]
-            state = request.form["state"] #request.form.get("state")&
-            #zipcode = request.form["zipcode"]&
-            zipcode = "12345"
-            email = request.form["email"]
-            phone = request.form["phone"]
+            nfirstName = request.form["fn"]
+            nlastName = request.form["ln"]
+            nusername = request.form["nm"]
+            oPassword = request.form["opw"]
+            npassword = request.form["pw"]
+            naddress = request.form["address"]
+            ncity = request.form["city"]
+            nstate = request.form.get("state")
+            nzipcode = request.form["zip"]
+            nemail = request.form["email"]
+            nphone = request.form["phone"]
             
-# UPDATE USER---------------------------------------------- ******NEEDS WORK*******
-            eU =[username, password, firstName, lastName, email, address, zipcode, city, state, phone]
+# UPDATE USER---------------------------------------------- ------------------------^
+            if (oPassword != password):
+                print("Please enter correct password")
+                return redirect(url_for("updatePersonalInfo"))
+            eU =[nusername, npassword, nfirstName, nlastName, nemail, naddress, nzipcode, ncity, nstate, nphone]
             #update user
-            rt = db.updateUser(cnx, cursor, userId, passwordId, eU)
-            return redirect(url_for("user"))
-#END UPDATE USER-------------------------------------------
-# NEED BUTTON TO REMOVE USER---------------------------------------****
-        if 'remove' in request.form:
+            rt = db.updateUser(cnx, cursor, str(userId), str(oPassword), eU)
 
+            session["user"] = nusername
+            session["userEmail"] = nemail
+            session["userState"] = nstate
+    # UPDATE USER EVENTS IF NEEDED-------------------------------------------
+
+            #update user in user_events if username or email change
+            if(str(username) != str(nusername) or str(email) != str(nemail)):
+                uEvents = db.getUEventsByUser(cursor,str(userId))
+                for uET in uEvents:
+                    clms = [str(uET[3]),str(uET[4])]
+                    chng = ["username","email"]
+                    rt = db.updateUEvents( cnx, cursor, str(userId), str(uET[2]), clms, chng)
+                    return f"{rt}"
+    # UPDATE USER EVENTS IF NEEDED-------------------------------------------
+
+            
+            
+            return redirect(url_for("user"))
+#END UPDATE USER------------------------------------------------------------------^
+        
+
+        if 'remove' in request.form:
+#REMOVE USER------------------------------------------------
             userRemove(cnx, cursor, userId, passwordId)
-            return redirect(url_for("index.html"))
-# NEED BUTTON TO REMOVE USER---------------------------------------****)
+
+            #remove all user events
+            uEvents2 = db.getUEventByUser(cursor,str(userId))
+            for uET2 in uEvents2:
+                db.removeUEvents(cnx, cursor, str(userId), uET2[2])
+                
+            session["user"] = None
+            session["userEmail"] = None
+            session["userState"] = None
+            return redirect(url_for("index"))
+#REMOVE USER------------------------------------------------
         else:
-            firstName = uFN
-            lastName = uLN
-            username = user
-            password = passwordId
-            address = uAd
-            city = uCity
-            state = uState
-            zipcode = uZip
-            email = uEmail
-            phone = uPhone
-            if 'user' in session:
-                logedIn = True
-            else:
-                logedIn = False
-            return render_template("updatePersonalInfo.html", firstName=firstName, lastName=lastName, username=username, password=
-                                   password, address=address, city=city, state=state, email=email, phone=phone, logedIn=logedIn)
+            return render_template("updatePersonalInfo.html", firstName=firstName, lastName=lastName,
+                                   username=username, password=password, address=address,
+                                   city=city, state=state, email=email, phone=phone,
+                                   zipcode=zipcode, logedIn=logedIn)
     else:
         logedIn = False
         redirect(url_for("loginPage"))
