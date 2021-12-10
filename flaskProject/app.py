@@ -515,6 +515,7 @@ def search_browseEvents():  # put application's code here
     eventLocations = []
     eventPrices = []
     eventImage = []
+    eventId = []
     #eventPopulation = []
     #eventMaxPop = []
 
@@ -545,6 +546,7 @@ def search_browseEvents():  # put application's code here
 
         if evInfo is not None:
             #add each section to list
+            eventId.append(evInfo[0])
             eventTitle.append(evInfo[1])
             eventStartDate.append(evInfo[2])
             eventEndDate.append(evInfo[3])
@@ -571,7 +573,8 @@ def search_browseEvents():  # put application's code here
         return render_template("search_browseEvents.html", events=events, eventDates=eventDates, eventTimes=eventTimes,
                                eventLocations=eventLocations, eventPrices=eventPrices, eventImage=eventImage, eventTitle=eventTitle,
                                eventStartDate=eventStartDate, eventEndDate=eventEndDate, eventAddress=eventAddress, eventPrice=eventPrice,
-                               eventTime=eventTime, eventOccupants=eventOccupants, eventCapacity=eventCapacity, eventRange=eventRange, logedIn=logedIn)
+                               eventTime=eventTime, eventOccupants=eventOccupants, eventCapacity=eventCapacity,
+                               eventRange=eventRange, logedIn=logedIn, eventId=eventId)
 
 
 ###########################################################--EDIT EVENT--########################################
