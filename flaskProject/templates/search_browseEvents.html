@@ -52,8 +52,8 @@
                                     <div class="dropdown-menu dropdown-menu-right">
                                         <a class="dropdown-item" href="updatePersonalInfo.html"><i class="fa fa-user fa-md"></i> My Account</a>
                                         <a class="dropdown-item" href="createEvent.html"><i class="fa fa-calendar-plus-o fa-md"></i> Create An Event</a>
-                                        <a class="dropdown-item" href="manageEvents.html"><i class="fa fa-edit fa-md"></i> Edit Events</a>
-                                        <a class="dropdown-item" href="index.html"><i class="fa fa-sign-out fa-md"></i> Log Out</a>
+                                        <a class="dropdown-item" href="manageEvents.html"><i class="fa fa-edit fa-md"></i> Manage Events</a>
+                                        <a class="dropdown-item" href="#modalLogout" data-toggle="modal"><i class="fa fa-sign-out fa-md"></i> Log Out</a>
                                     </div>
                                 </div>    
                             </li>
@@ -71,28 +71,36 @@
             </nav>
         </div>  <!--menu-bar-->
 
+        <!--Logout modal-->
+        <div class="modal fade" id="modalLogout" tabindex="-1" role="dialog" aria-labelledby="modalHeader" aria-hidden="true">
+            <div class="modal-dialog" role="document">
+              <div class="modal-content">
+                <div class="modal-header">
+                  <h5 class="modal-title" id="modalHeader">Confirm Logout</h5>
+                  <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                  </button>
+                </div>
+                <div class="modal-body">
+                  Are you sure you want to log out?
+                </div>
+                <div class="modal-footer">
+                  <form action="#" method="POST">
+                    <div class="form-group">
+                        <input type='button' value="CANCEL" data-dismiss="modal" />      
+                        <input type='submit' value="YES" name="userLogout"/>    <!--incoming user logs out-->
+                    </div>    
+                  </form>
+                </div>
+              </div>
+            </div>
+        </div>
+
         <div class="container">     
             <div class="row row-content">
                 <div class="col-sm-5 col-md-8">
                     <h2>Events</h2>
                 </div>
-
-                <form method="POST">
-                    <div class="form-group">
-                        <div class="input-group">
-                            <div class="input-group-prepend dropdown">
-                                <button class="btn btn-secondary dropdown-toggle" type="button" data-toggle="dropdown" id="filterinput">Filter by: </button>        <!--optional, can be deleted-->
-                            <div class="dropdown-menu">
-                                <a href="#" class="dropdown-item" onclick="changeval(0);">Tag</a>
-                                <a href="#" class="dropdown-item" onclick="changeval(1);">Price</a>
-                                <a href="#" class="dropdown-item" onclick="changeval(2);">Date</a>
-                                <a href="#" class="dropdown-item" onclick="changeval(3);">Location</a>
-                            </div>
-                            <input type="search" name="filtersearch" class="form-control" placeholder="Search..." id="myinput" onkeyup="search();">                 <!--incoming filter search-->
-                            </div>  <!--input-group-prepend-->
-                        </div>  <!--input-group-->
-                    </div>
-                </form>
 
                 <div class="col-12" id="events">
                     <!--Events Generated with parent class "card"-->
@@ -108,9 +116,9 @@
                                     <span id="capacity" class="text-success mr-4">{{ eventOccupants[i] }}/{{ eventCapacity[i] }}</span>                            <!--outgoing event capacity-->
                                 </div>
                                 <p>
-                                    <span>Date: {{ eventStartDate[i] }}-{{ eventEndDate[i] }} &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Time: {{ eventTime[i] }}</span>                                                                <!--outgoing event date/time-->
+                                    <span>Date: {{ eventStartDate[i] }} to {{ eventEndDate[i] }} &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Time: {{ eventTime[i] }}</span>                                                                <!--outgoing event date/time-->
                                     <span>Location: {{ eventAddress[i] }}</span>                                                                   <!--outgoing event location-->
-                                    <span>Price: {{ eventPrice[i] }}</span>                                                                      <!--outgoing event price-->
+                                    <span>Price: ${{ eventPrice[i] }}</span>                                                                      <!--outgoing event price-->
                                 </p>
                                 <form action="{{url_for('eventDetails')}}" id="eventDetailForm", method="POST">
                                     <input type="text" name="eventId" value="{{eventId[0]}}" hidden>
@@ -152,8 +160,7 @@
                             <i class="fa fa-youtube fa-md"></i>
                         </a>
                     </div>  <!--col-->
-                    <div class="col text-right">
-                        <a href="registerPage.html"><button type="button" class="btn btn-primary">Get Started</button></a>  
+                    <div class="col text-right"> 
                         <a class="btn btn-floating" href="#">
                             <i class="fa fa-arrow-circle-up"></i> Back to top
                         </a>
