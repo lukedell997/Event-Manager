@@ -103,7 +103,7 @@ class DataB:
     #REMOVE USER EVENTS
     def removeUEvents(self, cnx, cursor, userId, eventId):
         try:
-            cursor.execute(self.remove("user_events", "userId", userId, "eventId", eventId))
+            cursor.execute(self.remove("user_events", "userId", str(userId), "eventId", str(eventId)))
             cnx.commit()
             return
         except Exception as e:
@@ -118,6 +118,8 @@ class DataB:
         except Exception as e:
             return e
         
+
+        
     # UPDATE USER EVENTS
     def updateUEvents(self, cnx, cursor, userId, eventId, clms, chng):
         try:
@@ -129,6 +131,21 @@ class DataB:
                 print(cursor)
                 cnx.commit()
                 return
+        except Exception as e:
+            return e
+
+    # UPDATE USER EVENTS
+    def updateUEventsByUId(self, cnx, cursor, userId, chng):
+        try:
+            #for all elements in list: if password hash password given
+            #update the column
+            uUE = ''.join(("UPDATE user_events SET",
+                           " userName = '%s', userEmail = '%s'"%(str(chng[0]), str(chng[1])),
+                           "WHERE userId = '%s'"%(str(userId))))
+
+            cursor.execute(uUE)
+            cnx.commit()
+            return True
         except Exception as e:
             return e
 
@@ -286,6 +303,15 @@ class DataB:
             return
         except Exception as e:
             return e
+
+        
+    def removeEventsByUId(self, cnx, cursor, userId):
+        try:
+            cursor.execute(self.remove("events", "userId", str(userId), "userId", str(userId)))
+            cnx.commit()
+            return
+        except Exception as e:
+            return e
         
     #UPDATE EVENT    
     def updateEvent(self, cnx, cursor, eventId, userId, uC):
@@ -304,7 +330,7 @@ class DataB:
             return e
 
     #UPDATE OCCUPANTS BY 1
-    def updateEventOcp(self, cnx, cursor, eventId, pastOcp):
+    def addEventOcp(self, cnx, cursor, eventId, pastOcp):
         try:
             #get occupant as old plus 1
             ocp = int(pastOcp) + 1
@@ -320,7 +346,7 @@ class DataB:
     def removeEventOcp(self,cnx, cursor, eventId):
         try:
             #get event info
-            event = self.getEventByEId(cursor, eventId)
+            event = self.getEventsByEId(cursor, eventId)
             if(event[8] == 0):
                 return
             else:
