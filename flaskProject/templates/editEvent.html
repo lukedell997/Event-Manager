@@ -56,8 +56,8 @@
                                     <div class="dropdown-menu dropdown-menu-right">
                                         <a class="dropdown-item" href="updatePersonalInfo.html"><i class="fa fa-user fa-md"></i> My Account</a>
                                         <a class="dropdown-item" href="createEvent.html"><i class="fa fa-calendar-plus-o fa-md"></i> Create An Event</a>
-                                        <a class="dropdown-item" href="manageEvents.html"><i class="fa fa-edit fa-md"></i> Edit Events</a>
-                                        <a class="dropdown-item" href="index.html"><i class="fa fa-sign-out fa-md"></i> Log Out</a>
+                                        <a class="dropdown-item" href="manageEvents.html"><i class="fa fa-edit fa-md"></i> Manage Events</a>
+                                        <a class="dropdown-item" href="#modalLogout" data-toggle="modal"><i class="fa fa-sign-out fa-md"></i> Log Out</a>
                                     </div>
                                 </div>    
                             </li>
@@ -66,6 +66,30 @@
                 </div>  <!--container-->
             </nav>
         </div>  <!--menu-bar-->
+
+        <div class="modal fade" id="modalLogout" tabindex="-1" role="dialog" aria-labelledby="modalHeader" aria-hidden="true">
+            <div class="modal-dialog" role="document">
+              <div class="modal-content">
+                <div class="modal-header">
+                  <h5 class="modal-title" id="modalHeader">Confirm Logout</h5>
+                  <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                  </button>
+                </div>
+                <div class="modal-body">
+                  Are you sure you want to log out?
+                </div>
+                <div class="modal-footer">
+                  <form action="#" method="POST">
+                    <div class="form-group">
+                        <input type='button' value="CANCEL" data-dismiss="modal" />      
+                        <input type='submit' value="YES" name="userLogout"/>    <!--incoming user logs out-->
+                    </div>    
+                  </form>
+                </div>
+              </div>
+            </div>
+        </div>
 
         <!-- CONTENTS -->
         <div class="container"> 
@@ -77,24 +101,24 @@
                         <h2>Edit Event</h2>                  
 
                         <div class="form-group">
-                            <label for="eventTitle">{{ eventTitle }}</label>
-                            <input type="text" class="form-control" id="eventTitle" placeholder="Event Name" name="title">          <!--outgoing event title-->
+                            <label for="eventTitle">Event Title</label>
+                            <input type="text" class="form-control" id="eventTitle" placeholder="Event Name" name="title" value="{{ eventTitle }}">          <!--outgoing event title-->
                         </div>  <!--row-->
 
                         <div class="form-group">
-                            <label for="eventAddress">{{ eventAddress }}</label>
-                            <input type="text" class="form-control" id="eventAddress" placeholder="Street" name="address">           <!--outgoing event street-->
+                            <label for="eventAddress">Event Address</label>
+                            <input type="text" class="form-control" id="eventAddress" placeholder="Street" name="address" value="{{ eventAddress }}">           <!--outgoing event street-->
                         </div>                
 
                         <div class="form-row">
                             <div class="form-group col-md-6">
-                                <label for="eventCity">{{ eventCity }}</label>
-                                <input type="text" class="form-control" id="eventCity" name="city">                                 <!--outgoing event city-->
+                                <label for="eventCity">City</label>
+                                <input type="text" class="form-control" id="eventCity" name="city" value="{{ eventCity }}">                                 <!--outgoing event city-->
                             </div>
 
                             <div class="form-group col-md-4">
-                                <label for="eventState">{{ eventState }}</label>
-                                <select id="eventState" class="form-control">                                                       <!--outgoing event state-->
+                                <label for="eventState">State</label>
+                                <select id="eventState" class="form-control" value="{{ eventState }}">                                                       <!--outgoing event state-->
                                     <option selected>Select...</option>
                                     <option value="AL">Alabama</option>
                                     <option value="AK">Alaska</option>
@@ -151,22 +175,22 @@
                             </div>
 
                             <div class="form-group col-md-2">
-                                <label for="eventZip">{{ eventZip }}</label>
-                                <input type="text" class="form-control" id="eventZip" name="zip">                           <!--outgoing event zip-->
+                                <label for="eventZip">Zip</label>
+                                <input type="text" class="form-control" id="eventZip" name="zip" value="{{ eventZip }}" onkeypress="numbersOnly(event)">                           <!--outgoing event zip-->
                             </div>
                         </div>  <!--row-->     
 
                         <div class="form-row">
                             <div class="form-group col-md-6">
-                                <label for="eventStartDate">{{ eventStartDate }}</label>
-                                <input type="date" class="form-control" id="eventStartDate" name="startDate">               <!--outgoing start date-->
-                                <input type="time" class="form-control" id="eventStartTime" name="startTime">               <!--outgoing start time-->
+                                <label for="eventStartDate">Starts</label>
+                                <input type="date" class="form-control" id="eventStartDate" name="startDate" value="{{ eventStartDate }}">               <!--outgoing start date-->
+                                <input type="time" class="form-control" id="eventStartTime" name="startTime" value="{{ eventStartTime }}">               <!--outgoing start time-->
                             </div>
 
                             <div class="form-group col-md-6">
-                                <label for="eventEndDate">{{ eventEndDate }}</label>
-                                <input type="date" class="form-control" id="eventEndDate" name="endDate">                   <!--outgoing end date-->
-                                <input type="time" class="form-control" id="eventEndTime" name="endTime">                   <!--outgoing end time-->
+                                <label for="eventEndDate">Ends</label>
+                                <input type="date" class="form-control" id="eventEndDate" name="endDate" value="{{ eventEndDate }}">                   <!--outgoing end date-->
+                                <input type="time" class="form-control" id="eventEndTime" name="endTime" value="{{ eventEndTime }}">                   <!--outgoing end time-->
                             </div>
                         </div>
 
@@ -174,20 +198,20 @@
                             <div class="form-group col-md-6">
                                 <div class="row">
                                     <div class="col">
-                                        <label for="eventPrice">{{ eventPrice }}</label>
-                                        <input type="number" step="0.01" min="0.01" class="form-control" id="eventPrice" placeholder="0.00" name="price">    <!--outgoing event price-->
+                                        <label for="eventPrice">Price</label>
+                                        <input type="number" step="0.01" min="0" class="form-control" id="eventPrice" placeholder="0.00" name="price" value="{{ eventPrice }}">    <!--outgoing event price-->
                                     </div>
                                     <div class="col">
-                                        <label for="eventCapacity">{{ eventCap }}</label>
-                                        <input type="number" min="1" class="form-control" id="eventCapacity" name="maxCapacity">                             <!--outgoing event capacity-->
+                                        <label for="eventCapacity">Max Capacity</label>
+                                        <input type="number" min="1" class="form-control" id="eventCapacity" name="maxCapacity" value="{{ eventCap }}">                             <!--outgoing event capacity-->
                                     </div>
                                 </div>
                             </div>
 
                             <div class="form-group col-md-6">
-                                <label for="deadlineDate">{{ eventDeadLine }}</label>
-                                <input type="date" class="form-control" id="deadlineDate" name="deadlineDate">              <!--outgoing deadline date-->
-                                <input type="time" class="form-control" id="deadlineTime" name="deadlineTime">              <!--outgoing deadline time-->
+                                <label for="deadlineDate">Registration Deadline</label>
+                                <input type="date" class="form-control" id="deadlineDate" name="deadlineDate" value="{{ eventDeadline }}">              <!--outgoing deadline date-->
+                                <input type="time" class="form-control" id="deadlineTime" name="deadlineTime" value="{{ eventDeadlineTime }}">              <!--outgoing deadline time-->
                             </div>
                         </div>
                         
@@ -217,8 +241,8 @@
                             </div>
                        
                             <div class="form-group col-md-9">
-                                <label for="eventDescr">{{ eventDes }}</label>
-                                <textarea class="form-control" id="eventDescr" name="description" rows="6" cols="50"></textarea>          <!--outgoing event description-->
+                                <label for="eventDescr">Event Description</label>
+                                <textarea class="form-control" id="eventDescr" name="description" rows="6" cols="50" value="{{ eventDes }}"></textarea>          <!--outgoing event description-->
                             </div>  <!--row-->
 
                         </div>  <!--form-row-->     
@@ -326,6 +350,6 @@
         <script src="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/owl.carousel.min.js" integrity="sha512-bPs7Ae6pVvhOSiIcyUClR7/q2OAsRiovw4vAkX+zJbw3ShAeeqezq50RIIcIURq7Oa20rW2n2q+fyXBNcU9lrw==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
 
         <!-- Custom Scripts-->
-        <script src="{{ url_for('static', filename='js/scripts.js')}}"></script>
+        <script src="{{ url_for('static', filename='js/numsVal.js')}}"></script>
     </body>
 </html>
