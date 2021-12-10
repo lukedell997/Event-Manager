@@ -4,7 +4,7 @@ from databaseCode import DataB
 
 app = Flask(__name__)
 
-app.permanent_session_lifetime = timedelta(minutes=1)
+app.permanent_session_lifetime = timedelta(hours=1)
 
 app.secret_key = "hello"
 
@@ -359,6 +359,8 @@ def eventDetails():  # put application's code here
             paid = 1
             seat = "O0"
             price = eventPrice
+            atEventId = request.form["eventId"]
+
         #if free, user has paid
             if (price != 0):
                 paid = 0
@@ -368,7 +370,7 @@ def eventDetails():  # put application's code here
             
         #check if not already exists: AND if not full
             if (db.checkAny(cursor, "attendantId", "user_events", "userId",
-                            str(userId), "eventId", str(eventId)) == False
+                            str(userId), "eventId", str(atEventId)) == False
                 and db.checkAvl(cursor, str(eventId)) == True):
 
         #create new user events
@@ -392,7 +394,7 @@ def eventDetails():  # put application's code here
                                    eventAddress=eventAddress, eventITag=eventITag,
                                    eventCity=eventCity, eventZip=eventZip, eventState=eventState,
                                    eventCap=eventOcp, eventMaxPop=eventCap,
-                                   logedIn=logedIn)
+                                   logedIn=logedIn, eventId=eventId)
 # END POST
     else:
         return render_template("eventDetails.html", eventStartDate=eventStartDate, eventEndDate=eventEndDate,
@@ -400,7 +402,7 @@ def eventDetails():  # put application's code here
                                eventAddress=eventAddress, eventITag=eventITag,
                                eventCity=eventCity, eventZip=eventZip, eventState=eventState,
                                eventCap=eventOcp, eventMaxPop=eventCap,
-                               logedIn=logedIn)
+                               logedIn=logedIn, eventId=eventId)
     
 
 
