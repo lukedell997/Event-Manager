@@ -195,23 +195,23 @@
                             <div class="form-group col-md-3">
                                 <p>Select an Event Tag:</p>                                                                 <!--outgoing event tag-->
                                 <div class="form-check">
-                                    <input type="radio" class="form-check-input" id="eventConcert" value="1" name="eventTag"> 
+                                    <input type="radio" class="form-check-input" id="eventConcert" value="eventConcert" name="eventTag"> 
                                     <label for="eventConcert" class="form-check-label">Concert Tag</label>
                                 </div>
                                 <div class="form-check">   
-                                    <input type="radio" class="form-check-input" id="eventConference" value="2" name="eventTag">       
+                                    <input type="radio" class="form-check-input" id="eventConference" value="eventConference" name="eventTag">       
                                     <label for="eventConference" class="form-check-label">Conference Tag</label>
                                 </div>   
                                 <div class="form-check">
-                                    <input type="radio" class="form-check-input" id="eventDinner" value="3" name="eventTag"> 
+                                    <input type="radio" class="form-check-input" id="eventDinner" value="eventDinner" name="eventTag"> 
                                     <label for="eventDinner" class="form-check-label">Dinner Tag</label>
                                 </div>
                                 <div class="form-check">
-                                    <input type="radio" class="form-check-input" id="eventFestival" value="4" name="eventTag"> 
+                                    <input type="radio" class="form-check-input" id="eventFestival" value="eventFestival" name="eventTag"> 
                                     <label for="eventFestival" class="form-check-label">Festival Tag</label>
                                 </div>
                                 <div class="form-check">
-                                    <input type="radio" class="form-check-input" id="eventMovie" value="5" name="eventTag"> 
+                                    <input type="radio" class="form-check-input" id="eventMovie" value="eventMovie" name="eventTag"> 
                                     <label for="eventMovie" class="form-check-label">Movie Tag</label>
                                 </div>
                             </div>

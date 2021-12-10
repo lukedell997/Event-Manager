@@ -409,9 +409,11 @@ def manageEvents():  # put application's code here
         atEventsId = []
         atEventsTitle = []  
         atEventsSDate = []  
-        atEventsEDate = []  
+        atEventsEDate = []
+        atEventsDDate = []
         atEventsCap = []
         atEventsOcp = []
+        
 
         #get user_events by userId
         userEvents = db.getUEventsByUser(cursor, str(userId))
@@ -426,6 +428,7 @@ def manageEvents():  # put application's code here
             atEventsTitle.append(evInfo[1])
             atEventsSDate.append(evInfo[2]) 
             atEventsEDate.append(evInfo[3])
+            atEventsDDate.append(evInfo[4])
             atEventsCap.append(evInfo[7])
             atEventsOcp.append(evInfo[8])
 
@@ -470,37 +473,37 @@ def manageEvents():  # put application's code here
                 return redirect(url_for("manageEvents"))
             else:
                 print("Attendant Not found for event")
-
-                if 'user' in session:
-                    logedIn = True
-                else:
-                    logedIn = False
-
                 return render_template("manageEvents.html",
                                        userAttendingEvents=atEventsTitle, atEventsSDate=atEventsSDate,
-                                       atEventsEDate=atEventsEDate, atEventsId=atEventsId,
+                                       atEventsEDate=atEventsEDate, atEventsId=atEventsId, atEventsDDate=atEventsDDate,
                                        atEventsCap=atEventsCap, atEventsOcp=atEventsOcp,
                                        usersEvents=adEventsTitle, adEventsSDate=adEventsSDate,
                                        adEventsEDate=adEventsEDate, adEventsId=adEventsId,
-                                       eventsMaxPop=adEventsCap, adEventsOcp=adEventsOcp, logedIn= logedIn)
+                                       eventsMaxPop=adEventsCap, adEventsOcp=adEventsOcp, logedIn= logedIn,
+                                       eventRange=eventRangeAttend,
+                                       eventRangeAdmin=eventRangeAdmin)
             
 #END REMOVE USER FROM ATTENDING EVENT------------------------------------
-        return render_template("manageEvents.html",
-                               userAttendingEvents=atEventsTitle, atEventsSDate=atEventsSDate,
-                               atEventsEDate=atEventsEDate, atEventsId=atEventsId,
-                               atEventsCap=atEventsCap, atEventsOcp=atEventsOcp,
-                               usersEvents=adEventsTitle, adEventsSDate=adEventsSDate,
-                               adEventsEDate=adEventsEDate, adEventsId=adEventsId,
-                               eventsMaxPop=adEventsCap, adEventsOcp=adEventsOcp, logedIn=logedIn, eventRange=eventRangeAttend,
-                               eventRangeAdmin=eventRangeAdmin)
+        else:
+            return render_template("manageEvents.html",
+                                   userAttendingEvents=atEventsTitle, atEventsSDate=atEventsSDate,
+                                   atEventsEDate=atEventsEDate, atEventsId=atEventsId, atEventsDDate=atEventsDDate,
+                                   atEventsCap=atEventsCap, atEventsOcp=atEventsOcp,
+                                   usersEvents=adEventsTitle, adEventsSDate=adEventsSDate,
+                                   adEventsEDate=adEventsEDate, adEventsId=adEventsId,
+                                   eventsMaxPop=adEventsCap, adEventsOcp=adEventsOcp, logedIn=logedIn,
+                                   eventRange=eventRangeAttend,
+                                   eventRangeAdmin=eventRangeAdmin)
 
     else:
+        logedIn = False
         return redirect(url_for("login"))  # ????
 
 ########################################################################--SEARCH_BROWSE EVENTS--############
 @app.route('/search_browseEvents.html', methods=["POST", "GET"])
 @app.route('/search_browseEvents', methods=["POST", "GET"])
 def search_browseEvents():  # put application's code here
+    eventId = []
     eventTitle = []
     eventStartDate = []
     eventEndDate = []
@@ -515,7 +518,6 @@ def search_browseEvents():  # put application's code here
     eventLocations = []
     eventPrices = []
     eventImage = []
-    eventId = []
     #eventPopulation = []
     #eventMaxPop = []
 
@@ -573,7 +575,8 @@ def search_browseEvents():  # put application's code here
         return render_template("search_browseEvents.html", events=events, eventDates=eventDates, eventTimes=eventTimes,
                                eventLocations=eventLocations, eventPrices=eventPrices, eventImage=eventImage, eventTitle=eventTitle,
                                eventStartDate=eventStartDate, eventEndDate=eventEndDate, eventAddress=eventAddress, eventPrice=eventPrice,
-                               eventTime=eventTime, eventOccupants=eventOccupants, eventCapacity=eventCapacity, eventRange=eventRange, logedIn=logedIn, eventId=eventId)
+                               eventTime=eventTime, eventOccupants=eventOccupants, eventCapacity=eventCapacity,
+                               eventRange=eventRange, logedIn=logedIn, eventId=eventId)
 
 
 ###########################################################--EDIT EVENT--########################################
@@ -590,12 +593,12 @@ def editEvent():
         userToDelete = []
     
         userId = session["userId"]
-        print(eventId)
+#IF SAVE BUTTON CLICKED:
         if "saveEvent" in request.form and request.method == "POST":
             eventTitle = request.form["title"]
             eventAddress = request.form["address"]
             eventCity = request.form["city"]
-            eventState = request.form.get("state")
+            eventState = request.form.get("state")  #NOT GETTING ANY VALUE
             eventZip = request.form["zip"]
             eventStartDate = request.form["startDate"]
             eventStartTime = request.form["startTime"]
@@ -610,20 +613,54 @@ def editEvent():
             eventDes = request.form["description"]
             #userToAdd = request.form["addUser"]
             #userToDelete = request.form["deleteUser"]
+            
+            #change price back to 0, if none entered
+            if eventPrice == '':
+                eventPrice = 0.0
                 
 # UPDATE EVENT---------------------------------------------------
             #check if event found by eventId
             if (db.checkAny(cursor, "eventId", "events", "eventId", str(eventId),
                     "eventId", str(eventId)) == True):
                 #update all variables
-                eE = getInputString([eventTitle, eventStartDate, eventEndDate, eventDeadline, eventPrice,
-                                     eventDes, eventCap, eventITag, eventAddress, eventCity, eventState,
-                                     eventZip, userId])
-                db.updateEvent(cnx,cursor,eE, userId, eventId)
+                print(eventStartDate)
+                print(eventEndDate)
+                
+                db.updateEvent(cnx,cursor, str(eventId), str(userId),
+                                    [str(eventTitle), str(eventStartDate), str(eventEndDate),
+                                     str(eventDeadline), str(eventPrice),str(eventDes),
+                                     str(eventCap), str(eventITag), str(eventAddress),
+                                     str(eventCity), str(eventState),
+                                     str(eventZip), str(userId)])
+                return redirect(url_for('manageEvents'))
             else:
                 #otherwise send back to search
                 return redirect(url_for('search_browseEvents'))
-# END UPDATE EVENT---------------------------------------------------
+# END UPDATE EVENT---------------------------------------------------^
+
+# DELETE EVENT AND USER EVENTS----------------------------------------------
+        if "deleteEvent" in request.form and request.method == "POST":
+            if (db.checkAny(cursor, "eventId", "events", "eventId", str(eventId),
+                    "eventId", str(eventId)) == True):
+                return f"{eventId}"
+                #remove event
+                db.removeEvent(cnx, cursor, str(eventId), str(userId))
+
+                #remove all users
+                db.removeUEventsByEvent(cnx, cursor, str(eventId))
+                return redirect(url_for('manageEvents'))
+            
+            else:
+                print("You are not able to delete this event")
+                return redirect(url_for('manageEvents'))
+# DELETE EVENT AND USER EVENTS----------------------------------------------
+
+#DELETE USER EVENT---------------------------------------------------------
+        if "userDelete" in request.form and request.method == "POST":
+            return f"{eventId}"
+#DELETE USER EVENT----------------------------------------------------------
+        
+# NOTHING PRESSED:
 # GET EVENT----------------------------------------------------------------^
         #check if event found by eventId
         if (db.checkAny(cursor, "eventId", "events", "eventId", str(eventId),
@@ -647,66 +684,41 @@ def editEvent():
             eventUId = event[14]
             eventDeadlineTime = 0
 
-#GET ALL ATTENDING EVENT--------------------------------------
+#GET ALL ATTENDING EVENT--------------------------------------^
             usersId = []
             usersName = []
             usersEmail = []
             
             #get user_events by userId
             eventUsers = db.getUEventsByEvent(cursor, str(eventId))
-
+            
             #for all user_events, get the event
             for tupleEvent in eventUsers:
-
                 #add each section to list
                 usersId.append(tupleEvent[1])
                 usersName.append(tupleEvent[3])
                 usersEmail.append(tupleEvent[4])
                 
-#END GET ALL ATTENDING EVENT--------------------------------------
+#END GET ALL ATTENDING EVENT--------------------------------------^
               
         else:
             #otherwise send back to search
             print("You are not authorized to edit event")
             return redirect(url_for('index'))
 # END GET EVENT-------------------------------------------------------------^
-#GET ALL POPULAR EVENTS----------------------------------------------
-        popEventsId = []
-        popEventsTitle = []
-        popEventsSDate = []
-        popEventsEDate = []
-        popEventsDetails = []
-        popEventsState = []
 
-        popEvents = db.getEventsByPop(cursor)
-        for tupleEvent3 in popEvents:
-            popEventsId.append(tupleEvent3[0])
-            popEventsTitle.append(tupleEvent3[1])
-            popEventsSDate.append(tupleEvent3[2])
-            popEventsEDate.append(tupleEvent3[3])
-            popEventsDetails.append(tupleEvent3[6])
-            popEventsState.append(tupleEvent3[12])
-            
-        
-#END ALL POPULAR EVENTS----------------------------------------------
 
         
 
 
-    #NEED USER TO DELETE BUTTON--------------------------------------------------*****(Not sure how to go about it)
-    #NEED USER TO DELETE BUTTON--------------------------------------------------*****
-        else:
-            return render_template("editEvent.html", eventId=eventId, eventTitle=eventTitle,
-                                   eventStartDate=eventStartDate, eventEndDate=eventEndDate,eventDeadline=eventDeadline,
-                                   eventPrice=eventPrice, eventDes=eventDes, eventCap=eventCap,
-                                   eventITag=eventITag, eventAddress=eventAddress, eventCity=eventCity,
-                                   eventState=eventState, eventZip=eventZip,
-                                   eventDeadlineTime=eventDeadlineTime, userToAdd=userToAdd, userToDelete=userToDelete,
-                                   logedIn=logedIn,
-                                   popEventsId = popEventsId, popEventsTitle = popEventsTitle,
-                                   popEventsSDate= popEventsSDate, popEventsEDate=popEventsEDate,
-                                   popEventsDetails= popEventsDetails,
-                                   popEventsState = popEventsState)
+    
+        return render_template("editEvent.html", eventId=eventId, eventTitle=eventTitle,
+                               eventStartDate=eventStartDate, eventEndDate=eventEndDate,eventDeadline=eventDeadline,
+                               eventPrice=eventPrice, eventDes=eventDes, eventCap=eventCap,
+                               eventITag=eventITag, eventAddress=eventAddress, eventCity=eventCity,
+                               eventState=eventState, eventZip=eventZip,
+                               eventDeadlineTime=eventDeadlineTime, userToAdd=userToAdd, userToDelete=userToDelete,
+                               logedIn=logedIn)
 
     else:
         logedIn = False
@@ -777,10 +789,6 @@ def updatePersonalInfo():
         #: check if user found, then get user info into variables
         if (db.checkAny(cursor, "userId", "users", "username", str(user),
             "userId", str(userId)) == True):
-            password = "password"                       #NEED TO GET PASSWORD(SESSION or LOGIN)
-            [uId, user, passwordId, uFN, uLN, uEmail,
-             uAd, uZip, uCity, uState,
-             uPhone]
             user= db.getUser(cursor, str(user), str(password))
             username= user[1]
             firstName= user[3]

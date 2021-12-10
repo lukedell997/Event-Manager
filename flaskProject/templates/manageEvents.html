@@ -101,7 +101,7 @@
                                     </div>
                                     <div class="col-md-8 pt-2">
                                         <h3 class="card-title mt-3">{{ usersEvents[i] }}</h3>                                               <!--outgoing event title-->
-                                        <p><span id='date-time'></span>                                                         <!--outgoing event date & time-->
+                                        <p><span id='date-time'>Event Date: ({{adEventsSDate[i]}})-({{adEventsEDate[i]}})</span>                                                         <!--outgoing event date & time-->
                                             <div class="row">
                                                 <div class="col-md-8 mr-5">
                                                     <form action="{{url_for('editEvent')}}" id="editEventsForm", method="POST">
@@ -137,7 +137,7 @@
                                     </div>
                                     <div class="col-md-8 pt-2">
                                         <h3 class="card-title mt-3">{{ userAttendingEvents[i] }}</h3>                                                <!--outgoing event title-->
-                                        <p><span id='date-time'></span>                                                             <!--outgoing event date & time-->
+                                        <p><span id='date-time'>Deadline Date: {{atEventsDDate[i]}}</span>                                                             <!--outgoing event date & time-->
                                             <div class="row">
                                                 <div class="col-md-8 mr-5">
                                                     <a class="edit-delete" href="#" name="leaveEvent">

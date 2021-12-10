@@ -109,6 +109,14 @@ class DataB:
         except Exception as e:
             return e
 
+    #REMOVE USER EVENTS BY EVENT
+    def removeUEventsByEvent(self, cnx, cursor, eventId):
+        try:
+            cursor.execute(self.remove("user_events", "eventId", eventId, "eventId", eventId))
+            cnx.commit()
+            return
+        except Exception as e:
+            return e
         
     # UPDATE USER EVENTS
     def updateUEvents(self, cnx, cursor, userId, eventId, clms, chng):
@@ -146,7 +154,7 @@ class DataB:
         cursor.execute("SELECT * FROM user_events WHERE eventId = %s",(str(eventId),))
         eventUser = []
         for (idU) in cursor:
-            eventUser.append([idU])
+            eventUser.append(idU)
         return eventUser
 
 #***************************USER PAYMENT************************************
@@ -276,9 +284,10 @@ class DataB:
             uU = ''.join(("UPDATE events SET name = '%s', sDate = '%s',"%(str(uC[0]),str(uC[1])),
                       " eDate = '%s', deadlineDate = '%s',"%(str(uC[2]),str(uC[3])),
                       " price = '%s', des = '%s', capacity = '%s',"%(str(uC[4]),str(uC[5]), str(uC[6])),
-                      " iTag = '%s', address = '%s'"%(str(uC[7]),str(uC[8])),
+                      " iTag = '%s', address = '%s',"%(str(uC[7]),str(uC[8])),
                       " city = '%s', state = '%s', zipcode = '%s'"%(str(uC[9]),str(uC[10]), str(uC[12])),
                       " WHERE eventId ='%s' AND userId = '%s'"%(str(eventId),str(userId))))
+            print(uU)
             cursor.execute(uU)
             cnx.commit()
             return True
@@ -460,9 +469,19 @@ class DataB:
 
     
 ##
-#db = DataB()
-#cnx, cursor = db.openDatabase()
+##db = DataB()
+##cnx, cursor = db.openDatabase()
 
+
+        
+##uU = ''.join(("UPDATE events SET name = 'Code Class#2', sDate = '2021-12-11',",
+##              " eDate = '2021-12-11', deadlineDate = '2021-12-11', price = '0.0',",
+##              " des = 'code class', capacity = '14', iTag = '4', address = '123 Main St',",
+##              " city = 'Town', state = 'IL', zipcode = '12345'",
+##              " WHERE eventId ='24' AND userId = '1'"))
+##cursor.execute(uU)
+##print(cursor)
+##cnx.commit()
 #cE = "'Test', '2022-04-04', '2022-04-04', '2022-04-04', '0', 'test', '23', '18', '3', '123 main st', 'Town', 'IL', '12345', '30'"
 #print(db.newEvent(cnx, cursor, cE))
 
