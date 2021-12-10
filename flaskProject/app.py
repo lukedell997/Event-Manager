@@ -573,8 +573,7 @@ def search_browseEvents():  # put application's code here
         return render_template("search_browseEvents.html", events=events, eventDates=eventDates, eventTimes=eventTimes,
                                eventLocations=eventLocations, eventPrices=eventPrices, eventImage=eventImage, eventTitle=eventTitle,
                                eventStartDate=eventStartDate, eventEndDate=eventEndDate, eventAddress=eventAddress, eventPrice=eventPrice,
-                               eventTime=eventTime, eventOccupants=eventOccupants, eventCapacity=eventCapacity,
-                               eventRange=eventRange, logedIn=logedIn, eventId=eventId)
+                               eventTime=eventTime, eventOccupants=eventOccupants, eventCapacity=eventCapacity, eventRange=eventRange, logedIn=logedIn, eventId=eventId)
 
 
 ###########################################################--EDIT EVENT--########################################
