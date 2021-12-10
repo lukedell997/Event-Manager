@@ -58,15 +58,40 @@
                                         <a class="dropdown-item" href="updatePersonalInfo.html"><i class="fa fa-user fa-md"></i> My Account</a>
                                         <a class="dropdown-item" href="createEvent.html"><i class="fa fa-calendar-plus-o fa-md"></i> Create An Event</a>
                                         <a class="dropdown-item" href="manageEvents.html"><i class="fa fa-edit fa-md"></i> Manage Events</a>
-                                        <a class="dropdown-item" href="index.html"><i class="fa fa-sign-out fa-md"></i> Log Out</a>
+                                        <a class="dropdown-item" href="#modalLogout" data-toggle="modal"><i class="fa fa-sign-out fa-md"></i> Log Out</a>
                                     </div>
-                                  </div>    
+                                </div>    
                             </li>
                         </ul>
                     </div>  <!--collapse-->
                 </div>  <!--container-->
             </nav>
         </div>  <!--menu-bar-->
+
+        <!--Logout modal-->
+        <div class="modal fade" id="modalLogout" tabindex="-1" role="dialog" aria-labelledby="modalHeader" aria-hidden="true">
+            <div class="modal-dialog" role="document">
+              <div class="modal-content">
+                <div class="modal-header">
+                  <h5 class="modal-title" id="modalHeader">Confirm Logout</h5>
+                  <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                  </button>
+                </div>
+                <div class="modal-body">
+                  Are you sure you want to log out?
+                </div>
+                <div class="modal-footer">
+                  <form action="#" method="POST">
+                    <div class="form-group">
+                        <input type='button' value="CANCEL" data-dismiss="modal" />      
+                        <input type='submit' value="YES" name="userLogout"/>    <!--incoming user logs out-->
+                    </div>    
+                  </form>
+                </div>
+              </div>
+            </div>
+        </div>
 
         <!-- CONTENTS -->
         <div class="container">
