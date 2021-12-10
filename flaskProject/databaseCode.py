@@ -126,6 +126,7 @@ class DataB:
                 #update the column
                 cursor.execute(self.update("user_events", str(clms[i]), str(chng[i]), "userId",
                                       str(userId), "eventId", str(eventId)))
+                print(cursor)
                 cnx.commit()
                 return
         except Exception as e:
@@ -247,6 +248,14 @@ class DataB:
     def getUser(self, cursor, username, pswd):
         ur =''.join(("SELECT * FROM users WHERE username = '",
                      username,"' AND passwordId = '", pswd, "'"))
+        cursor.execute(ur)
+        user = []
+        for (idU) in cursor:
+            user = idU
+        return user
+    def getUserById(self, cursor, user):
+        ur = ''.join(("SELECT * FROM users WHERE userId = '",
+                     user,"'"))
         cursor.execute(ur)
         user = []
         for (idU) in cursor:
