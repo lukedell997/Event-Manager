@@ -2,7 +2,6 @@ import mysql.connector
 import datetime
 import hashlib
 import nltk
-nltk.download()
 from nltk.corpus import stopwords
 from nltk.tokenize import word_tokenize
 from nltk.stem import PorterStemmer
