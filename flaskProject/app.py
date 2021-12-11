@@ -744,6 +744,7 @@ def editEvent():
                 eventAddress = request.form["address"]
                 eventCity = request.form["city"]
                 eventState = request.form.get("state")  # NOT GETTING ANY VALUE
+                print(eventState, "THIS THING")
                 eventZip = request.form["zip"]
                 eventStartDate = request.form["startDate"]
                 eventStartTime = request.form["startTime"]
