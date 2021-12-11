@@ -550,10 +550,10 @@ class DataB:
 
     
 ##
-db = DataB()
-cnx, cursor = db.openDatabase()
+#db = DataB()
+#cnx, cursor = db.openDatabase()
 
-print(db.getEventsByUpcoming(cursor))
+#print(db.getEventsByUpcoming(cursor))
 #wordS = "thank giving and christ mas are here to test you"
 #print(db.getEventsAdvanced(cursor, "t"))
                 
