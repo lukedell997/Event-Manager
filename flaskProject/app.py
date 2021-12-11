@@ -814,7 +814,7 @@ def editEvent():
                                            eventITag=eventITag, eventAddress=eventAddress, eventCity=eventCity,
                                            eventState=eventState, eventZip=eventZip,
                                            eventDeadlineTime=eventDeadlineTime,
-                                           userToAdd=usersId, userToDelete=usersName,
+                                           userToAdd=usersId, usersName=usersName,
                                            logedIn=logedIn, userRange=userRange)
 #DELETE USER IN EVENT--------------------------------------------------------
 
