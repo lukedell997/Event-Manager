@@ -427,7 +427,7 @@ class DataB:
     
     def getEventsByKeyword(self, cursor, word):
         events = []
-        cursor.execute("SELECT * FROM events WHERE name LIKE %s"%(str(word,)))
+        cursor.execute("SELECT * FROM events WHERE name LIKE '%s'"%(str(word),))
         print(cursor)
 
         for (event) in cursor:
