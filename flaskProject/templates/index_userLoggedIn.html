@@ -137,7 +137,7 @@
                                 <li class="list-group-item w-100">
                                      <form action="{{url_for('eventDetails')}}" id="eventDetailForm", method="POST">
                                         <input type="text" name="eventId" value="{{atEventsId[i]}}" hidden>
-                                        <input type="submit" value={{ atEventsTitle[i] }}>
+                                        <input type="submit" value="{{ atEventsTitle[i] }}">
                                     </form>                <!--outgoing event title-->
                                     <i class="fa fa-calendar" aria-hidden="true"></i>Date: {{ atEventsSDate[i] }}-{{ atEventsEDate[i] }}                  <!--outgoing event date & time-->
                                     <span class="text-muted"></span> </br>

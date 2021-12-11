@@ -101,7 +101,7 @@
                                                         <input type="text" name="eventId" value="{{adEventsId[i]}}" hidden>
                                                         <input type="submit" value="Edit">
                                                     </form>
-                                                    <a class="edit-delete" href="editEvent.html">EDIT</a>
+
                                                 </div>
                                                 <div class="col">
                                                     <div class="progress mt-2">
@@ -124,7 +124,6 @@
                             {% for i in range (0,eventRange) %}
                             <div class="card">
                                 <div class="row">
-                                    <a href="eventDetails.html" class="stretched-link"></a>    
                                     <div class="col-md-4">
                                         <img src="{{ url_for('static', filename='img/movieEvents.jpg')}}" class="img-fluid">        <!--outgoing event image-->
                                     </div>
@@ -132,14 +131,16 @@
                                         <h3 class="card-title mt-3">{{ userAttendingEvents[i] }}</h3>                                                <!--outgoing event title-->
                                         <p><span id='date-time'>Deadline Date: {{atEventsDDate[i]}}</span>                                                             <!--outgoing event date & time-->
                                             <div class="row">
-                                                <div class="col-md-8 mr-5">
+                                                <form action="#" method="POST">
+                                                    <div class="col-md-8 mr-5">
                                                    <!-- <a class="edit-delete" href="#" name="leaveEvent"> -->
-                                                        <form action="#" id="eventDetailForm", method="POST">
-                                                            <input type="text" name="leaveEventId" value="{{atEventsId[i]}}" hidden>
-                                                            <input type="submit" value="LEAVE EVENT">
-                                                        </form>             <!--incoming leave event-->
+
+                                                        <input type="text" name = "leaveEventId" value="{{atEventsId[i]}}" hidden>
+                                                        <input type="submit" name = "leaveEvent" value="LEAVE EVENT">
+                                                                   <!--incoming leave event-->
                                                     <!--</a> -->
-                                                </div>
+                                                    </div>
+                                                </form>
                                                 <div class="col">
                                                     <div class="progress mt-2">
                                                         <div class="progress-bar" role="progressbar" style="width: 75%" aria-valuenow="75" aria-valuemin="0" aria-valuemax="100">   <!--outgoing capacity-->

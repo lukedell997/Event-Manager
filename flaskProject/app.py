@@ -475,7 +475,7 @@ def manageEvents():  # put application's code here
             print("This is the eventID: ", eventId)
 
 # REMOVE USER FROM ATTENDING EVENT------------------------------------            
-            if 'LEAVE EVENT' in request.form:
+            if 'leaveEvent' in request.form:
                 leaveEventId = request.form.get("leaveEventId")
                 print("This is the leave eventID: ",leaveEventId)
                 print("TEST!!!!!!!!!!!!!!!!!!!!!!!!!!")
