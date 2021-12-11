@@ -1,6 +1,10 @@
 import mysql.connector
 import datetime
 import hashlib
+import nltk
+from nltk.corpus import stopwords
+from nltk.tokenize import word_tokenize
+from nltk.stem import PorterStemmer
 class DataB:
     
     #====================== OPEN DATABASE =========================================
@@ -424,12 +428,43 @@ class DataB:
         for(event) in cursor:
             events.append(event)
         return events
+
+    #GET EVENTS BY ADVANCED KEYWORD SEARCH
+    def getEventsAdvanced(self, cursor, wordS):
+
+        ps = PorterStemmer()
+        stopWords = set(stopwords.words('English'))
+
+        wordTokens = word_tokenize(wordS)
+        eventDc = {}
+        finalList = []
+        #if word greater than 1
+        if len(wordTokens) > 1:
+            #for all words in string. if not stopword get all events words: if found add 1, else create new
+            for w in wordTokens:
+                if not w.lower() in stopWords:
+                    setEvent = self.getEventsByKeyword(cursor, ps.stem(w))
+                    for ev in setEvent:
+                        if ev in eventDc:
+                            eventDc[ev] += 1
+                        else:
+                            eventDc[ev] = 1
+
+            while eventDc:
+                maxKey = max(eventDc, key = eventDc.get)
+                finalList.append(maxKey)
+                eventDc.pop(maxKey)
+            return(finalList)
+        else:
+            finalList = self.getEventsByKeyword(cursor, ps.stem(wordS))
+            return(finalList)
+            #return finalList
+
     
     def getEventsByKeyword(self, cursor, word):
         events = []
-        cursor.execute("SELECT * FROM events WHERE name LIKE '%s'"%(str(word),))
-        print(cursor)
-
+        word = "%" + str(word) + "%"
+        cursor.execute("SELECT * FROM events WHERE name LIKE '%s'"%(word,))
         for (event) in cursor:
             events.append(event)
         return events
@@ -504,11 +539,16 @@ class DataB:
 
     
 ##
-##db = DataB()
-##cnx, cursor = db.openDatabase()
+#db = DataB()
+#cnx, cursor = db.openDatabase()
 
-
-        
+#wordS = "thank giving and christ mas are here to test you"
+#print(db.getEventsAdvanced(cursor, "t"))
+                
+            
+    
+#print(db.getEventsByKeyword(cursor,'t'))
+      
 ##uU = ''.join(("UPDATE events SET name = 'Code Class#2', sDate = '2021-12-11',",
 ##              " eDate = '2021-12-11', deadlineDate = '2021-12-11', price = '0.0',",
 ##              " des = 'code class', capacity = '14', iTag = '4', address = '123 Main St',",
