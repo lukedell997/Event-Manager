@@ -306,10 +306,11 @@ def user():
 
 # This is for a logout page that might be made
 @app.route("/logout")
+@app.route("/logout.html")
 def logout():
-    session.pop("user", None)
+    session.clear()
     # flash("You have been logged out!", "info")
-    return redirect(url_for("loginPage"))  # ????
+    return redirect(url_for("index"))  # ????
 
 ########################################################################--EVENT DETAILS--############
 @app.route('/eventDetails.html', methods=["POST", "GET"])
