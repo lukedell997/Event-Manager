@@ -332,7 +332,7 @@ def user():
                                    nearEventsDetails=locEventsDetails, nearEventsId=locEventsId,
                                    adEventRange=adEventsRange, atEventRange=atEventsRange,
                                    search=search, popEventRange=popEventRange, locEventRange=locEventRange,
-                                   popEventsItag=popEventsItag,locEventsItag=locEventsItag,adEventsItag=adEventsItag )
+                                   popEventsItag=popEventsItag,nearEventsItag=locEventsItag,adEventsItag=adEventsItag )
 
     else:
         logedIn = False
