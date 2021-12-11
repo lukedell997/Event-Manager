@@ -12,6 +12,23 @@ db = DataB()
 cnx, cursor = db.openDatabase()
 
 
+def imageReturn(imageNumber):
+
+    if imageNumber == 1:
+        pic = 'img/concertEvent.jpg'
+    elif imageNumber == 2:
+        pic = 'img/conferenceEvent.jpg'
+    elif imageNumber == 3:
+        pic = 'img/dinnerEvent.jpg'
+    elif imageNumber == 4:
+        pic = 'img/festivalEvent.jpg'
+    elif imageNumber == 5:
+        pic = 'img/movieEvent.jpg'
+    else:
+        pic = 0
+
+    return pic
+
 def getInputString(ItemList):
     try:
         # for all items in input, add ' data '
@@ -57,6 +74,7 @@ def index():  # put application's code here
         popEventsEDate = []
         popEventsDetails = []
         popEventsState = []
+        popEventsItag = []
 
         popEvents = db.getEventsByPop(cursor)
         popEventRange = 0
@@ -66,6 +84,7 @@ def index():  # put application's code here
             popEventsSDate.append(tupleEvent3[2])
             popEventsEDate.append(tupleEvent3[3])
             popEventsDetails.append(tupleEvent3[6])
+            popEventsItag.append(imageReturn(tupleEvent3[9]))
             popEventsState.append(tupleEvent3[12])
             popEventRange += 1
 
@@ -77,6 +96,7 @@ def index():  # put application's code here
         nearEventsEDate = []
         nearEventsDetails = []
         nearEventsState = []
+        nearEventsItag = []
 
         locEvents = db.getEventsByLoc(cursor, str("IL"))
         locEventRange = 0
@@ -86,15 +106,16 @@ def index():  # put application's code here
             nearEventsSDate.append(tEvent[2])
             nearEventsEDate.append(tEvent[3])
             nearEventsDetails.append(tEvent[6])
+            nearEventsItag.append(imageReturn(tEvent[9]))
             nearEventsState.append(tEvent[12])
-            locEventRange
+            locEventRange += 1
 
         # END ALL LOCATION EVENTS----------------------------------------------
 
         return render_template("index.html", popEventsTitle=popEventsTitle, popEventsDetails=popEventsDetails,
                                popEventsId=popEventsId, nearEventsTitle=nearEventsTitle,
                                nearEventsDetails=nearEventsDetails, nearEventsId=nearEventsId,
-                               popEventRange=popEventRange, locEventRange=locEventRange)
+                               popEventRange=popEventRange, locEventRange=locEventRange, nearEventsItag=nearEventsItag, popEventsItag=popEventsItag)
 
 
 ########################################################################--REGISTER PAGE--############
@@ -230,6 +251,7 @@ def user():
         adEventsSDate = []
         adEventsEDate = []
         adEventsState = []
+        adEventsItag = []
         adEventsRange = 0
 
         adminEvents = db.getEventsByUser(cursor, str(userId))
@@ -239,6 +261,7 @@ def user():
             adEventsTitle.append(tupleEvent2[1])
             adEventsSDate.append(tupleEvent2[2])
             adEventsEDate.append(tupleEvent2[3])
+            adEventsItag.append(imageReturn(tupleEvent2[9]))
             adEventsState.append(tupleEvent2[12])
             adEventsRange += 1
 
@@ -250,6 +273,7 @@ def user():
         popEventsEDate = []
         popEventsDetails = []
         popEventsState = []
+        popEventsItag = []
         popEventRange = 0
 
         popEvents = db.getEventsByPop(cursor)
@@ -260,6 +284,7 @@ def user():
             popEventsSDate.append(tupleEvent3[2])
             popEventsEDate.append(tupleEvent3[3])
             popEventsDetails.append(tupleEvent3[6])
+            popEventsItag.append(imageReturn(tupleEvent3[9]))
             popEventsState.append(tupleEvent3[12])
             popEventRange += 1
 
@@ -271,6 +296,7 @@ def user():
         locEventsEDate = []
         locEventsDetails = []
         locEventsState = []
+        locEventsItag = []
         locEventRange = 0
 
         locEvents = db.getEventsByLoc(cursor, str(userLoc))
@@ -279,7 +305,9 @@ def user():
             locEventsTitle.append(tEvent[1])
             locEventsSDate.append(tEvent[2])
             locEventsEDate.append(tEvent[3])
+            locEventsItag.append(imageReturn([tEvent[9]]))
             locEventsDetails.append(tEvent[6])
+
             locEventsState.append(tEvent[12])
             locEventRange += 1
         # END ALL LOCATION EVENTS----------------------------------------------
@@ -303,7 +331,8 @@ def user():
                                    nearEventsTitle=locEventsTitle,
                                    nearEventsDetails=locEventsDetails, nearEventsId=locEventsId,
                                    adEventRange=adEventsRange, atEventRange=atEventsRange,
-                                   search=search, popEventRange=popEventRange, locEventRange=locEventRange)
+                                   search=search, popEventRange=popEventRange, locEventRange=locEventRange,
+                                   popEventsItag=popEventsItag,locEventsItag=locEventsItag,adEventsItag=adEventsItag )
 
     else:
         logedIn = False
@@ -336,6 +365,7 @@ def eventDetails():  # put application's code here
     popEventsEDate = []
     popEventsDetails = []
     popEventsState = []
+    popEventsItag = []
     popEventRange = 0
 
     popEvents = db.getEventsByPop(cursor)
@@ -345,6 +375,8 @@ def eventDetails():  # put application's code here
         popEventsSDate.append(tupleEvent3[2])
         popEventsEDate.append(tupleEvent3[3])
         popEventsDetails.append(tupleEvent3[6])
+        popEventsDetails.append(tupleEvent3[6])
+        popEventsItag.append(imageReturn(tupleEvent3[6]))
         popEventsState.append(tupleEvent3[12])
         popEventRange += 1
 
@@ -367,7 +399,7 @@ def eventDetails():  # put application's code here
         eventDescription = event[6]
         eventCap = event[7]
         eventOcp = event[8]
-        eventITag = event[9]
+        eventITag = imageReturn(event[9])
         eventAddress = event[10]
         eventCity = event[11]
         eventState = event[12]
@@ -427,7 +459,7 @@ def eventDetails():  # put application's code here
                                    logedIn=logedIn, eventId=eventId, popEventsId=popEventsId,
                                    popEventsTitle=popEventsTitle,
                                    popEventsSDate=popEventsSDate, popEventsDetails=popEventsDetails,
-                                   popEventsState=popEventsState, popEventRange=popEventRange)
+                                   popEventsState=popEventsState, popEventRange=popEventRange, popEventsItag=popEventsItag)
     # END POST
     else:
         return render_template("eventDetails.html", eventStartDate=eventStartDate, eventEndDate=eventEndDate,
@@ -437,7 +469,7 @@ def eventDetails():  # put application's code here
                                eventCap=eventOcp, eventMaxPop=eventCap,
                                logedIn=logedIn, eventId=eventId, popEventsId=popEventsId, popEventsTitle=popEventsTitle,
                                popEventsSDate=popEventsSDate, popEventsDetails=popEventsDetails,
-                               popEventsState=popEventsState, popEventRange=popEventRange)
+                               popEventsState=popEventsState, popEventRange=popEventRange, popEventsItag=popEventsItag)
 
 
 ########################################################################--MANAGE EVENTS--############
@@ -457,6 +489,7 @@ def manageEvents():  # put application's code here
         atEventsDDate = []
         atEventsCap = []
         atEventsOcp = []
+        atEventsItag = []
 
         # get user_events by userId
         userEvents = db.getUEventsByUser(cursor, str(userId))
@@ -474,6 +507,7 @@ def manageEvents():  # put application's code here
             atEventsDDate.append(evInfo[4])
             atEventsCap.append(evInfo[7])
             atEventsOcp.append(evInfo[8])
+            atEventsItag.append(imageReturn(evInfo[9]))
 
         # END ALL USER EVENTS ATTENDING----------------------------------------
         # GET ALL USER EVENTS ADMINISTRATING----------------------------------
@@ -483,6 +517,7 @@ def manageEvents():  # put application's code here
         adEventsEDate = []
         adEventsCap = []
         adEventsOcp = []
+        adEventsItag = []
 
         adminEvents = db.getEventsByUser(cursor, str(userId))
         eventRangeAdmin = len(adminEvents)
@@ -493,6 +528,7 @@ def manageEvents():  # put application's code here
             adEventsEDate.append(tupleE2[3])
             adEventsCap.append(tupleE2[7])
             adEventsOcp.append(tupleE2[8])
+            adEventsItag.append(imageReturn(tupleE2[8]))
 
         # END ALL USER EVENTS ADMINISTRATING----------------------------------
 
@@ -528,7 +564,7 @@ def manageEvents():  # put application's code here
                                            adEventsEDate=adEventsEDate, adEventsId=adEventsId,
                                            eventsMaxPop=adEventsCap, adEventsOcp=adEventsOcp, logedIn=logedIn,
                                            eventRange=eventRangeAttend,
-                                           eventRangeAdmin=eventRangeAdmin)
+                                           eventRangeAdmin=eventRangeAdmin, adEventsItag= adEventsItag, atEventsItag=atEventsItag)
 
         # END REMOVE USER FROM ATTENDING EVENT------------------------------------
         else:
@@ -540,7 +576,7 @@ def manageEvents():  # put application's code here
                                    adEventsEDate=adEventsEDate, adEventsId=adEventsId,
                                    eventsMaxPop=adEventsCap, adEventsOcp=adEventsOcp, logedIn=logedIn,
                                    eventRange=eventRangeAttend,
-                                   eventRangeAdmin=eventRangeAdmin)
+                                   eventRangeAdmin=eventRangeAdmin, adEventsItag= adEventsItag, atEventsItag=atEventsItag)
 
     else:
         logedIn = False
@@ -565,7 +601,7 @@ def search_browseEvents():  # put application's code here
     eventTimes = []
     eventLocations = []
     eventPrices = []
-    eventImage = []
+    eventItag = []
     # eventPopulation = []
     # eventMaxPop = []
 
@@ -585,7 +621,7 @@ def search_browseEvents():  # put application's code here
             eventPrice.append(eK[5])
             eventCapacity.append(eK[7])
             eventOccupants.append(eK[8])
-            eventImage.append(eK[9])
+            eventItag.append(imageReturn(eK[9]))
             eventAddress.append(eK[10])
             eventLocations.append(eK[12])
             eventTime = []
@@ -623,6 +659,7 @@ def search_browseEvents():  # put application's code here
                 eventTime.append(evInfo[4])
                 eventPrice.append(evInfo[5])
                 eventCapacity.append(evInfo[7])
+                eventItag.append(imageReturn(evInfo[9]))
                 eventOccupants.append(evInfo[8])
                 eventAddress.append(evInfo[10])
 
@@ -638,7 +675,7 @@ def search_browseEvents():  # put application's code here
     else:
         logedIn = False
     return render_template("search_browseEvents.html", events=events, eventDates=eventDates, eventTimes=eventTimes,
-                           eventLocations=eventLocations, eventPrices=eventPrices, eventImage=eventImage,
+                           eventLocations=eventLocations, eventPrices=eventPrices, eventItag=eventItag,
                            eventTitle=eventTitle,
                            eventStartDate=eventStartDate, eventEndDate=eventEndDate, eventAddress=eventAddress,
                            eventPrice=eventPrice,
@@ -673,7 +710,7 @@ def editEvent():
             eventDes = event[6]
             eventCap = event[7]
             eventOcp = event[8]
-            eventITag = event[9]
+            eventITag = imageReturn(event[9])
             eventAddress = event[10]
             eventCity = event[11]
             eventState = event[12]
@@ -767,7 +804,7 @@ def editEvent():
                                        eventState=eventState, eventZip=eventZip,
                                        eventDeadlineTime=eventDeadlineTime,
                                        userToAdd=usersId, userToDelete=usersName,
-                                       logedIn=logedIn)
+                                       logedIn=logedIn, usersEmail=usersEmail)
 
             return render_template("editEvent.html", eventId=eventId, eventTitle=eventTitle,
                                    eventStartDate=eventStartDate, eventEndDate=eventEndDate,
