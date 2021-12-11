@@ -106,7 +106,7 @@
                             <div class="carousel-item {% if i == 0 %} active {% endif %}"> 
                                 <img class="d-block w-100" src="{{ url_for('static', filename=adEventsItag[i])}}" alt="Concert Event" /> 
                                 <div class="carousel-caption">                                                                    <!--outgoing event title-->
-                                    <form action="{{url_for('editEvent')}}" id="eventDetailForm", method="POST">
+                                    <form action="{{url_for('eventDetails')}}" id="eventDetailForm", method="POST">
                                         <h3><input type="text" name="eventId" value="{{adEventsId[i]}}" hidden>
                                          <input type="submit" value="{{ adEventsTitle[i] }}"></h3>
                                      </form>                <!--outgoing event title-->
