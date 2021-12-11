@@ -248,8 +248,10 @@ def user():
         popEventsEDate = []
         popEventsDetails = []
         popEventsState = []
+        popEventRange = 0
 
         popEvents = db.getEventsByPop(cursor)
+
         for tupleEvent3 in popEvents:
             popEventsId.append(tupleEvent3[0])
             popEventsTitle.append(tupleEvent3[1])
@@ -257,7 +259,7 @@ def user():
             popEventsEDate.append(tupleEvent3[3])
             popEventsDetails.append(tupleEvent3[6])
             popEventsState.append(tupleEvent3[12])
-            
+            popEventRange += 1
         
 #END ALL POPULAR EVENTS----------------------------------------------
 #GET ALL LOCATION EVENTS----------------------------------------------
@@ -267,6 +269,7 @@ def user():
         locEventsEDate = []
         locEventsDetails = []
         locEventsState = []
+        locEventRange = 0
 
         locEvents = db.getEventsByLoc(cursor, str(userLoc))
         for tEvent in locEvents:
@@ -276,6 +279,7 @@ def user():
             locEventsEDate.append(tEvent[3])
             locEventsDetails.append(tEvent[6])
             locEventsState.append(tEvent[12])
+            locEventRange += 1
 #END ALL LOCATION EVENTS----------------------------------------------
 
         if request.method == "POST":
@@ -297,7 +301,7 @@ def user():
                                    nearEventsTitle=locEventsTitle,
                                    nearEventsDetails=locEventsDetails, nearEventsId=locEventsId,
                                    adEventRange=adEventsRange, atEventRange=atEventsRange,
-                                   search=search)
+                                   search=search, popEventRange=popEventRange, locEventRange=locEventRange)
 
     else:
         logedIn = False
