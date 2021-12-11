@@ -252,7 +252,6 @@ def user():
         adEventsRange = 0
 
         adminEvents = db.getEventsByUser(cursor, str(userId))
-        print(adminEvents)
         for tupleEvent2 in adminEvents:
             adEventsId.append(tupleEvent2[0])
             adEventsTitle.append(tupleEvent2[1])
@@ -317,7 +316,6 @@ def user():
                 search = request.form["searchbar"]
                 # DO A SEARCH
         else:
-            print(adEventsRange, atEventsRange)
             return render_template("index_userLoggedIn.html", name=user,
                                    atEventsTitle=atEventsTitle, atEventsSDate=atEventsSDate,
                                    atEventsEDate=atEventsEDate, atEventsId=atEventsId,
@@ -741,7 +739,6 @@ def editEvent():
                 eventAddress = request.form["address"]
                 eventCity = request.form["city"]
                 eventState = request.form.get("state")  # NOT GETTING ANY VALUE
-                print(eventState, "THIS THING")
                 eventZip = request.form["zip"]
                 eventStartDate = request.form["startDate"]
                 eventStartTime = request.form["startTime"]
