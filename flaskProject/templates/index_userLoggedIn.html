@@ -104,13 +104,11 @@
                         <div class="carousel-inner">   
 							{% for i in range (0,adEventRange) %}
                             <div class="carousel-item active"> 
-                                <a href="editEvent.html">
-                                    <img class="d-block w-100" src="{{ url_for('static', filename='img/concertEvent.jpg')}}" alt="Concert Event" />                <!--outgoing event image-->
-                                    <div class="carousel-caption">
-                                        <h3>{{ adEventsTitle[i] }}</h3>                                                                        <!--outgoing event title-->
-                                        <p class="d-none d-sm-block">Date: {{ adEventsSDate[i] }}-{{ adEventsEDate[i] }} & Time: </p>                                            <!--outgoing event date & time-->
-                                    </div>  <!--carousel-caption-->
-                                </a>
+                                <img class="d-block w-100" src="{{ url_for('static', filename='img/concertEvent.jpg')}}" alt="Concert Event" />                <!--outgoing event image-->
+                                <div class="carousel-caption">
+                                    <h3>{{ adEventsTitle[i] }}</h3>                                                                        <!--outgoing event title-->
+                                    <p class="d-none d-sm-block">Date: {{ adEventsSDate[i] }}-{{ adEventsEDate[i] }} & Time: </p>                                            <!--outgoing event date & time-->
+                                </div>  <!--carousel-caption-->
                             </div>  <!--carousel-item-->
 							{% endfor %}
                         </div>  <!--carousel-inner-->
@@ -139,7 +137,7 @@
                                         <input type="text" name="eventId" value="{{atEventsId[i]}}" hidden>
                                         <input type="submit" value="{{ atEventsTitle[i] }}">
                                     </form>                <!--outgoing event title-->
-                                    <i class="fa fa-calendar" aria-hidden="true"></i>Date: {{ atEventsSDate[i] }}-{{ atEventsEDate[i] }}                  <!--outgoing event date & time-->
+                                    <i class="fa fa-calendar" aria-hidden="true"></i>{{ atEventsSDate[i] }} - {{ atEventsEDate[i] }}                  <!--outgoing event date & time-->
                                     <span class="text-muted"></span> </br>
                                     <i class="fa fa-clock-o" aria-hidden="true"></i> Deadline                               <!--outgoing event deadline-->
                                 </li>
@@ -150,124 +148,54 @@
                 </div>  <!--col-->
             </div>  <!--row-->
             
-            <!-- POPULAR EVENTS -->
-            <div class="row row-content">
+             <!-- POPULAR EVENTS -->
+             <div class="row row-content">
                 <div class="col-sm-6">
                     <h2>Popular Events</h2>
                 </div>  <!--col-->
                 <div class="owl-carousel owl-theme">
-
+                    {% for i in range (0, popEventRange) %}
                     <div class="ms-2 me-2">
                         <div class="card">
-                            <img src="{{ url_for('static', filename='img/concertEvent.jpg')}}" alt="Concert Event" class="card-img-top">    <!--outgoing event image-->
+                            <img src="{{ url_for('static', filename=popEventsItag[i])}}" alt="Concert Event" class="card-img-top">    <!--outgoing event image-->
                             <div class="card-body">
-                                <h4 class="card-title">{{ popEventsTitle[0] }}</h4>                                                                  <!--outgoing event title-->
-                                <p class="card-text">{{ popEventsDetails[0] }}</p>      
+                                <h4 class="card-title">{{ popEventsTitle[i] }}</h4>                                                                  <!--outgoing event title-->
+                                <p class="card-text">{{ popEventsDetails[i] }}</p>      
                                 <form action="{{url_for('eventDetails')}}" id="eventDetailForm", method="POST">
                                     <input type="text" name="eventId" value="{{popEventsId[0]}}" hidden>
                                     <input type="submit" value="Read More">
-                                </form>                                                            <!--outgoing concert details-->
-                                <!-- <a href="eventDetails.html">                                                                               
-                                    <button type="button" class="btn btn-danger">Read More</button>             
-                                </a>-->
+                                </form>                      
                             </div>  <!--card-body-->
                         </div>  <!--card-->
                     </div>  <!--ms-2 me-2-->
-
-                    <div class="ms-2 me-2">
-                        <div class="card">
-                            <img src="{{ url_for('static', filename='img/conferenceEvent.jpg')}}" alt="Conference Event" class="card-img-top">  <!--outgoing event image-->
-                            <div class="card-body">
-                                <h4 class="card-title">{{ popEventsTitle[1] }}</h4>                                                                   <!--outgoing event title-->
-                                <p class="card-text">{{ popEventsDetails[1] }}</p>                                                                     <!--outgoing concert details-->
-                                <form action="{{url_for('eventDetails')}}" id="eventDetailForm", method="POST">
-                                    <input type="text" name="eventId" value="{{popEventsId[1]}}" hidden>
-                                    <input type="submit" value="Read More">
-                                </form>
-                            </div>  <!--card-body-->
-                        </div>  <!--card-->
-                    </div>  <!--ms-2 me-2-->
-
-                    <div class="ms-2 me-2">
-                        <div class="card">
-                            <img src="{{ url_for('static', filename='img/dinnerEvent.jpg')}}" alt="Dinner Event" class="card-img-top">      <!--outgoing event image-->
-                            <div class="card-body">
-                                <h4 class="card-title">{{ popEventsTitle[2] }}</h4>                                                                   <!--outgoing event title-->
-                                <p class="card-text">{{ popEventsDetails[2] }}</p>                                                                     <!--outgoing concert details-->
-                                <form action="{{url_for('eventDetails')}}" id="eventDetailForm", method="POST">
-                                    <input type="text" name="eventId" value="{{popEventsId[2]}}" hidden>
-                                    <input type="submit" value="Read More">
-                                </form>
-                            </div>  <!--card-body-->
-                        </div>  <!--card-->
-                    </div>  <!--ms-2 me-2-->
-
-                    <div class="ms-2 me-2">
-                        <div class="card">
-                            <img src="{{ url_for('static', filename='img/festivalEvent.jpg')}}" alt="Festival Event" class="card-img-top">  <!--outgoing event image-->
-                            <div class="card-body">
-                                <h4 class="card-title">{{ popEventsTitle[3] }}</h4>                                                                 <!--outgoing event title-->
-                                <p class="card-text">{{ popEventsDetails[3] }}</p>                                                                   <!--outgoing concert details-->
-                                <form action="{{url_for('eventDetails')}}" id="eventDetailForm", method="POST">
-                                    <input type="text" name="eventId" value="{{popEventsId[3]}}" hidden>
-                                    <input type="submit" value="Read More">
-                                </form>
-                            </div>  <!--card-body-->
-                        </div>  <!--card-->
-                    </div>  <!--ms-2 me-2-->                    
+                    {% endfor %}
                 </div>  <!--owl-carousel-->
             </div>  <!--row-->
 
-            <!-- EVENTS AROUND YOU -->
+            <!-- UPCOMING EVENTS -->
             <div class="row row-content">
                 <div class="col-sm-6">
-                    <h2>Events Nearby</h2>
+                    <h2>Upcoming Events</h2>
                 </div>  <!--col-->
                 <div class="owl-carousel owl-theme">
-
+                    {% for i in range (0, locEventRange) %}
                     <div class="ms-2 me-2">
                         <div class="card" id="nearEvent0">
-                            <img src="{{ url_for('static', filename='img/concertEvent.jpg')}}" alt="Concert Event" class="card-img-top">    <!--outgoing event image-->
+                            <img src="{{ url_for('static', filename=popEventsItag[i])}}" alt="Concert Event" class="card-img-top">    <!--outgoing event image-->
                             <div class="card-body">
-                                <h4 class="card-title">{{ nearEventsTitle[0] }}</h4>                                                                  <!--outgoing event title-->
-                                <p class="card-text">{{ nearEventsDetails[0] }}</p>                                                                    <!--outgoing concert details-->
+                                <h4 class="card-title">{{ nearEventsTitle[i] }}</h4>                                                                  <!--outgoing event title-->
+                                <p class="card-text">{{ nearEventsDetails[i] }}</p>                                                                    <!--outgoing concert details-->
                                 <form action="{{url_for('eventDetails')}}" id="eventDetailForm", method="POST">
                                     <input type="text" name="eventId" value="{{nearEventsId[0]}}" hidden>
                                     <input type="submit" value="Read More">
                                 </form>
                             </div>  <!--card-body-->
                         </div>  <!--card-->
-                    </div>  <!--ms-2 me-2-->
-
-                    <div class="ms-2 me-2">
-                        <div class="card" id="nearEvent1">
-                            <img src="{{ url_for('static', filename='img/conferenceEvent.jpg')}}" alt="Conference Event" class="card-img-top">  <!--outgoing event image-->
-                            <div class="card-body">
-                                <h4 class="card-title">{{ nearEventsTitle[1] }}</h4>                                                                   <!--outgoing event title-->
-                                <p class="card-text">{{ nearEventsDetails[1] }}</p>                                                                     <!--outgoing concert details-->
-                                <form action="{{url_for('eventDetails')}}" id="eventDetailForm", method="POST">
-                                    <input type="text" name="eventId" value="{{nearEventsId[1]}}" hidden>
-                                    <input type="submit" value="Read More">
-                                </form>
-                            </div>  <!--card-body-->
-                        </div>  <!--card-->
-                    </div>  <!--ms-2 me-2-->
-
-                    <div class="ms-2 me-2">
-                        <div class="card" id="nearEvent2">
-                            <img src="{{ url_for('static', filename='img/dinnerEvent.jpg')}}" alt="Dinner Event" class="card-img-top">  <!--outgoing event image-->
-                            <div class="card-body">
-                                <h4 class="card-title">{{ nearEventsTitle[2] }}</h4>                                                               <!--outgoing event title-->
-                                <p class="card-text">{{ nearEventsDetails[2] }}</p>                                                                 <!--outgoing concert details-->
-                                <form action="{{url_for('eventDetails')}}" id="eventDetailForm", method="POST">
-                                    <input type="text" name="eventId" value="{{nearEventsId[2]}}" hidden>
-                                    <input type="submit" value="Read More">
-                                </form>
-                            </div>  <!--card-body-->
-                        </div>  <!--card-->
-                    </div>  <!--ms-2 me-2-->                    
+                    </div>  <!--ms-2 me-2-->   
+                    {% endfor %}    
                 </div>  <!--owl-carousel-->
             </div>  <!--row-->
+        </div>  <!--container-->
         </div>  <!--container-->
        
         <!-- FOOTER -->
