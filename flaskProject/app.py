@@ -471,18 +471,21 @@ def manageEvents():  # put application's code here
 
             user = session["user"]
             userId = session["userId"]
-            eventId = 24
+            leaveEventId = []
+            print("This is the eventID: ", eventId)
 
 # REMOVE USER FROM ATTENDING EVENT------------------------------------            
-            if 'leaveEvent' in request.form:
-                eventId = request.form.get("eventId")
+            if 'LEAVE EVENT' in request.form:
+                leaveEventId = request.form.get("leaveEventId")
+                print("This is the leave eventID: ",leaveEventId)
+                print("TEST!!!!!!!!!!!!!!!!!!!!!!!!!!")
             #if user found with event
                 if (db.checkAny(cursor, "attendantId", "user_events", "userId",
-                                str(userId), "eventId", str(eventId)) == True):
+                                str(userId), "eventId", str(leaveEventId)) == True):
                     
             #remove user from event attendance
-                    db.removeUEvents(cnx, cursor, userId, str(eventId))
-                    db.removeEventOcp(cnx, cursor, str(eventId))
+                    db.removeUEvents(cnx, cursor, userId, str(leaveEventId))
+                    db.removeEventOcp(cnx, cursor, str(leaveEventId))
                     
                     return redirect(url_for("manageEvents"))
                 else:
