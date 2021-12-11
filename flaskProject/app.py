@@ -800,7 +800,10 @@ def editEvent():
             # DELETE EVENT AND USER EVENTS----------------------------------------------
 #DELETE USER IN EVENT--------------------------------------------------------
             if "del" in request.form:
-                uEID = request.form.get("userEId")
+                print("Event id before pull is: ", eventId)
+                uEID = request.form.get("userDel")
+                eventId = request.form.get('eventDelUserId')
+                print("GOT HERE WITH THIS U ID:", uEID, "and this event Id: ", eventId)
 
                 if (db.checkAny(cursor, "attendentId", "user_events", "eventId", str(eventId),
                                 "userId", str(userId))):
@@ -814,7 +817,7 @@ def editEvent():
                                            eventITag=eventITag, eventAddress=eventAddress, eventCity=eventCity,
                                            eventState=eventState, eventZip=eventZip,
                                            eventDeadlineTime=eventDeadlineTime,
-                                           userToAdd=usersId, usersName=usersName,
+                                           userId=usersId, usersName=usersName,
                                            logedIn=logedIn, usersEmail=usersEmail, userRange=userRange)
 #DELETE USER IN EVENT--------------------------------------------------------
 
@@ -826,7 +829,7 @@ def editEvent():
                                        eventITag=eventITag, eventAddress=eventAddress, eventCity=eventCity,
                                        eventState=eventState, eventZip=eventZip,
                                        eventDeadlineTime=eventDeadlineTime,
-                                       userToAdd=usersId, usersName=usersName,
+                                       userId=usersId, usersName=usersName,
                                        logedIn=logedIn, usersEmail=usersEmail, userRange=userRange)
 
             return render_template("editEvent.html", eventId=eventId, eventTitle=eventTitle,
@@ -836,7 +839,7 @@ def editEvent():
                                    eventITag=eventITag, eventAddress=eventAddress, eventCity=eventCity,
                                    eventState=eventState, eventZip=eventZip,
                                    eventDeadlineTime=eventDeadlineTime,
-                                   userToAdd=usersId, usersName=usersName,
+                                   userId=usersId, usersName=usersName,
                                    logedIn=logedIn, usersEmail=usersEmail, userRange=userRange)
 
         # END GET EVENT-------------------------------------------------------------^

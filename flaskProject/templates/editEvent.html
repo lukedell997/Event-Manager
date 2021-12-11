@@ -289,7 +289,9 @@
                                         <td data-name="del">
                                             <form action="logout.html" method="POST">
                                                 <div class="form-group">
-                                                    <input type='button' value="x" />
+                                                    <input type='submit' name = 'del' value="Remove" />
+                                                    <input type='text' name = 'eventDelUserId' value="{{ eventId }}" hidden/>
+                                                    <input type='text' name = 'userDel' value="{{ userId[i] }}" hidden/>
                                                 </div>    
                                             </form>
                                         </td>
