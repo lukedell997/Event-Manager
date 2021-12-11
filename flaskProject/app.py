@@ -305,8 +305,8 @@ def user():
 
 
 # This is for a logout page that might be made
-@app.route("/logout")
-@app.route("/logout.html")
+@app.route("/logout", methods=["POST", "GET"])
+@app.route("/logout.html", methods=["POST", "GET"])
 def logout():
     session.clear()
     # flash("You have been logged out!", "info")
