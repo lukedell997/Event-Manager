@@ -288,9 +288,11 @@
                                             <p>Attendant</p>					                                            <!--outgoing role-->				
                                         </td>
                                         <td data-name="del">
-                                            <a class='btn btn-floating row-remove' name='del' class='form-control'>
-                                                <i class='fa fa-trash'></i>
-                                            </a>
+                                            <form action="logout.html" method="POST">
+                                                <div class="form-group">
+                                                    <input type='button' value="x" />
+                                                </div>    
+                                            </form>
                                         </td>
                                     </tr>
                                     {% endfor %}
