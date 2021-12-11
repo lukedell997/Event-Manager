@@ -947,13 +947,11 @@ def updatePersonalInfo():
                 db.removeUser(cnx, cursor, str(userId), str(oPassword))
 
                 # set session to None
-                session["user"] = None
-                session["userEmail"] = None
-                session["userState"] = None
+                logout()
                 return redirect(url_for("index"))
             # REMOVE USER------------------------------------------------
             # UPDATE USER---------------------------------------------- ------------------------^
-            if 'submit' in request.form:
+            elif 'submit' in request.form:
                 # password must match
                 if (oPassword != password):
                     print("Please enter correct password")
