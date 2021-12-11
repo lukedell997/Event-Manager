@@ -172,29 +172,29 @@
                 </div>  <!--owl-carousel-->
             </div>  <!--row-->
 
-            <!-- UPCOMING EVENTS -->
-            <div class="row row-content">
-                <div class="col-sm-6">
-                    <h2>Upcoming Events</h2>
-                </div>  <!--col-->
-                <div class="owl-carousel owl-theme">
-                    {% for i in range (0, locEventRange) %}
-                    <div class="ms-2 me-2">
-                        <div class="card" id="nearEvent">
-                            <img src="{{ url_for('static', filename=nearEventsItag[i])}}" alt="Concert Event" class="card-img-top">    <!--outgoing event image-->
-                            <div class="card-body">
-                                <h4 class="card-title">{{ nearEventsTitle[i] }}</h4>                                                                  <!--outgoing event title-->
-                                <p class="card-text">{{ nearEventsDetails[i] }}</p>                                                                    <!--outgoing concert details-->
-                                <form action="{{url_for('eventDetails')}}" id="eventDetailForm", method="POST">
-                                    <input type="text" name="eventId" value="{{nearEventsId[i]}}" hidden>
-                                    <input type="submit" value="Read More">
-                                </form>
-                            </div>  <!--card-body-->
-                        </div>  <!--card-->
-                    </div>  <!--ms-2 me-2-->   
-                    {% endfor %}    
-                </div>  <!--owl-carousel-->
-            </div>  <!--row-->
+           <!-- UPCOMING EVENTS -->
+           <div class="row row-content">
+            <div class="col-sm-6">
+                <h2>Upcoming Events</h2>
+            </div>  <!--col-->
+            <div class="owl-carousel owl-theme">
+                {% for i in range (0, locEventRange) %}
+                <div class="ms-2 me-2">
+                    <div class="card" id="nearEvent0">
+                        <img src="{{ url_for('static', filename=nearEventsItag[i])}}" alt="Concert Event" class="card-img-top">    <!--outgoing event image-->
+                        <div class="card-body">
+                            <h4 class="card-title">{{ nearEventsTitle[i] }}</h4>                                                                  <!--outgoing event title-->
+                            <p class="card-text">{{ nearEventsDetails[i] }}</p>                                                                    <!--outgoing concert details-->
+                            <form action="{{url_for('eventDetails')}}" id="eventDetailForm", method="POST">
+                                <input type="text" name="eventId" value="{{nearEventsId[i]}}" hidden>
+                                <input type="submit" value="Read More">
+                            </form>
+                        </div>  <!--card-body-->
+                    </div>  <!--card-->
+                </div>  <!--ms-2 me-2-->   
+                {% endfor %}    
+            </div>  <!--owl-carousel-->
+        </div>  <!--row-->
         </div>  <!--container-->
         </div>  <!--container-->
        
