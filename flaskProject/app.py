@@ -861,7 +861,7 @@ def createEvent():
             eventTitle = request.form["title"]
             eventAddress = request.form["address"]
             eventCity = request.form["city"]
-            eventState = request.form.get("eventState")
+            eventState = request.form.get("state")
             eventZip = request.form["zip"]
             eventStartDate = request.form["startDate"]
             eventStartTime = request.form["endTime"]
