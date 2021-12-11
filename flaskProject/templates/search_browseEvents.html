@@ -121,7 +121,7 @@
                                     <span>Price: ${{ eventPrice[i] }}</span>                                                                      <!--outgoing event price-->
                                 </p>
                                 <form action="{{url_for('eventDetails')}}" id="eventDetailForm", method="POST">
-                                    <input type="text" name="eventId" value="{{eventId[0]}}" hidden>
+                                    <input type="text" name="eventId" value="{{eventId[i]}}" hidden>
                                     <input type="submit" value="Read More">
                                 </form>                                                   
                             </div>  <!--card-body-->      

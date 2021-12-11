@@ -153,7 +153,7 @@
                                 <h4 class="card-title">{{ popEventsTitle[i] }}</h4>                                                                  <!--outgoing event title-->
                                 <p class="card-text">{{ popEventsDetails[i] }}</p>      
                                 <form action="{{url_for('eventDetails')}}" id="eventDetailForm", method="POST">
-                                    <input type="text" name="eventId" value="{{popEventsId[0]}}" hidden>
+                                    <input type="text" name="eventId" value="{{popEventsId[i]}}" hidden>
                                     <input type="submit" value="Read More">
                                 </form>                      
                             </div>  <!--card-body-->

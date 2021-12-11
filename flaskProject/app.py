@@ -722,6 +722,7 @@ def editEvent():
 
             # get user_events by userId
             eventUsers = db.getUEventsByEvent(cursor, str(eventId))
+            userRange = 0
 
             # for all user_events, get the event
             for tupleEvent in eventUsers:
@@ -729,6 +730,7 @@ def editEvent():
                 usersId.append(tupleEvent[1])
                 usersName.append(tupleEvent[3])
                 usersEmail.append(tupleEvent[4])
+                userRange += 1
 
         # END GET ALL ATTENDING EVENT--------------------------------------^
 
@@ -824,7 +826,7 @@ def editEvent():
                                        eventState=eventState, eventZip=eventZip,
                                        eventDeadlineTime=eventDeadlineTime,
                                        userToAdd=usersId, userToDelete=usersName,
-                                       logedIn=logedIn, usersEmail=usersEmail)
+                                       logedIn=logedIn, usersEmail=usersEmail, userRange=userRange)
 
             return render_template("editEvent.html", eventId=eventId, eventTitle=eventTitle,
                                    eventStartDate=eventStartDate, eventEndDate=eventEndDate,
