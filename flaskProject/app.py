@@ -6,7 +6,7 @@ app = Flask(__name__)
 
 app.permanent_session_lifetime = timedelta(hours=1)
 
-app.secret_key = "hello"
+app.secret_key = "This is a super duper secret key 431321"
 
 db = DataB()
 cnx, cursor = db.openDatabase()
@@ -213,9 +213,6 @@ def user():
     if "user" in session:
         logedIn = True
         search = None
-        if request.method == "POST":
-            search = request.form
-            # DO A SEARCH IDK HOW YET
 
         user = session["user"]
         userId = session["userId"]
@@ -580,7 +577,7 @@ def manageEvents():  # put application's code here
 
     else:
         logedIn = False
-        return redirect(url_for("login"))
+        return redirect(url_for("loginPage"))
 
 
 ########################################################################--SEARCH_BROWSE EVENTS--############
@@ -613,7 +610,7 @@ def search_browseEvents():  # put application's code here
         eventRange = len(eventsK)
 
         for eK in eventsK:
-            eventId = eK[0]
+            eventId.append(eK[0])
             eventTitle.append(eK[1])
             eventStartDate.append(eK[2])
             eventEndDate.append(eK[3])
@@ -805,7 +802,7 @@ def editEvent():
                 eventId = request.form.get('eventDelUserId')
                 print("GOT HERE WITH THIS U ID:", uEID, "and this event Id: ", eventId)
 
-                if (db.checkAny(cursor, "attendentId", "user_events", "eventId", str(eventId),
+                if (db.checkAny(cursor, "attendantId", "user_events", "eventId", str(eventId),
                                 "userId", str(userId))):
                     db.removeUEvents(cnx, cursor, str(uEID), str(eventId))
                 else:
