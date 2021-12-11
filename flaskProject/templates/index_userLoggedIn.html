@@ -103,7 +103,7 @@
                     <div id="homeCarousel" class="carousel slide" data-ride="carousel"> 
                         <div class="carousel-inner">   
 							{% for i in range (0,adEventRange) %}
-                            <div class="carousel-item active"> 
+                            <div class="carousel-item {% if i == 0 %} active {% endif %}"> 
                                 <img class="d-block w-100" src="{{ url_for('static', filename='img/concertEvent.jpg')}}" alt="Concert Event" />                <!--outgoing event image-->
                                 <div class="carousel-caption">
                                     <h3>{{ adEventsTitle[i] }}</h3>                                                                        <!--outgoing event title-->

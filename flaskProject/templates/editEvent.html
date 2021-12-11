@@ -278,16 +278,16 @@
                                 <tbody>
                                     <tr>
                                         <td data-name="nm">
-                                            <input type="text" name='nm' placeholder='Username' class="form-control"/>         <!--outgoing username-->
+                                            <p>Username</p>        <!--outgoing username-->
                                         </td>
                                         <td data-name="mail">
-                                            <input type="text" name='mail' placeholder='Email' class="form-control"/>      <!--outgoing email-->
+                                            <p>Email</p>      <!--outgoing email-->
                                         </td>
                                         <td data-name="role">
                                             <p>Attendant</p>					                                            <!--outgoing role-->				
                                         </td>
                                         <td data-name="del">
-                                            <a class='btn btn-floating row-remove' name='del' class='form-control' onclick='removeUser();'>
+                                            <a class='btn btn-floating row-remove' name='del' class='form-control'>
                                                 <i class='fa fa-trash'></i>
                                             </a>
                                         </td>
@@ -355,10 +355,5 @@
 
         <!-- Custom Scripts-->
         <script src="{{ url_for('static', filename='js/numsVal.js')}}"></script>
-        <script>
-            function removeUser() {
-                alert('yuh');
-            }
-        </script>
     </body>
 </html>
