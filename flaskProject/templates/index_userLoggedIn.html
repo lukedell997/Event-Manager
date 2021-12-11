@@ -186,7 +186,7 @@
                                 <h4 class="card-title">{{ nearEventsTitle[i] }}</h4>                                                                  <!--outgoing event title-->
                                 <p class="card-text">{{ nearEventsDetails[i] }}</p>                                                                    <!--outgoing concert details-->
                                 <form action="{{url_for('eventDetails')}}" id="eventDetailForm", method="POST">
-                                    <input type="text" name="eventId" value="{{nearEventsId[0]}}" hidden>
+                                    <input type="text" name="eventId" value="{{nearEventsId[i]}}" hidden>
                                     <input type="submit" value="Read More">
                                 </form>
                             </div>  <!--card-body-->
