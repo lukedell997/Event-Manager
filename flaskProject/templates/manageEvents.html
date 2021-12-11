@@ -116,7 +116,7 @@
                                 <div class="row">
 
                                     <div class="col-md-4">
-                                        <img src="{{ url_for('static', filename='img/concertEvent.jpg')}}" class="img-fluid">   <!--outgoing event image-->
+                                        <img src="{{ url_for('static', filename=adEventsItag[i])}}" class="img-fluid">   <!--outgoing event image-->
                                     </div>
                                     <div class="col-md-8 pt-2">
                                         <h3 class="card-title mt-3">{{ usersEvents[i] }}</h3>                                               <!--outgoing event title-->
@@ -151,7 +151,7 @@
                             <div class="card">
                                 <div class="row">
                                     <div class="col-md-4">
-                                        <img src="{{ url_for('static', filename='img/movieEvents.jpg')}}" class="img-fluid">        <!--outgoing event image-->
+                                        <img src="{{ url_for('static', filename=atEventsItag[i])}}" class="img-fluid">        <!--outgoing event image-->
                                     </div>
                                     <div class="col-md-8 pt-2">
                                         <h3 class="card-title mt-3">{{ userAttendingEvents[i] }}</h3>                                                <!--outgoing event title-->
