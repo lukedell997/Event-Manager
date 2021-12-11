@@ -609,7 +609,7 @@ def search_browseEvents():  # put application's code here
     if request.method == "POST":
         word = request.form["searchbar"]
         print(word)
-        eventsK = db.getEventsByKeyword(cursor, str(word))
+        eventsK = db.getEventsAdvanced(cursor, str(word))
         eventRange = len(eventsK)
 
         for eK in eventsK:
