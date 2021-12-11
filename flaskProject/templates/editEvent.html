@@ -276,12 +276,13 @@
                                     </tr>
                                 </thead>
                                 <tbody>
+                                    {% for i in range (0, userRange) %}
                                     <tr>
                                         <td data-name="nm">
-                                            <p>Username</p>        <!--outgoing username-->
+                                            <p>{{usersName[i]}}</p>        <!--outgoing username-->
                                         </td>
                                         <td data-name="mail">
-                                            <p>Email</p>      <!--outgoing email-->
+                                            <p>{{usersEmail[i]}}</p>      <!--outgoing email-->
                                         </td>
                                         <td data-name="role">
                                             <p>Attendant</p>					                                            <!--outgoing role-->				
@@ -292,10 +293,11 @@
                                             </a>
                                         </td>
                                     </tr>
+                                    {% endfor %}
                                 </tbody>
                             </table>
                             <div class="col">
-                                <a role="button" class="btn btn-link" href="mailto:users@eventmanager.co">
+                                <a role="button" class="btn btn-link" href="mailto:{% for i in range (0, userRange) %} {{usersEmail[i]}} {% endfor %}">
                                     <i class="fa fa-envelope-o"></i> Email all users for this event</a>
                             </div>  <!--col-->
                         </div>  
