@@ -837,7 +837,7 @@ def editEvent():
                                    eventState=eventState, eventZip=eventZip,
                                    eventDeadlineTime=eventDeadlineTime,
                                    userToAdd=usersId, userToDelete=usersName,
-                                   logedIn=logedIn, userRange=userRange)
+                                   logedIn=logedIn,usersEmail=usersEmail, userRange=userRange)
 
         # END GET EVENT-------------------------------------------------------------^
 
