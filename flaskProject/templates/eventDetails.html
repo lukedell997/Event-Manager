@@ -107,74 +107,30 @@
                 </div>
             </div>  <!--row-->
 
-
-        <!-- POPULAR EVENTS -->
+            <!-- POPULAR EVENTS -->
             <div class="row row-content">
                 <div class="col-sm-6">
                     <h2>Popular Events</h2>
                 </div>  <!--col-->
                 <div class="owl-carousel owl-theme">
+                    {% for i in range (0, popEventRange) %}
                     <div class="ms-2 me-2">
                         <div class="card">
                             <img src="{{ url_for('static', filename='img/concertEvent.jpg')}}" alt="Concert Event" class="card-img-top">    <!--outgoing event image-->
                             <div class="card-body">
-                                <h4 class="card-title">{{ popEventsTitle[0] }}</h4>                                                                  <!--outgoing event title-->
-                                <p class="card-text">{{ popEventsDetails[0] }}</p>
+                                <h4 class="card-title">{{ popEventsTitle[i] }}</h4>                                                                  <!--outgoing event title-->
+                                <p class="card-text">{{ popEventsDetails[i] }}</p>      
                                 <form action="{{url_for('eventDetails')}}" id="eventDetailForm", method="POST">
                                     <input type="text" name="eventId" value="{{popEventsId[0]}}" hidden>
                                     <input type="submit" value="Read More">
-                                </form>                                                            <!--outgoing concert details-->
-                                <!-- <a href="eventDetails.html">
-                                    <button type="button" class="btn btn-danger">Read More</button>
-                                </a>-->
+                                </form>                      
                             </div>  <!--card-body-->
                         </div>  <!--card-->
                     </div>  <!--ms-2 me-2-->
-
-                    <div class="ms-2 me-2">
-                        <div class="card">
-                            <img src="{{ url_for('static', filename='img/conferenceEvent.jpg')}}" alt="Conference Event" class="card-img-top">  <!--outgoing event image-->
-                            <div class="card-body">
-                                <h4 class="card-title">{{ popEventsTitle[1] }}</h4>                                                                   <!--outgoing event title-->
-                                <p class="card-text">{{ popEventsDetails[1] }}</p>                                                                     <!--outgoing concert details-->
-                                <form action="{{url_for('eventDetails')}}" id="eventDetailForm", method="POST">
-                                    <input type="text" name="eventId" value="{{popEventsId[1]}}" hidden>
-                                    <input type="submit" value="Read More">
-                                </form>
-                            </div>  <!--card-body-->
-                        </div>  <!--card-->
-                    </div>  <!--ms-2 me-2-->
-
-                    <div class="ms-2 me-2">
-                        <div class="card">
-                            <img src="{{ url_for('static', filename='img/dinnerEvent.jpg')}}" alt="Dinner Event" class="card-img-top">      <!--outgoing event image-->
-                            <div class="card-body">
-                                <h4 class="card-title">{{ popEventsTitle[2] }}</h4>                                                                   <!--outgoing event title-->
-                                <p class="card-text">{{ popEventsDetails[2] }}</p>                                                                     <!--outgoing concert details-->
-                                <form action="{{url_for('eventDetails')}}" id="eventDetailForm", method="POST">
-                                    <input type="text" name="eventId" value="{{popEventsId[2]}}" hidden>
-                                    <input type="submit" value="Read More">
-                                </form>
-                            </div>  <!--card-body-->
-                        </div>  <!--card-->
-                    </div>  <!--ms-2 me-2-->
-
-                    <div class="ms-2 me-2">
-                        <div class="card">
-                            <img src="{{ url_for('static', filename='img/festivalEvent.jpg')}}" alt="Festival Event" class="card-img-top">  <!--outgoing event image-->
-                            <div class="card-body">
-                                <h4 class="card-title">{{ popEventsTitle[3] }}</h4>                                                                 <!--outgoing event title-->
-                                <p class="card-text">{{ popEventsDetails[3] }}</p>                                                                   <!--outgoing concert details-->
-                                <form action="{{url_for('eventDetails')}}" id="eventDetailForm", method="POST">
-                                    <input type="text" name="eventId" value="{{popEventsId[3]}}" hidden>
-                                    <input type="submit" value="Read More">
-                                </form>
-                            </div>  <!--card-body-->
-                        </div>  <!--card-->
-                    </div>  <!--ms-2 me-2-->
+                    {% endfor %}
                 </div>  <!--owl-carousel-->
             </div>  <!--row-->
-        </div>  <!--container-->
+        </div>
 
         <!-- FOOTER -->
         <footer class="site-footer">    
@@ -204,7 +160,6 @@
                         </a>
                     </div>  <!--col-->
                     <div class="col text-right">
-                        <a href="registerPage.html"><button type="button" class="btn btn-primary">Get Started</button></a>  
                         <a class="btn btn-floating" href="#">
                             <i class="fa fa-arrow-circle-up"></i> Back to top
                         </a>
