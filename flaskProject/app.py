@@ -309,6 +309,7 @@ def user():
 @app.route("/logout.html", methods=["POST", "GET"])
 def logout():
     session.clear()
+    print("YOU HAVE LOGGED OUT. NICE!!!!!")
     # flash("You have been logged out!", "info")
     return redirect(url_for("index"))  # ????
 
@@ -320,6 +321,27 @@ def eventDetails():  # put application's code here
         logedIn = True
     else:
         logedIn = False
+
+    # GET ALL POPULAR EVENTS----------------------------------------------
+    popEventsId = []
+    popEventsTitle = []
+    popEventsSDate = []
+    popEventsEDate = []
+    popEventsDetails = []
+    popEventsState = []
+    popEventRange = 0
+
+    popEvents = db.getEventsByPop(cursor)
+    for tupleEvent3 in popEvents:
+        popEventsId.append(tupleEvent3[0])
+        popEventsTitle.append(tupleEvent3[1])
+        popEventsSDate.append(tupleEvent3[2])
+        popEventsEDate.append(tupleEvent3[3])
+        popEventsDetails.append(tupleEvent3[6])
+        popEventsState.append(tupleEvent3[12])
+        popEventRange += 1
+
+    # END ALL POPULAR EVENTS----------------------------------------------
         
     eventId = request.form.get("eventId")
     
@@ -395,7 +417,8 @@ def eventDetails():  # put application's code here
                                    eventAddress=eventAddress, eventITag=eventITag,
                                    eventCity=eventCity, eventZip=eventZip, eventState=eventState,
                                    eventCap=eventOcp, eventMaxPop=eventCap,
-                                   logedIn=logedIn, eventId=eventId)
+                                   logedIn=logedIn, eventId=eventId, popEventsId=popEventsId, popEventsTitle=popEventsTitle,
+                                   popEventsSDate=popEventsSDate, popEventsDetails=popEventsDetails, popEventsState=popEventsState, popEventRange=popEventRange)
 # END POST
     else:
         return render_template("eventDetails.html", eventStartDate=eventStartDate, eventEndDate=eventEndDate,
@@ -403,7 +426,8 @@ def eventDetails():  # put application's code here
                                eventAddress=eventAddress, eventITag=eventITag,
                                eventCity=eventCity, eventZip=eventZip, eventState=eventState,
                                eventCap=eventOcp, eventMaxPop=eventCap,
-                               logedIn=logedIn, eventId=eventId)
+                               logedIn=logedIn, eventId=eventId, popEventsId=popEventsId, popEventsTitle=popEventsTitle,
+                                   popEventsSDate=popEventsSDate, popEventsDetails=popEventsDetails, popEventsState=popEventsState, popEventRange=popEventRange)
     
 
 
