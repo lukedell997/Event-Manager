@@ -110,7 +110,7 @@
                                         <h3><input type="text" name="eventId" value="{{adEventsId[i]}}" hidden>
                                          <input type="submit" value="{{ adEventsTitle[i] }}"></h3>
                                      </form>                <!--outgoing event title-->
-                                    <p class="d-none d-sm-block">{{ adEventsEDate[i] }} to {{ adEventsSDate[i] }}</p>                                            <!--outgoing event date & time-->
+                                    <p class="d-none d-sm-block">{{ adEventsSDate[i] }} to {{ adEventsSDate[i] }}</p>                                            <!--outgoing event date & time-->
                                 </div>  <!--carousel-caption-->
                             </div>  <!--carousel-item-->
 							{% endfor %}
@@ -140,7 +140,7 @@
                                         <input type="text" name="eventId" value="{{atEventsId[i]}}" hidden>
                                         <input type="submit" value="{{ atEventsTitle[i] }}">
                                     </form>                <!--outgoing event title-->
-                                    <i class="fa fa-calendar" aria-hidden="true"></i>{{ atEventsEDate[i] }} - {{ atEventsSDate[i] }}                  <!--outgoing event date & time-->
+                                    <i class="fa fa-calendar" aria-hidden="true"></i>{{ atEventsSDate[i] }} - {{ atEventsEDate[i] }}                  <!--outgoing event date & time-->
                                     <span class="text-muted"></span> </br>
                                     <i class="fa fa-clock-o" aria-hidden="true"></i> Deadline                               <!--outgoing event deadline-->
                                 </li>
