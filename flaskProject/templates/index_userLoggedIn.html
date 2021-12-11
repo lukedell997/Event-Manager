@@ -135,8 +135,11 @@
                             <ul class="list-group list-group-hover">
 								{% for i in range (0, atEventRange) %}
                                 <li class="list-group-item w-100">
-                                    <a id="event1" class="lead" href="eventDetails.html">{{ atEventsTitle[0] }}</a> </br>                 <!--outgoing event title-->
-                                    <i class="fa fa-calendar" aria-hidden="true"></i>Date: {{ atEventsSDate[0] }}-{{ atEventsEDate[0] }}                  <!--outgoing event date & time-->
+                                     <form action="{{url_for('eventDetails')}}" id="eventDetailForm", method="POST">
+                                        <input type="text" name="eventId" value="{{atEventsId[i]}}" hidden>
+                                        <input type="submit" value={{ atEventsTitle[i] }}>
+                                    </form>                <!--outgoing event title-->
+                                    <i class="fa fa-calendar" aria-hidden="true"></i>Date: {{ atEventsSDate[i] }}-{{ atEventsEDate[i] }}                  <!--outgoing event date & time-->
                                     <span class="text-muted"></span> </br>
                                     <i class="fa fa-clock-o" aria-hidden="true"></i> Deadline                               <!--outgoing event deadline-->
                                 </li>
