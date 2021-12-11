@@ -416,7 +416,18 @@ class DataB:
         for(event) in cursor:
             events.append(event)
         return events
-
+    #GET EVENTS BY DATE RANGE
+    #(from outside: lowerDate, upperDate)-> get events in date range
+    def getEventsByUpcoming(self, cursor):
+        events = []
+        dt = ''.join(("SELECT * FROM events WHERE eDate >= '",str(datetime.date.today()),
+             "' ORDER BY eDate"))
+        cursor.execute(dt)
+        
+        for(event) in cursor:
+            events.append(event)
+        return events
+    
     #GET EVENTS BY DATE RANGE
     #(from outside: lowerDate, upperDate)-> get events in date range
     def getEventsByDate(self, cursor, lDate, uDate):
@@ -539,9 +550,10 @@ class DataB:
 
     
 ##
-#db = DataB()
-#cnx, cursor = db.openDatabase()
+db = DataB()
+cnx, cursor = db.openDatabase()
 
+print(db.getEventsByUpcoming(cursor))
 #wordS = "thank giving and christ mas are here to test you"
 #print(db.getEventsAdvanced(cursor, "t"))
                 

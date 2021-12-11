@@ -98,7 +98,7 @@ def index():  # put application's code here
         nearEventsState = []
         nearEventsItag = []
 
-        locEvents = db.getEventsByLoc(cursor, str("IL"))
+        locEvents = db.getEventsByUpcoming(cursor)
         locEventRange = 0
         for tEvent in locEvents:
             nearEventsId.append(tEvent[0])
@@ -795,6 +795,26 @@ def editEvent():
                     print("You are not able to delete this event")
                     return redirect(url_for('manageEvents'))
             # DELETE EVENT AND USER EVENTS----------------------------------------------
+#DELETE USER IN EVENT--------------------------------------------------------
+            if "del" in request.form:
+                uEId = request.form.get("userEId")
+
+                if (db.checkAny(cursor, "attendentId", "user_events", "eventId", str(eventId),
+                                "userId", str(userId))):
+                    db.removeUEvents(cnx, cursor, str(uEID), str(eventId))
+                else:
+                    print("User not found in Event")
+                    return render_template("editEvent.html", eventId=eventId, eventTitle=eventTitle,
+                                           eventStartDate=eventStartDate, eventEndDate=eventEndDate,
+                                           eventDeadline=eventDeadline,
+                                           eventPrice=eventPrice, eventDes=eventDes, eventCap=eventCap,
+                                           eventITag=eventITag, eventAddress=eventAddress, eventCity=eventCity,
+                                           eventState=eventState, eventZip=eventZip,
+                                           eventDeadlineTime=eventDeadlineTime,
+                                           userToAdd=usersId, userToDelete=usersName,
+                                           logedIn=logedIn)
+#DELETE USER IN EVENT--------------------------------------------------------
+
             else:
                 return render_template("editEvent.html", eventId=eventId, eventTitle=eventTitle,
                                        eventStartDate=eventStartDate, eventEndDate=eventEndDate,
