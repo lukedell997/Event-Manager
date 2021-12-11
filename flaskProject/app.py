@@ -25,7 +25,7 @@ def imageReturn(imageNumber):
     elif imageNumber == 5:
         pic = 'img/movieEvent.jpg'
     else:
-        pic = 0
+        pic = 'img/basicEventPicture.jpg'
 
     return pic
 
