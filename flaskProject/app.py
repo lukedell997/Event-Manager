@@ -799,7 +799,7 @@ def editEvent():
             # DELETE EVENT AND USER EVENTS----------------------------------------------
 #DELETE USER IN EVENT--------------------------------------------------------
             if "del" in request.form:
-                uEId = request.form.get("userEId")
+                uEID = request.form.get("userEId")
 
                 if (db.checkAny(cursor, "attendentId", "user_events", "eventId", str(eventId),
                                 "userId", str(userId))):
@@ -814,7 +814,7 @@ def editEvent():
                                            eventState=eventState, eventZip=eventZip,
                                            eventDeadlineTime=eventDeadlineTime,
                                            userToAdd=usersId, userToDelete=usersName,
-                                           logedIn=logedIn)
+                                           logedIn=logedIn, userRange=userRange)
 #DELETE USER IN EVENT--------------------------------------------------------
 
             else:
@@ -836,7 +836,7 @@ def editEvent():
                                    eventState=eventState, eventZip=eventZip,
                                    eventDeadlineTime=eventDeadlineTime,
                                    userToAdd=usersId, userToDelete=usersName,
-                                   logedIn=logedIn)
+                                   logedIn=logedIn, userRange=userRange)
 
         # END GET EVENT-------------------------------------------------------------^
 
