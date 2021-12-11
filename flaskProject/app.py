@@ -815,7 +815,7 @@ def editEvent():
                                            eventState=eventState, eventZip=eventZip,
                                            eventDeadlineTime=eventDeadlineTime,
                                            userToAdd=usersId, usersName=usersName,
-                                           logedIn=logedIn, userRange=userRange)
+                                           logedIn=logedIn, usersEmail=usersEmail, userRange=userRange)
 #DELETE USER IN EVENT--------------------------------------------------------
 
             else:
@@ -826,7 +826,7 @@ def editEvent():
                                        eventITag=eventITag, eventAddress=eventAddress, eventCity=eventCity,
                                        eventState=eventState, eventZip=eventZip,
                                        eventDeadlineTime=eventDeadlineTime,
-                                       userToAdd=usersId, userToDelete=usersName,
+                                       userToAdd=usersId, usesrName=usersName,
                                        logedIn=logedIn, usersEmail=usersEmail, userRange=userRange)
 
             return render_template("editEvent.html", eventId=eventId, eventTitle=eventTitle,
@@ -836,8 +836,8 @@ def editEvent():
                                    eventITag=eventITag, eventAddress=eventAddress, eventCity=eventCity,
                                    eventState=eventState, eventZip=eventZip,
                                    eventDeadlineTime=eventDeadlineTime,
-                                   userToAdd=usersId, userToDelete=usersName,
-                                   logedIn=logedIn,usersEmail=usersEmail, userRange=userRange)
+                                   userToAdd=usersId, usesrName=usersName,
+                                   logedIn=logedIn, usersEmail=usersEmail, userRange=userRange)
 
         # END GET EVENT-------------------------------------------------------------^
 
