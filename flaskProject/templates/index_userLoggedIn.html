@@ -32,8 +32,8 @@
                 <div class="container-fluid">
                     <a class="navbar-brand" href="index_userLoggedIn.html"><img src="{{ url_for('static', filename='img/logo.png')}}" alt="Event Manager Logo"></a>
                     <!--SEARCH BAR-->
-                    <form class="form-inline ml-4" action="search_browseEvents.html" method="GET">                                                                            <!--incoming search bar-->
-                        <input class="form control py-2 border-right-0 border" type="search" placeholder="Search for..." name="searchbar">
+                    <form class="form-inline ml-4" action="search_browseEvents.html" method="POST">                                                                            <!--incoming search bar-->
+                        <input class="form control py-2 border-right-0 border" type="search" placeholder="Search for..." name="searchbar" value="searchbar">
                         <button class="btn btn-primary btn-outline-secondary border" type="submit">
                             <i class="fa fa-search"></i>
                         </button>
