@@ -456,10 +456,10 @@ def eventDetails():  # put application's code here
     # END ALL EVENT INFO------------------------------------------------------------
 
     if request.method == "POST":
-        if "user" not in session:
-            flash("Please Login!")
-        elif "attend" in request.form:
-            
+
+        if "attend" in request.form:
+            if "user" not in session:
+                flash("Please Login!")
             if attend == "attending" or attend == "admin":
                 flash("You are already attending or admining this event")
                 return render_template("eventDetails.html", eventStartDate=eventStartDate, eventEndDate=eventEndDate,
