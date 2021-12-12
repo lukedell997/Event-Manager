@@ -11,8 +11,6 @@ app.secret_key = "hello"
 db = DataB()
 #cnx,  = db.openDatabase()
 
-print(db.hashIt("password"))
-
 
 def imageReturn(imageNumber):
 
@@ -113,17 +111,15 @@ def index():  # put application's code here
             nearEventsEDate.append(endDate)
             nearEventsDetails.append(tEvent[6])
             nearEventsItag.append(imageReturn(tEvent[9]))
-            print(tEvent[9])
             nearEventsState.append(tEvent[12])
             locEventRange += 1
-        
-        print(nearEventsITag)
         # END ALL LOCATION EVENTS----------------------------------------------
 
         return render_template("index.html", popEventsTitle=popEventsTitle, popEventsDetails=popEventsDetails,
-                               popEventsId=popEventsId, nearEventsTitle=nearEventsTitle,
+                               popEventsId=popEventsId, nearEventsTitle=nearEventsTitle, 
                                nearEventsDetails=nearEventsDetails, nearEventsId=nearEventsId,
-                               popEventRange=popEventRange, locEventRange=locEventRange, nearEventsItag=nearEventsItag, popEventsItag=popEventsItag)
+                               popEventRange=popEventRange, locEventRange=locEventRange,
+                               nearEventsItag=nearEventsItag, popEventsItag=popEventsItag)
 
 
 ########################################################################--REGISTER PAGE--############
@@ -190,6 +186,7 @@ def loginPage():  # put application's code here
         user = request.form["nm"]  # NEED TO CHECK THAT USER EXISTS
         password = request.form["pw"]
         password = db.hashIt(password)
+        print(password)
         session["user"] = user
         # ^GET USER^-------------------------------------------------------------^
         #: check if user found, then get user info into variables
@@ -257,8 +254,6 @@ def user():
             enDate = "{:%d %b, %Y}".format(evInfo[3])
             atEventsEDate.append(enDate)
             atEventsState.append(evInfo[12])
-            #stTime = "{:%l:%M %p}".format(evInfo[15])
-            #stTime = evInfo[15].strftime(" %l:%M %p}")
             atEventsSTime.append(evInfo[15])
             atEventsETime.append(evInfo[16])
             atEventsDTime.append(evInfo[17])
@@ -327,7 +322,7 @@ def user():
         locEventsState = []
         locEventsItag = []
         locEventRange = 0
-
+        
         locEvents = db.getEventsByLoc(str(userLoc))
         for tEvent in locEvents:
             locEventsId.append(tEvent[0])
@@ -336,8 +331,9 @@ def user():
             locEventsSDate.append(upDate)
             endDate = "{:%d %b, %Y}".format(tEvent[3])
             locEventsEDate.append(endDate)
-            locEventsItag.append(imageReturn([tEvent[9]]))
+            locEventsItag.append(imageReturn(tEvent[9]))
             locEventsDetails.append(tEvent[6])
+
 
             locEventsState.append(tEvent[12])
             locEventRange += 1
@@ -463,9 +459,8 @@ def eventDetails():  # put application's code here
 
     if request.method == "POST":
 
-
-
         if "attend" in request.form:
+            
             if attend == "attending" or attend == "admin":
                 flash("You are already attending or admining this event")
                 return render_template("eventDetails.html", eventStartDate=eventStartDate, eventEndDate=eventEndDate,
@@ -480,7 +475,6 @@ def eventDetails():  # put application's code here
                                        popEventsState=popEventsState, popEventRange=popEventRange,
                                        popEventsItag=popEventsItag)
             else:
-
                 # ADD USER FROM ATTENDING EVENT--------------------------
                 # get all info you need
                 userId = session["userId"]
@@ -571,7 +565,7 @@ def eventDetails():  # put application's code here
                                    popEventsSDate=popEventsSDate, popEventsDetails=popEventsDetails,
                                    popEventsState=popEventsState, popEventRange=popEventRange,
                                    popEventsItag=popEventsItag)
-    # END POST
+        # END POST
     else:
         return render_template("eventDetails.html", eventStartDate=eventStartDate, eventEndDate=eventEndDate,
                                eventTitle=eventTitle, eventPrice=eventPrice, eventDescription=eventDescription,
