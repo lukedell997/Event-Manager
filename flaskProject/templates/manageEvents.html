@@ -52,7 +52,7 @@
                                     <div class="dropdown-menu dropdown-menu-right">
                                         <a class="dropdown-item" href="updatePersonalInfo.html"><i class="fa fa-user fa-md"></i> My Account</a>
                                         <a class="dropdown-item" href="createEvent.html"><i class="fa fa-calendar-plus-o fa-md"></i> Create An Event</a>
-                                        <a class="dropdown-item" href="manageEvents.html"><i class="fa fa-edit fa-md"></i> Edit Events</a>
+                                        <a class="dropdown-item" href="manageEvents.html"><i class="fa fa-edit fa-md"></i> Manage Events</a>
                                         <a class="dropdown-item" href="#modalLogout" data-toggle="modal"><i class="fa fa-sign-out fa-md"></i> Log Out</a>
                                     </div>
                                 </div>    
@@ -88,7 +88,6 @@
             </div>
         </div>
 
-
         <!-- CONTENTS -->
         <div class="container"> 
             <!--MANAGE AN EVENT-->         
@@ -114,18 +113,17 @@
                             {% for i in range (0,eventRangeAdmin) %}
                             <div class="card">
                                 <div class="row">
-
                                     <div class="col-md-4">
                                         <img src="{{ url_for('static', filename=adEventsItag[i])}}" class="img-fluid">   <!--outgoing event image-->
                                     </div>
                                     <div class="col-md-8 pt-2">
                                         <h3 class="card-title mt-3">{{ usersEvents[i] }}</h3>                                               <!--outgoing event title-->
-                                        <p><span id='date-time'>Event Date: ({{adEventsSDate[i]}})-({{adEventsEDate[i]}})</span>                                                         <!--outgoing event date & time-->
+                                        <p><span id='date-time'>Event Date: ({{adEventsSDate[i]}}) to ({{adEventsEDate[i]}})</span>                                                         <!--outgoing event date & time-->
                                             <div class="row">
                                                 <div class="col-md-8 mr-5">
                                                     <form action="{{url_for('editEvent')}}" id="editEventsForm", method="POST">
                                                         <input type="text" name="eventId" value="{{adEventsId[i]}}" hidden>
-                                                        <input type="submit" value="Edit">
+                                                        <input type="submit" value="EDIT" id="editButton">
                                                     </form>
 
                                                 </div>
@@ -158,9 +156,9 @@
                                         <p><span id='date-time'>Deadline Date: {{atEventsDDate[i]}} at {{atEventsDTime[i]}}</span>                                                             <!--outgoing event date & time-->
                                             <div class="row">
                                                 <form action="#" method="POST">
-                                                    <div class="col-md-8 mr-5">
+                                                    <div class="col-md-10 mr-5">
                                                         <input type="text" name = "leaveEventId" value="{{atEventsId[i]}}" hidden>
-                                                        <input type="submit" name = "leaveEvent" value="LEAVE EVENT">
+                                                        <input type="submit" name = "leaveEvent" value="LEAVE EVENT" id="leaveButton">
                                                     </div>
                                                 </form>
                                                 <div class="col">

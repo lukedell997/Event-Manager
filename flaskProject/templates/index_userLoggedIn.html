@@ -108,7 +108,7 @@
                                 <div class="carousel-caption">                                                                    <!--outgoing event title-->
                                     <form action="{{url_for('eventDetails')}}" id="eventDetailForm", method="POST">
                                         <h3><input type="text" name="eventId" value="{{adEventsId[i]}}" hidden>
-                                         <input type="submit" value="{{ adEventsTitle[i] }}"></h3>
+                                         <input type="submit" value="{{ adEventsTitle[i] }}" id="adminTitle"></h3>
                                      </form>                <!--outgoing event title-->
                                     <p class="d-none d-sm-block">{{ adEventsSDate[i] }} to {{ adEventsEDate[i] }}</p>                                            <!--outgoing event date & time-->
                                 </div>  <!--carousel-caption-->
@@ -138,9 +138,9 @@
                                 <li class="list-group-item w-100">
                                      <form action="{{url_for('eventDetails')}}" id="eventDetailForm", method="POST">
                                         <input type="text" name="eventId" value="{{atEventsId[i]}}" hidden>
-                                        <input type="submit" value="{{ atEventsTitle[i] }}">
+                                        <input type="submit" value="{{ atEventsTitle[i] }}" id="attendingTitle">
                                     </form>                <!--outgoing event title-->
-                                    <i class="fa fa-calendar" aria-hidden="true"></i>{{ atEventsSDate[i] }} - {{ atEventsEDate[i] }}                  <!--outgoing event date & time-->
+                                    <i class="fa fa-calendar" aria-hidden="true"></i> {{ atEventsSDate[i] }} to {{ atEventsEDate[i] }}                  <!--outgoing event date & time-->
                                     <span class="text-muted"></span> </br>
                                     <i class="fa fa-clock-o" aria-hidden="true"></i> {{ atEventsSTime[i] }} - {{ atEventsETime[i] }}                              <!--outgoing event deadline-->
                                 </li>

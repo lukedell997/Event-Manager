@@ -303,7 +303,7 @@ p span {
 	width: 30%;
 }
 
-.media input[type=submit]:hover {
+.media input[type=submit]:hover, #attendButton:hover {
 	background-color: white;
     color: #017BFF;
     font-weight: bold;
@@ -311,7 +311,7 @@ p span {
 }
 
 /* SUBMIT / CANCEL */
-.form-group input[type=submit] {
+.form-group input[type=submit], #attendButton, #editButton {
     background-color: #017BFF;
 	border: none;
 	border-radius: 18px;
@@ -321,7 +321,7 @@ p span {
 	margin: 10px 2px;
 	cursor: pointer;
 }
-.form-group input[type=button] {
+.form-group input[type=button], #leaveButton {
     background-color: #DC3545;
 	border: none;
 	border-radius: 18px;
@@ -330,6 +330,23 @@ p span {
 	text-decoration: none;
 	margin: 10px 2px;
 	cursor: pointer;
+}
+
+#adminTitle {
+    padding: 0;
+    border: none;
+    background: none;
+    color: white;
+}
+
+#attendingTitle {
+    padding: 0;
+    border: none;
+    background: none;
+}
+
+#attendingTitle:hover {
+    color: blue;
 }
 
 /*-----FOOTER-----*/

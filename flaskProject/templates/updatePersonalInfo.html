@@ -71,7 +71,7 @@
                             <input type="text" class="form-control" name="zip" placeholder="Zip" value="{{ zipcode }}" required="required" onkeypress="numbersOnly(event)">         <!--incoming zip-->
                         </div>  <!--col-->
                         <div class="form-group col-md-7">
-                            <select name="state" id="eventState" class="form-control">                                                       <!--incoming event state-->
+                            <select name="state" id="eventState" class="form-control" value="{{eventState}}">                                                       <!--incoming event state-->
                                 <option disabled selected>Select State...</option>
                                 <option value="AL"{%  if state == 'AL' %} selected {% endif %}>Alabama</option>
                                 <option value="AK"{%  if state == 'AK' %} selected {% endif %}>Alaska</option>
@@ -138,13 +138,13 @@
                 </div>  <!--form-group-->
 
                 <div class="form-group">
-                    <input type="submit" value="submit" name="submit" />   
+                    <input type="submit" value="Save" name="submit" />   
                 </div>  <!--form-group-->
 
                 <p style="text-align: center;"><strong>OR</strong></p>
 
                 <div class="form-group">
-                    <input type="submit" value="remove" name="remove" style="background-color: #dc3545;"/>   
+                    <input type="submit" value="Delete Account" name="remove" style="background-color: #dc3545;"/>   
                 </div>  <!--form-group-->   
             </form>
         </div>  <!--fillout-form-->

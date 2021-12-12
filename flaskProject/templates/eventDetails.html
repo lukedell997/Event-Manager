@@ -91,15 +91,14 @@
                 <div class="modal-footer">
                   <form action="#" method="POST">
                     <div class="form-group">
-                        <input type='button' value="CANCEL" data-dismiss="modal" />      
-                        <input type='submit' value="YES" name="userLogout"/>    <!--incoming user logs out-->
+                        <input type='button' value="CANCEL" data-dismiss="modal" id="dismissButton" />      
+                        <input type='submit' value="YES" name="userLogout" id="payButton" />    <!--incoming user logs out-->
                     </div>    
                   </form>
                 </div>
               </div>
             </div>
         </div>
-
 
         <!--Payment modal-->
         <div class="modal fade" id="modalPayment" tabindex="-1" role="dialog" aria-labelledby="modalHeader" aria-hidden="true">
@@ -139,27 +138,24 @@
                     <div class="media">
                         <img class="d-flex mr-5 img-fluid img-thumbnail" src="{{ url_for('static', filename=eventITag)}}" alt="Event Image" />     <!--outgoing event image-->
                         <div class="media-body align-self-center">
-
 							<h2>{{ eventTitle }}</h2>                                              <!--outgoing event title-->
                             <h4>${{ eventPrice }}</h4>                                                        <!--outgoing event price-->
-							<h5>Date:{{ eventStartDate }}-{{ eventEndDate }}</h5>                                                     <!--outgoing event date-->
-                            <h5>Time: {{ eventSTime }}-{{ eventETime }}</h5>  
+							<h5>Date: {{ eventStartDate }} to {{ eventEndDate }}</h5>                                                     <!--outgoing event date-->
+                            <h5>Time: {{ eventSTime }} - {{ eventETime }}</h5>  
                             <form action="#" method="POST">
                                 <div class="form-group">
-                                {% with messages = get_flashed_messages() %}
-                                  {% if messages %}
-                                    {% for message in messages %}
-                                      {{ message }}
-                                    {% endfor %}
-                                  {% endif %}
-                                {% endwith %}
+                                    {% with messages = get_flashed_messages() %}
+                                    {% if messages %}
+                                        {% for message in messages %}
+                                        <p style="color: #DC3545">{{ message }} </p>
+                                        {% endfor %}
+                                    {% endif %}
+                                    {% endwith %}
                                     {%  if eventPrice > 0 %}
-                                    <input type="button" value="ATTEND" name="attend" data-toggle="modal" data-target="#modalPayment"/>   
-                                    <!-- <input type="text" name="eventId" hidden>
-                                        <button type="button" value="ATTEND" name="attend" data-toggle="modal" data-target="#modalPayment">ATTEND</button> -->
+                                    <input type="button" value="ATTEND" name="attend" data-toggle="modal" data-target="#modalPayment" id="attendButton" />   
                                     {%  elif eventPrice <= 0 %}
                                     <input type="text" name="eventId" value="{{eventId}}" hidden>
-                                    <input type="submit" value="ATTEND" name="attend">
+                                    <input type="submit" value="ATTEND" name="attend" >
                                     {% endif %}
                                 </div>          
                             </form>
