@@ -125,15 +125,10 @@
                                                         <input type="text" name="eventId" value="{{adEventsId[i]}}" hidden>
                                                         <input type="submit" value="EDIT" id="editButton">
                                                     </form>
-
                                                 </div>
                                                 <div class="col">
-                                                    <div class="progress mt-2">
-                                                        <div class="progress-bar" role="progressbar" style="width: 75%" aria-valuenow="75" aria-valuemin="0" aria-valuemax="100">   <!--outgoing capacity-->
-                                                            {{  adEventsOcp[i] }}/{{ eventsMaxPop[i] }}
-                                                        </div>
-                                                        <!--"w-75" is the indication capacity shown on the bar (just for visualizing)
-                                                            'aria-valuenow' is the capacity value-->
+                                                    <div class="col text-right">
+                                                        <span id="capacity" class="text-success mr-4">{{  adEventsOcp[i] }}/{{ eventsMaxPop[i] }}</span>
                                                     </div>
                                                 </div>
                                             </div>  
@@ -155,20 +150,16 @@
                                         <h3 class="card-title mt-3">{{ userAttendingEvents[i] }}</h3>                                                <!--outgoing event title-->
                                         <p><span id='date-time'>Deadline Date: {{atEventsDDate[i]}} at {{atEventsDTime[i]}}</span>                                                             <!--outgoing event date & time-->
                                             <div class="row">
-                                                <form action="#" method="POST">
-                                                    <div class="col-md-10 mr-5">
-                                                        <input type="text" name = "leaveEventId" value="{{atEventsId[i]}}" hidden>
-                                                        <input type="submit" name = "leaveEvent" value="LEAVE EVENT" id="leaveButton">
-                                                    </div>
-                                                </form>
                                                 <div class="col">
-                                                    <div class="progress mt-2">
-                                                        <div class="progress-bar" role="progressbar" style="width: 75%" aria-valuenow="75" aria-valuemin="0" aria-valuemax="100">   <!--outgoing capacity-->
-                                                            {{ atEventsOcp[i] }}/{{ atEventsCap[i] }}
+                                                    <form action="#" method="POST">
+                                                        <div class="col-md-10 mr-5">
+                                                            <input type="text" name = "leaveEventId" value="{{atEventsId[i]}}" hidden>
+                                                            <input type="submit" name = "leaveEvent" value="LEAVE EVENT" id="leaveButton">
                                                         </div>
-                                                        <!--"w-75" is the indication capacity shown on the bar (just for visualizing)
-                                                            'aria-valuenow' is the capacity value-->
-                                                    </div>
+                                                    </form>
+                                                </div>
+                                                <div class="col text-right mr-2">
+                                                    <span id="capacity" class="text-success mr-4">{{ atEventsOcp[i] }}/{{ atEventsCap[i] }}</span>
                                                 </div>
                                             </div>  
                                         </p>                                                          
