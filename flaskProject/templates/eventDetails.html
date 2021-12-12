@@ -102,7 +102,7 @@
 
 
         <!--payment modal-->
-        <div class="modal fade" id="modalLogout" tabindex="-1" role="dialog" aria-labelledby="modalHeader" aria-hidden="true">
+        <div class="modal fade" id="modalPay" tabindex="-1" role="dialog" aria-labelledby="modalHeader" aria-hidden="true">
             <div class="modal-dialog" role="document">
               <div class="modal-content">
                 <div class="modal-header">
@@ -118,6 +118,7 @@
                   <form action="#" method="POST">
                     <div class="form-group">
                         <input type='button' value="CANCEL" data-dismiss="modal" />
+                        <input type='submit' value="Attend" name="attendPayinfo"/>
                         <input type='text' value="" name="creditCard info"/>    <!--incoming user logs out-->
                     </div>
                   </form>
@@ -143,9 +144,9 @@
                                 <div class="form-group">
                                     <input type="text" name="eventId" value="{{eventId}}" hidden>
                                     {% if eventPrice > 0 %}
-                                    <input type="submit" value="ATTEND" name="attend">
+                                        <button type="button" name="attend" data-toggle="modal" data-target="#modalPay"> ATTEND </button>
                                     {% else %}
-                                    <button type="button" name="attend" data-toggle="modal" data-target="#exampleModal"> ATTEND </button>
+                                        <input type="submit" value="ATTEND" name="attend">
                                     {% endif %}
                                 </div>  <!--form-group-->           
                             </form>

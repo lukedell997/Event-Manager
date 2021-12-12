@@ -4,7 +4,7 @@ from databaseCode import DataB
 
 app = Flask(__name__)
 
-app.permanent_session_lifetime = timedelta(hours=1)
+#app.permanent_session_lifetime = timedelta(minutes=1)
 
 app.secret_key = "This is a super duper secret key 431321"
 
@@ -1019,6 +1019,14 @@ try:
 
 except:
     logout()
+    try:
+        cnx.close()
+        cursor.close()
+        db = DataB()
+        cnx, cursor = db.openDatabase()
+    except:
+        db = DataB()
+        cnx, cursor = db.openDatabase()
     redirect(url_for('index'))
 if __name__ == '__main__':
     app.run(debug=True)
