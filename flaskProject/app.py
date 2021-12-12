@@ -1,6 +1,6 @@
 from flask import Flask, render_template, redirect, url_for, request, flash, session
 from datetime import timedelta
-from databaseCode import DataB
+from databaseCodeDB import DataB
 import time
 app = Flask(__name__)
 
@@ -9,7 +9,7 @@ app.permanent_session_lifetime = timedelta(hours=1)
 app.secret_key = "hello"
 
 db = DataB()
-cnx, cursor = db.openDatabase()
+#cnx,  = db.openDatabase()
 
 
 def imageReturn(imageNumber):
@@ -76,7 +76,7 @@ def index():  # put application's code here
         popEventsState = []
         popEventsItag = []
 
-        popEvents = db.getEventsByPop(cursor)
+        popEvents = db.getEventsByPop()
         popEventRange = 0
         for tupleEvent3 in popEvents:
             popEventsId.append(tupleEvent3[0])
@@ -100,7 +100,7 @@ def index():  # put application's code here
         nearEventsState = []
         nearEventsItag = []
 
-        locEvents = db.getEventsByUpcoming(cursor)
+        locEvents = db.getEventsByUpcoming()
         locEventRange = 0
         for tEvent in locEvents:
             nearEventsId.append(tEvent[0])
@@ -146,7 +146,7 @@ def registerPage():  # put application's code here
                              userLastName, userEmail, userAddress,
                              userZipcode, userCity, userState, userNumber])
         # check if already exists: if not, create new
-        if (db.checkAny(cursor, "userId", "users", "username", str(userUsername)
+        if (db.checkAny( "userId", "users", "username", str(userUsername)
                 , "username", str(userUsername)) == False):
             # print(test)
             db.newUser(cU)
@@ -187,12 +187,12 @@ def loginPage():  # put application's code here
         session["user"] = user
         # ^GET USER^-------------------------------------------------------------^
         #: check if user found, then get user info into variables
-        if (db.checkAny(cursor, "userId", "users", "username", str(user),
+        if (db.checkAny( "userId", "users", "username", str(user),
                         "passwordId", str(password)) == True):
 
             [uId, user, password, uFN, uLN, uEmail,
              uAd, uZip, uCity, uState,
-             uPhone] = db.getUser(cursor, str(user), str(password))
+             uPhone] = db.getUser( str(user), str(password))
 
             # put user info into session...
             session["userId"] = uId
@@ -237,11 +237,11 @@ def user():
         atEventsRange = 0
 
         # get user_events by userId
-        userEvents = db.getUEventsByUser(cursor, str(userId))
+        userEvents = db.getUEventsByUser( str(userId))
 
         # for all user_events, get the event
         for tupleEvent in userEvents:
-            evInfo = db.getEventsByEId(cursor, str(tupleEvent[2]))
+            evInfo = db.getEventsByEId( str(tupleEvent[2]))
 
             # add each section to list
             atEventsId.append(evInfo[0])
@@ -269,7 +269,7 @@ def user():
         adEventsItag = []
         adEventsRange = 0
 
-        adminEvents = db.getEventsByUser(cursor, str(userId))
+        adminEvents = db.getEventsByUser( str(userId))
         for tupleEvent2 in adminEvents:
             adEventsId.append(tupleEvent2[0])
             adEventsTitle.append(tupleEvent2[1])
@@ -295,7 +295,7 @@ def user():
         popEventsItag = []
         popEventRange = 0
 
-        popEvents = db.getEventsByPop(cursor)
+        popEvents = db.getEventsByPop()
 
         for tupleEvent3 in popEvents:
             popEventsId.append(tupleEvent3[0])
@@ -320,7 +320,7 @@ def user():
         locEventsItag = []
         locEventRange = 0
 
-        locEvents = db.getEventsByLoc(cursor, str(userLoc))
+        locEvents = db.getEventsByLoc(str(userLoc))
         for tEvent in locEvents:
             locEventsId.append(tEvent[0])
             locEventsTitle.append(tEvent[1])
@@ -387,10 +387,10 @@ def eventDetails():  # put application's code here
     
     if "user" in session:
         logedIn = True
-        if (db.checkAny(cursor, "attendantId", "user_events", "eventId", str(eventId),
+        if (db.checkAny( "attendantId", "user_events", "eventId", str(eventId),
                         "userId", str(userId)) == True):
             attend = "attending"
-        if (db.checkAny(cursor, "eventId", "events", "eventId", str(eventId),
+        if (db.checkAny( "eventId", "events", "eventId", str(eventId),
                         "userId", str(userId)) == True):
             attend = "admin"
     else:
@@ -407,7 +407,7 @@ def eventDetails():  # put application's code here
     popEventsItag = []
     popEventRange = 0
 
-    popEvents = db.getEventsByPop(cursor)
+    popEvents = db.getEventsByPop()
     for tupleEvent3 in popEvents:
         popEventsId.append(tupleEvent3[0])
         popEventsTitle.append(tupleEvent3[1])
@@ -427,10 +427,10 @@ def eventDetails():  # put application's code here
 
     # GET ALL EVENT INFO------------------------------------------------------------
     # check if event found by eventId
-    if (db.checkAny(cursor, "eventId", "events", "eventId", str(eventId),
+    if (db.checkAny( "eventId", "events", "eventId", str(eventId),
                     "eventId", str(eventId)) == True):
         # get all variables in event
-        event = db.getEventsByEId(cursor, str(eventId))
+        event = db.getEventsByEId( str(eventId))
         eventId = event[0]
         eventTitle = event[1]
         eventStartDate = "{:%d %b, %Y}".format(event[2])
@@ -475,9 +475,9 @@ def eventDetails():  # put application's code here
             cUE = getInputString([userId, eventId, user, email, paid, seat, price])
 
             # check if not already exists: AND if not full
-            if (db.checkAny(cursor, "attendantId", "user_events", "userId",
+            if (db.checkAny( "attendantId", "user_events", "userId",
                             str(userId), "eventId", str(atEventId)) == False
-                    and db.checkAvl(cursor, str(eventId)) == True):
+                    and db.checkAvl( str(eventId)) == True):
 
                 # create new user events
                 db.newUEvents(cUE)
@@ -544,12 +544,12 @@ def manageEvents():  # put application's code here
         atEventsDTime = []
 
         # get user_events by userId
-        userEvents = db.getUEventsByUser(cursor, str(userId))
+        userEvents = db.getUEventsByUser( str(userId))
         eventRangeAttend = len(userEvents)
 
         # for all user_events, get the event
         for tupleEvent in userEvents:
-            evInfo = db.getEventsByEId(cursor, str(tupleEvent[2]))
+            evInfo = db.getEventsByEId( str(tupleEvent[2]))
 
             # add each section to list
             atEventsId.append(evInfo[0])
@@ -580,7 +580,7 @@ def manageEvents():  # put application's code here
         adEventsETime = []
         adEventsDTime = []
 
-        adminEvents = db.getEventsByUser(cursor, str(userId))
+        adminEvents = db.getEventsByUser( str(userId))
         eventRangeAdmin = len(adminEvents)
         for tupleE2 in adminEvents:
             adEventsId.append(tupleE2[0])
@@ -611,7 +611,7 @@ def manageEvents():  # put application's code here
                 print("This is the leave eventID: ", leaveEventId)
                 print("TEST!!!!!!!!!!!!!!!!!!!!!!!!!!")
                 # if user found with event
-                if (db.checkAny(cursor, "attendantId", "user_events", "userId",
+                if (db.checkAny( "attendantId", "user_events", "userId",
                                 str(userId), "eventId", str(leaveEventId)) == True):
 
                     # remove user from event attendance
@@ -692,7 +692,7 @@ def search_browseEvents():  # put application's code here
     if request.method == "POST":
         word = request.form["searchbar"]
         print(word)
-        eventsK = db.getEventsAdvanced(cursor, str(word))
+        eventsK = db.getEventsAdvanced( str(word))
         eventRange = len(eventsK)
 
         for eK in eventsK:
@@ -727,13 +727,13 @@ def search_browseEvents():  # put application's code here
         tagEventsState = []
 
         # get user_events by userId
-        # tagEvents = db.getEventTagByTagId(cursor, str(tagName))
-        tagEvents = db.getEvents(cursor)
+        # tagEvents = db.getEventTagByTagId( str(tagName))
+        tagEvents = db.getEvents()
         eventRange = len(tagEvents)
 
         # for all user_events, get the event
         for tgEvent in tagEvents:
-            # evInfo = db.getEventsByEId(cursor, str(tgEvent))
+            # evInfo = db.getEventsByEId( str(tgEvent))
             evInfo = tgEvent
 
             if evInfo is not None:
@@ -794,10 +794,10 @@ def editEvent():
 
         # GET EVENT----------------------------------------------------------------^
         # check if event found by eventId
-        if (db.checkAny(cursor, "eventId", "events", "eventId", str(eventId),
+        if (db.checkAny( "eventId", "events", "eventId", str(eventId),
                         "userId", str(userId)) == True):
             # get all variables in event
-            event = db.getEventsByEId(cursor, str(eventId))
+            event = db.getEventsByEId( str(eventId))
 
             eventTitle = event[1]
             eventStartDate = event[2]
@@ -821,7 +821,7 @@ def editEvent():
             # GET ALL ATTENDING EVENT--------------------------------------^
 
             # get user_events by userId
-            eventUsers = db.getUEventsByEvent(cursor, str(eventId))
+            eventUsers = db.getUEventsByEvent( str(eventId))
             userRange = 0
 
             # for all user_events, get the event
@@ -866,7 +866,7 @@ def editEvent():
                     eventPrice = 0.0
 
                 # check if event found by eventId
-                if (db.checkAny(cursor, "eventId", "events", "eventId", str(eventId),
+                if (db.checkAny( "eventId", "events", "eventId", str(eventId),
                                 "userId", str(userId)) == True):
                     # get list of all variables
                     eE = [str(eventTitle), str(eventStartDate), str(eventEndDate), str(eventDeadline),
@@ -887,7 +887,7 @@ def editEvent():
             if "deleteEvent" in request.form:
 
                 # check if user is admin
-                if (db.checkAny(cursor, "eventId", "events", "eventId", str(eventId),
+                if (db.checkAny( "eventId", "events", "eventId", str(eventId),
                                 "eventId", str(eventId)) == True):
 
                     # remove all users from event
@@ -906,7 +906,7 @@ def editEvent():
             if "del" in request.form:
                 uEID = request.form.get("userEId")
 
-                if (db.checkAny(cursor, "attendantId", "user_events", "eventId", str(eventId),
+                if (db.checkAny( "attendantId", "user_events", "eventId", str(eventId),
                                 "userId", str(userId))):
                     db.removeUEvents(str(uEID), str(eventId))
                 else:
@@ -992,7 +992,7 @@ def createEvent():
                  eventEndTime, eventDeadlineTime])
 
             # check if already exists: if not, create new
-            if (db.checkAny(cursor, "eventId", "events", "name", str(eventTitle)
+            if (db.checkAny( "eventId", "events", "name", str(eventTitle)
                     , "userId", str(userId)) == False):
 
                 rt = db.newEvent(cE)
@@ -1020,9 +1020,9 @@ def updatePersonalInfo():
         userId = session["userId"]
         # ^GET USER^-------------------------------------------------------------^
         #: check if user found, then get user info into variables
-        if (db.checkAny(cursor, "userId", "users", "username", str(user),
+        if (db.checkAny( "userId", "users", "username", str(user),
                         "userId", str(userId)) == True):
-            userE = db.getUserById(cursor, str(userId))
+            userE = db.getUserById( str(userId))
 
             username = userE[1]
             password = userE[2]
@@ -1062,13 +1062,13 @@ def updatePersonalInfo():
                     return redirect(url_for("updatePersonalInfo"))
 
                 # remove all user events
-                uEvents2 = db.getUEventsByUser(cursor, str(userId))
+                uEvents2 = db.getUEventsByUser( str(userId))
                 for uET2 in uEvents2:
                     db.removeUEvents(str(userId), str(uET2[2]))
                     db.removeEventOcp(str(uET2[2]))
 
                 # remove all events created by user
-                uAdmin = db.getEventsByUser(cursor, str(userId))
+                uAdmin = db.getEventsByUser( str(userId))
                 for uAE in uAdmin:
                     db.removeUEventsByEvent(str(uAE[0]))
                     db.removeEvent(str(uAE[0]), str(userId))

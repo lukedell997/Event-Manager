@@ -559,7 +559,7 @@ class DataB:
     def getEventsByLoc(self, state):
         try:
             #db = DataB()
-            cnx, cursor = db.openDatabase()
+            cnx, cursor = self.openDatabase()
             events = []
             st = ''.join(("SELECT * FROM events WHERE state = '",state,
                           "' AND deadlineDate >= '", str(datetime.date.today()),"'"))
@@ -838,9 +838,9 @@ class DataB:
 
     
 ##
-db = DataB()
+#db = DataB()
 
-print(db.getEventsAdvanced("thank you christ mas"))
+#print(db.getEventsAdvanced("thank you christ mas"))
 #cnx, cursor = db.openDatabase()
 
 #print(db.getEventsByUpcoming(cursor))
