@@ -491,7 +491,45 @@ def eventDetails():  # put application's code here
                 return redirect(url_for("eventDetails"))
 
         # END ADD USER FROM ATTENDING EVENT--------------------------
+        elif "attendPayinfo" in request.form:
+            # ADD USER FROM ATTENDING EVENT--------------------------
+            # get all info you need
+            userId = session["userId"]
+            user = session["user"]
+            email = session["userEmail"]
+            paid = 1
+            seat = "O0"
+            price = eventPrice
+            atEventId = request.form["eventId"]
+            creditCardNum = request.form["creditCardNum"]
+            csv = request.form["csv"]
+            expiration = request.form["expiration"]
+            billAdd = request.form["billAdd"]
+            cardName = request.form["cardName"]
 
+            print("AND AGAIN: ", creditCardNum, csv, expiration, billAdd, cardName)
+            # if free, user has paid
+            if (price != 0):
+                paid = 0
+
+            # turn to string
+            cUE = getInputString([userId, eventId, user, email, paid, seat, price])
+
+            # check if not already exists: AND if not full
+            if (db.checkAny("attendantId", "user_events", "userId",
+                            str(userId), "eventId", str(atEventId)) == False
+                    and db.checkAvl(str(eventId)) == True):
+
+                # create new user events
+                db.newUEvents(cUE)
+
+                # add occupant to event
+                rt = db.addEventOcp(eventId, eventOcp)
+
+                return redirect(url_for("user"))
+            else:
+                print("Event Filled or you are already attending")
+                return redirect(url_for("eventDetails"))
         else:
             # give error(filled or user already signed up)
             print("ERROR: event filled or already signed up")

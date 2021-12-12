@@ -100,6 +100,35 @@
             </div>
         </div>
 
+         <!--payment modal-->
+        <div class="modal fade" id="modalPayment" tabindex="-1" role="dialog" aria-labelledby="modalHeader" aria-hidden="true">
+            <div class="modal-dialog" role="document">
+              <div class="modal-content">
+                <div class="modal-header">
+                  <h5 class="modal-title" id="modalHeader">Confirm Logout</h5>
+                  <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                  </button>
+                </div>
+                <div class="modal-body">
+                  Are you sure you want to log out?
+                </div>
+                <div class="modal-footer">
+                  <form action="#" method="POST">
+                    <div class="form-group">
+                        <input type='button' value="CANCEL" data-dismiss="modal" />
+                        <input type='submit' value="Attend" name="attendPayinfo"/>
+                        <input type='text' value="" name="creditCard info"/>    <!--incoming user logs out-->
+                        <input type='number' placeholder="put your credit card number here"  name="creditCardNum"/>
+                        <input type='number' placeholder="put your credit card csv here"  name="csv"/>
+                        <input type='date' placeholder="put your credit card expiration here"  name="expiration"/>
+                        <input type='text' placeholder="put your billing address here"  name="billAdd"/>
+                        <input type='text' placeholder="put the name on the card"  name="cardName"/>
+                        <input type="text" placeholder="eventId" value="{{eventId}}" hidden>
+                    </div>
+                  </form>
+                </div>
+
         <!-- CONTENTS -->
         <div class="container">
 	    <!-- EVENT DETAILS -->
@@ -115,8 +144,13 @@
                             <h5>Time: {{ eventSTime }}-{{ eventETime }}</h5>  
                             <form action="#" method="POST">
                                 <div class="form-group">
+                                    {%  if eventPrice > 0 %}
+                                    <input type="text" name="eventId" value="{{eventId}}" hidden>
+                                        <button type="button" value="ATTEND" name="attend" data-toggle="modal" data-target="#modalPayment">ATTEND</button>
+                                    {%  elif eventPrice > 0 %}
                                     <input type="text" name="eventId" value="{{eventId}}" hidden>
                                     <input type="submit" value="ATTEND" name="attend">
+                                    {% endif %}
                                 </div>  <!--form-group-->           
                             </form>
                             <div class="progress mt-2">                                         <!--outgoing event capacity-->
