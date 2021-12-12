@@ -420,8 +420,7 @@ def eventDetails():  # put application's code here
         eDate = "{:%d %b, %Y}".format(tupleEvent3[3])
         popEventsEDate.append(eDate)
         popEventsDetails.append(tupleEvent3[6])
-        popEventsDetails.append(tupleEvent3[6])
-        popEventsItag.append(imageReturn(tupleEvent3[6]))
+        popEventsItag.append(imageReturn(tupleEvent3[9]))
         popEventsState.append(tupleEvent3[12])
         popEventRange += 1
 
