@@ -146,6 +146,13 @@
                             <h5>Time: {{ eventSTime }}-{{ eventETime }}</h5>  
                             <form action="#" method="POST">
                                 <div class="form-group">
+                                {% with messages = get_flashed_messages() %}
+                                  {% if messages %}
+                                    {% for message in messages %}
+                                      {{ message }}
+                                    {% endfor %}
+                                  {% endif %}
+                                {% endwith %}
                                     {%  if eventPrice > 0 %}
                                     <input type="button" value="ATTEND" name="attend" data-toggle="modal" data-target="#modalPayment"/>   
                                     <!-- <input type="text" name="eventId" hidden>
