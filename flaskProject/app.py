@@ -23,7 +23,7 @@ def imageReturn(imageNumber):
     elif imageNumber == 4:
         pic = 'img/festivalEvent.jpg'
     elif imageNumber == 5:
-        pic = 'img/movieEvent.jpg'
+        pic = 'img/movieEvents.jpg'
     else:
         pic = 'img/basicEventPicture.jpg'
 
