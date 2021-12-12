@@ -457,8 +457,8 @@ def eventDetails():  # put application's code here
 
     if request.method == "POST":
         if "user" not in session:
-            return redirect(url_for("index"))
-        if "attend" in request.form:
+            flash("Please Login!")
+        elif "attend" in request.form:
             
             if attend == "attending" or attend == "admin":
                 flash("You are already attending or admining this event")
