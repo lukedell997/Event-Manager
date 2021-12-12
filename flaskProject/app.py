@@ -750,8 +750,9 @@ def search_browseEvents():  # put application's code here
     if request.method == "POST":
         word = request.form["searchbar"]
         print(word)
-        eventsK = db.getEventsAdvanced( str(word))
-        eventRange = len(eventsK)
+        #eventsK = db.getEventsAdvanced( str(word))
+        eventsK = db.getEventsByKeyword(str(word))
+        eventRange = 0
 
         for eK in eventsK:
             eventId.append(eK[0])
@@ -771,6 +772,7 @@ def search_browseEvents():  # put application's code here
             eventSTime.append(eK[15])
             eventETime.append(eK[16])
             eventDTime.append(eK[17])
+            eventRange += 1
 
 
 
