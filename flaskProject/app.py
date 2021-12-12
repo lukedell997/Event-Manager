@@ -113,7 +113,6 @@ def index():  # put application's code here
             nearEventsItag.append(imageReturn(tEvent[9]))
             nearEventsState.append(tEvent[12])
             locEventRange += 1
-        print(nearEventsItag)
         # END ALL LOCATION EVENTS----------------------------------------------
 
         return render_template("index.html", popEventsTitle=popEventsTitle, popEventsDetails=popEventsDetails,
@@ -323,7 +322,7 @@ def user():
         locEventsState = []
         locEventsItag = []
         locEventRange = 0
-
+        
         locEvents = db.getEventsByLoc(str(userLoc))
         for tEvent in locEvents:
             locEventsId.append(tEvent[0])
@@ -332,8 +331,9 @@ def user():
             locEventsSDate.append(upDate)
             endDate = "{:%d %b, %Y}".format(tEvent[3])
             locEventsEDate.append(endDate)
-            locEventsItag.append(imageReturn([tEvent[9]]))
+            locEventsItag.append(imageReturn(tEvent[9]))
             locEventsDetails.append(tEvent[6])
+
 
             locEventsState.append(tEvent[12])
             locEventRange += 1
