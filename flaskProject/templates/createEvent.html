@@ -102,23 +102,23 @@
 
                         <div class="form-group">
                             <label for="eventTitle">Event Title</label>
-                            <input type="text" class="form-control" id="eventTitle" placeholder="Event Name" name="title">          <!--incoming event title-->
+                            <input type="text" class="form-control" id="eventTitle" placeholder="Event Name" name="title" required="required">          <!--incoming event title-->
                         </div>  <!--row-->
 
                         <div class="form-group">
                             <label for="eventAddress">Address</label>
-                            <input type="text" class="form-control" id="eventAddress" placeholder="Street" name="address">           <!--incoming event street-->
+                            <input type="text" class="form-control" id="eventAddress" placeholder="Street" name="address" required="required">           <!--incoming event street-->
                         </div>                
 
                         <div class="form-row">
                             <div class="form-group col-md-6">
                                 <label for="eventCity">City</label>
-                                <input type="text" class="form-control" id="eventCity" name="city">                                 <!--incoming event city-->
+                                <input type="text" class="form-control" id="eventCity" name="city" required="required">                                 <!--incoming event city-->
                             </div>
 
                             <div class="form-group col-md-4">
                                 <label for="eventState">State</label>
-                                <select name="state" id="eventState" class="form-control">                                                       <!--incoming event state-->
+                                <select name="state" id="eventState" class="form-control" required="required">                                                       <!--incoming event state-->
                                     <option selected>Select...</option>
                                     <option value="AL">Alabama</option>
                                     <option value="AK">Alaska</option>
@@ -176,20 +176,20 @@
 
                             <div class="form-group col-md-2">
                                 <label for="eventZip">Zip</label>
-                                <input type="text" class="form-control" id="eventZip" name="zip" onkeypress="numbersOnly(event)">                           <!--incoming event zip-->
+                                <input type="number" class="form-control" id="eventZip" name="zip" onkeypress="numbersOnly(event)" required="required">                           <!--incoming event zip-->
                             </div>
                         </div>  <!--row-->     
 
                         <div class="form-row">
                             <div class="form-group col-md-6">
                                 <label for="eventStartDate">Starts</label>
-                                <input type="date" class="form-control" id="eventStartDate" name="startDate">               <!--incoming start date-->
+                                <input type="date" class="form-control" id="eventStartDate" name="startDate" required="required">               <!--incoming start date-->
                                 <input type="time" class="form-control" id="eventStartTime" name="startTime">               <!--incoming start time-->
                             </div>
 
                             <div class="form-group col-md-6">
                                 <label for="eventEndDate">Ends</label>
-                                <input type="date" class="form-control" id="eventEndDate" name="endDate">                   <!--incoming end date-->
+                                <input type="date" class="form-control" id="eventEndDate" name="endDate" required="required">                   <!--incoming end date-->
                                 <input type="time" class="form-control" id="eventEndTime" name="endTime">                   <!--incoming end time-->
                             </div>
                         </div>
@@ -198,19 +198,19 @@
                             <div class="form-group col-md-6">
                                 <div class="row">
                                     <div class="col">
-                                        <label for="eventPrice">Price</label>
+                                        <label for="eventPrice">Price(Optional)</label>
                                         <input type="number" step="0.01" min="0" class="form-control" id="eventPrice" placeholder="0.00" name="price">    <!--incoming event price-->
                                     </div>
                                     <div class="col">
                                         <label for="eventCapacity">Max Capacity</label>
-                                        <input type="number" min="1" class="form-control" id="eventCapacity" name="maxCapacity">                             <!--incoming event capacity-->
+                                        <input type="number" min="1" class="form-control" id="eventCapacity" name="maxCapacity" required="required">                             <!--incoming event capacity-->
                                     </div>
                                 </div>
                             </div>
 
                             <div class="form-group col-md-6">
                                 <label for="deadlineDate">Registration Deadline</label>
-                                <input type="date" class="form-control" id="deadlineDate" name="deadlineDate">              <!--incoming deadline date-->
+                                <input type="date" class="form-control" id="deadlineDate" name="deadlineDate" required="required">              <!--incoming deadline date-->
                                 <input type="time" class="form-control" id="deadlineTime" name="deadlineTime">              <!--incoming deadline time-->
                             </div>
                         </div>
@@ -242,7 +242,7 @@
                        
                             <div class="form-group col-md-9">
                                 <label for="eventDescr">Event Description</label>
-                                <textarea class="form-control" id="eventDescr" name="description" rows="6" cols="50"></textarea>          <!--incoming event description-->
+                                <textarea class="form-control" id="eventDescr" name="description" rows="6" cols="50" required="required"></textarea>          <!--incoming event description-->
                             </div>  <!--row-->
 
                         </div>  <!--form-row-->     
