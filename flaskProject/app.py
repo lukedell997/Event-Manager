@@ -1010,7 +1010,7 @@ def editEvent():
                                 "userId", str(uEID))):
 
                     db.removeUEvents(str(uEID), str(eventId))
-                    db.removeEventOcp(str(uEID), str(eventId))
+                    db.removeEventOcp(str(eventId))
 
                     
                 else:
