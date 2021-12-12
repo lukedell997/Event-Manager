@@ -118,13 +118,15 @@
                                 <input type="text" placeholder="Credit Card Number" name="creditCardNum" value="{{creditCardNum}}" onkeypress="numbersOnly(event)"/>
                                 <input type="date" placeholder="Expiration Date" name="expiration" value="{{expiration}}" />
                                 <input type="text" placeholder="CSV" name="csv" value="{{csv}}" onkeypress="numbersOnly(event)"/>
-                                <input type="text" placeholder="eventId" value="{{eventId}}" hidden>
                             </div>
                         </form>
                     </div>
                     <div class="modal-footer">
-                        <input type='button' value="CANCEL" data-dismiss="modal" />
-                        <input type='submit' value="ATTEND" name="attendPayinfo"/>
+                        <form action="#" method="POST">
+                            <input type='button' value="CANCEL" data-dismiss="modal" />
+                            <input type="text" name="eventId" value="{{eventId}}" hidden>
+                            <input type="submit" value="ATTEND" name="attend" >
+                        </form>
                     </div>
                 </div>
             </div>
