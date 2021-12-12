@@ -11,6 +11,8 @@ app.secret_key = "hello"
 db = DataB()
 #cnx,  = db.openDatabase()
 
+print(db.hashIt("password"))
+
 
 def imageReturn(imageNumber):
 
@@ -111,9 +113,11 @@ def index():  # put application's code here
             nearEventsEDate.append(endDate)
             nearEventsDetails.append(tEvent[6])
             nearEventsItag.append(imageReturn(tEvent[9]))
+            print(tEvent[9])
             nearEventsState.append(tEvent[12])
             locEventRange += 1
-
+        
+        print(nearEventsITag)
         # END ALL LOCATION EVENTS----------------------------------------------
 
         return render_template("index.html", popEventsTitle=popEventsTitle, popEventsDetails=popEventsDetails,
@@ -133,10 +137,11 @@ def registerPage():  # put application's code here
         userLastName = request.form["ln"]
         userUsername = request.form["nm"]
         userPassword = request.form["pw"]
+        userPassword = db.hashIt(userPassword)
         userAddress = request.form["address"]
         userCity = request.form["city"]
         userState = request.form.get("state")
-        userZipcode = request.form["zipcode"]
+        userZipcode = request.form["zip"]
         userEmail = request.form["email"]
         userNumber = request.form["phone"]
 
@@ -184,6 +189,7 @@ def loginPage():  # put application's code here
         session.permanent = True
         user = request.form["nm"]  # NEED TO CHECK THAT USER EXISTS
         password = request.form["pw"]
+        password = db.hashIt(password)
         session["user"] = user
         # ^GET USER^-------------------------------------------------------------^
         #: check if user found, then get user info into variables
@@ -251,6 +257,8 @@ def user():
             enDate = "{:%d %b, %Y}".format(evInfo[3])
             atEventsEDate.append(enDate)
             atEventsState.append(evInfo[12])
+            #stTime = "{:%l:%M %p}".format(evInfo[15])
+            #stTime = evInfo[15].strftime(" %l:%M %p}")
             atEventsSTime.append(evInfo[15])
             atEventsETime.append(evInfo[16])
             atEventsDTime.append(evInfo[17])
@@ -491,6 +499,7 @@ def eventDetails():  # put application's code here
                 return redirect(url_for("eventDetails"))
 
         # END ADD USER FROM ATTENDING EVENT--------------------------
+
         elif "attendPayinfo" in request.form:
             # ADD USER FROM ATTENDING EVENT--------------------------
             # get all info you need
@@ -506,6 +515,7 @@ def eventDetails():  # put application's code here
             expiration = request.form["expiration"]
             billAdd = request.form["billAdd"]
             cardName = request.form["cardName"]
+
 
             print("AND AGAIN: ", creditCardNum, csv, expiration, billAdd, cardName)
             # if free, user has paid
@@ -530,6 +540,7 @@ def eventDetails():  # put application's code here
             else:
                 print("Event Filled or you are already attending")
                 return redirect(url_for("eventDetails"))
+
         else:
             # give error(filled or user already signed up)
             print("ERROR: event filled or already signed up")
@@ -629,7 +640,7 @@ def manageEvents():  # put application's code here
             adEventsEDate.append(endDate)
             adEventsCap.append(tupleE2[7])
             adEventsOcp.append(tupleE2[8])
-            adEventsItag.append(imageReturn(tupleE2[8]))
+            adEventsItag.append(imageReturn(tupleE2[9]))
             adEventsSTime.append(evInfo[15])
             adEventsETime.append(evInfo[16])
             adEventsDTime.append(evInfo[17])
@@ -646,15 +657,15 @@ def manageEvents():  # put application's code here
             # REMOVE USER FROM ATTENDING EVENT------------------------------------
             if 'leaveEvent' in request.form:
                 leaveEventId = request.form.get("leaveEventId")
-                print("This is the leave eventID: ", leaveEventId)
-                print("TEST!!!!!!!!!!!!!!!!!!!!!!!!!!")
+
                 # if user found with event
                 if (db.checkAny( "attendantId", "user_events", "userId",
                                 str(userId), "eventId", str(leaveEventId)) == True):
 
                     # remove user from event attendance
                     db.removeUEvents(userId, str(leaveEventId))
-                    db.removeEventOcp(str(leaveEventId))
+                    rt = db.removeEventOcp(str(leaveEventId))
+                    print(rt)
 
                     return redirect(url_for("manageEvents"))
                 else:
@@ -1084,7 +1095,9 @@ def updatePersonalInfo():
             nlastName = request.form["ln"]
             nusername = request.form["nm"]
             oPassword = request.form["opw"]
+            oPassword = db.hashIt(oPassword)
             npassword = request.form["pw"]
+            npassword = db.hashIt(npassword)
             naddress = request.form["address"]
             ncity = request.form["city"]
             nstate = request.form.get("state")

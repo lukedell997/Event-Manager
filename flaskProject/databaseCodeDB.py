@@ -482,7 +482,7 @@ class DataB:
             #db = DataB()
             cnx, cursor = self.openDatabase()
             #get event info
-            event = self.getEventsByEId(cursor, eventId)
+            event = self.getEventsByEId(eventId)
             if(event[8] == 0):
                 #close
                 cursor.close()
