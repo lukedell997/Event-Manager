@@ -138,7 +138,10 @@
                     <div class="media">
                         <img class="d-flex mr-5 img-fluid img-thumbnail" src="{{ url_for('static', filename=eventITag)}}" alt="Event Image" />     <!--outgoing event image-->
                         <div class="media-body align-self-center">
-							<h2>{{ eventTitle }}</h2>                                              <!--outgoing event title-->
+                            <div class="d-flex justify-content-between">
+                                <h2>{{ eventTitle }}</h2>                                               <!--outgoing event title-->
+                                <span id="capacity" class="text-success mr-4">Current Capacity: {{ eventCap }}/{{ eventMaxPop }}</span>                            <!--outgoing event capacity-->
+                            </div>
                             <h4>${{ eventPrice }}</h4>                                                        <!--outgoing event price-->
 							<h5>Date: {{ eventStartDate }} to {{ eventEndDate }}</h5>                                                     <!--outgoing event date-->
                             <h5>Time: {{ eventSTime }} - {{ eventETime }}</h5>  
@@ -159,11 +162,6 @@
                                     {% endif %}
                                 </div>          
                             </form>
-                            <div class="progress mt-2">                                         <!--outgoing event capacity-->
-                                <div class="progress-bar" role="progressbar" style="width: 75%" aria-valuenow="75" aria-valuemin="0" aria-valuemax="100">   <!--outgoing capacity-->
-                                    {{ eventCap }}/{{ eventMaxPop }}
-                                </div>
-                            </div>
                         </div>  <!--media-body-->
                     </div>  <!--media-->
                 </div>  <!--col-->
