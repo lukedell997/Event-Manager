@@ -100,38 +100,40 @@
             </div>
         </div>
 
-         <!--payment modal-->
+
+        <!--Payment modal-->
         <div class="modal fade" id="modalPayment" tabindex="-1" role="dialog" aria-labelledby="modalHeader" aria-hidden="true">
             <div class="modal-dialog" role="document">
-              <div class="modal-content">
-                <div class="modal-header">
-                  <h5 class="modal-title" id="modalHeader">Confirm Logout</h5>
-                  <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                  </button>
-                </div>
-                <div class="modal-body">
-                  Are you sure you want to log out?
-                </div>
-                <div class="modal-footer">
-                  <form action="#" method="POST">
-                    <div class="form-group">
-                        <input type='button' value="CANCEL" data-dismiss="modal" />
-                        <input type='submit' value="Attend" name="attendPayinfo"/>
-                        <input type='text' value="" name="creditCard info"/>    <!--incoming user logs out-->
-                        <input type='number' placeholder="put your credit card number here"  name="creditCardNum"/>
-                        <input type='number' placeholder="put your credit card csv here"  name="csv"/>
-                        <input type='date' placeholder="put your credit card expiration here"  name="expiration"/>
-                        <input type='text' placeholder="put your billing address here"  name="billAdd"/>
-                        <input type='text' placeholder="put the name on the card"  name="cardName"/>
-                        <input type="text" placeholder="eventId" value="{{eventId}}" hidden>
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="modalHeader">Confirm Payment</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
                     </div>
-                  </form>
+                    <div class="modal-body">
+                        <form action="#" method="POST">
+                            <div class="form-group">
+                                <input type="text" placeholder="Name"  name="cardName" value="{{cardName}}"/>
+                                <input type="text" placeholder="Billing Address"  name="billAdd" value="{{billAdd}}" />
+                                <input type="text" placeholder="Credit Card Number" name="creditCardNum" value="{{creditCardNum}}" onkeypress="numbersOnly(event)"/>
+                                <input type="date" placeholder="Expiration Date" name="expiration" value="{{expiration}}" />
+                                <input type="text" placeholder="CSV" name="csv" value="{{csv}}" onkeypress="numbersOnly(event)"/>
+                                <input type="text" placeholder="eventId" value="{{eventId}}" hidden>
+                            </div>
+                        </form>
+                    </div>
+                    <div class="modal-footer">
+                        <input type='button' value="CANCEL" data-dismiss="modal" />
+                        <input type='submit' value="ATTEND" name="attendPayinfo"/>
+                    </div>
                 </div>
+            </div>
+        </div> 
 
         <!-- CONTENTS -->
         <div class="container">
-	    <!-- EVENT DETAILS -->
+	        <!-- EVENT DETAILS -->
             <div class="row row-content">
                 <div class="col">
                     <div class="media">
@@ -145,13 +147,14 @@
                             <form action="#" method="POST">
                                 <div class="form-group">
                                     {%  if eventPrice > 0 %}
-                                    <input type="text" name="eventId" value="{{eventId}}" hidden>
-                                        <button type="button" value="ATTEND" name="attend" data-toggle="modal" data-target="#modalPayment">ATTEND</button>
-                                    {%  elif eventPrice > 0 %}
+                                    <input type="button" value="ATTEND" name="attend" data-toggle="modal" data-target="#modalPayment"/>   
+                                    <!-- <input type="text" name="eventId" hidden>
+                                        <button type="button" value="ATTEND" name="attend" data-toggle="modal" data-target="#modalPayment">ATTEND</button> -->
+                                    {%  elif eventPrice <= 0 %}
                                     <input type="text" name="eventId" value="{{eventId}}" hidden>
                                     <input type="submit" value="ATTEND" name="attend">
                                     {% endif %}
-                                </div>  <!--form-group-->           
+                                </div>          
                             </form>
                             <div class="progress mt-2">                                         <!--outgoing event capacity-->
                                 <div class="progress-bar" role="progressbar" style="width: 75%" aria-valuenow="75" aria-valuemin="0" aria-valuemax="100">   <!--outgoing capacity-->
@@ -246,5 +249,6 @@
 
         <!-- Custom Scripts-->
         <script src="{{ url_for('static', filename='js/scripts.js')}}"></script>
+        <script src="{{ url_for('static', filename='js/numsVal.js')}}"></script>
     </body>
 </html>
