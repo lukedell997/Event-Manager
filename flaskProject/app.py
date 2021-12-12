@@ -136,7 +136,7 @@ def registerPage():  # put application's code here
         userAddress = request.form["address"]
         userCity = request.form["city"]
         userState = request.form.get("state")
-        userZipcode = 123456
+        userZipcode = request.form["zipcode"]
         userEmail = request.form["email"]
         userNumber = request.form["phone"]
 
@@ -149,7 +149,7 @@ def registerPage():  # put application's code here
         if (db.checkAny(cursor, "userId", "users", "username", str(userUsername)
                 , "username", str(userUsername)) == False):
             # print(test)
-            db.newUser(cnx, cursor, cU)
+            db.newUser(cU)
             return redirect(url_for("loginPage"))
         else:
             print("ERROR: username already exists")
@@ -480,10 +480,10 @@ def eventDetails():  # put application's code here
                     and db.checkAvl(cursor, str(eventId)) == True):
 
                 # create new user events
-                db.newUEvents(cnx, cursor, cUE)
+                db.newUEvents(cUE)
 
                 # add occupant to event
-                rt = db.addEventOcp(cnx, cursor, eventId, eventOcp)
+                rt = db.addEventOcp(eventId, eventOcp)
 
                 return redirect(url_for("user"))
             else:
@@ -615,8 +615,8 @@ def manageEvents():  # put application's code here
                                 str(userId), "eventId", str(leaveEventId)) == True):
 
                     # remove user from event attendance
-                    db.removeUEvents(cnx, cursor, userId, str(leaveEventId))
-                    db.removeEventOcp(cnx, cursor, str(leaveEventId))
+                    db.removeUEvents(userId, str(leaveEventId))
+                    db.removeEventOcp(str(leaveEventId))
 
                     return redirect(url_for("manageEvents"))
                 else:
@@ -874,7 +874,7 @@ def editEvent():
                           str(eventCity), str(eventState), str(eventZip), str(userId), str(eventStartTime),
                           str(eventEndTime), str(eventDeadlineTime)]
                     # update all variables
-                    db.updateEvent(cnx, cursor, str(eventId), str(userId), eE)
+                    db.updateEvent(str(eventId), str(userId), eE)
 
                     return redirect(url_for('manageEvents'))
                 # if userId doesnt match, send to manage events
@@ -891,10 +891,10 @@ def editEvent():
                                 "eventId", str(eventId)) == True):
 
                     # remove all users from event
-                    db.removeUEventsByEvent(cnx, cursor, str(eventId))
+                    db.removeUEventsByEvent(str(eventId))
 
                     # remove event
-                    db.removeEvent(cnx, cursor, str(eventId), str(userId))
+                    db.removeEvent(str(eventId), str(userId))
 
                     return redirect(url_for('manageEvents'))
 
@@ -908,7 +908,7 @@ def editEvent():
 
                 if (db.checkAny(cursor, "attendantId", "user_events", "eventId", str(eventId),
                                 "userId", str(userId))):
-                    db.removeUEvents(cnx, cursor, str(uEID), str(eventId))
+                    db.removeUEvents(str(uEID), str(eventId))
                 else:
                     print("User not found in Event")
                     return render_template("editEvent.html", eventId=eventId, eventTitle=eventTitle,
@@ -995,7 +995,7 @@ def createEvent():
             if (db.checkAny(cursor, "eventId", "events", "name", str(eventTitle)
                     , "userId", str(userId)) == False):
 
-                rt = db.newEvent(cnx, cursor, cE)
+                rt = db.newEvent(cE)
                 return redirect(url_for("user"))
             # else return to userIndex
             else:
@@ -1064,17 +1064,17 @@ def updatePersonalInfo():
                 # remove all user events
                 uEvents2 = db.getUEventsByUser(cursor, str(userId))
                 for uET2 in uEvents2:
-                    db.removeUEvents(cnx, cursor, str(userId), str(uET2[2]))
-                    db.removeEventOcp(cnx, cursor, str(uET2[2]))
+                    db.removeUEvents(str(userId), str(uET2[2]))
+                    db.removeEventOcp(str(uET2[2]))
 
                 # remove all events created by user
                 uAdmin = db.getEventsByUser(cursor, str(userId))
                 for uAE in uAdmin:
-                    db.removeUEventsByEvent(cnx, cursor, str(uAE[0]))
-                    db.removeEvent(cnx, cursor, str(uAE[0]), str(userId))
+                    db.removeUEventsByEvent(str(uAE[0]))
+                    db.removeEvent(str(uAE[0]), str(userId))
 
                 # remove user from users
-                db.removeUser(cnx, cursor, str(userId), str(oPassword))
+                db.removeUser(str(userId), str(oPassword))
 
                 # set session to None
                 logout()
@@ -1093,7 +1093,7 @@ def updatePersonalInfo():
                       str(nzipcode), str(ncity), str(nstate), str(nphone)]
 
                 # update user
-                rt = db.updateUser(cnx, cursor, str(userId), str(oPassword), eU)
+                rt = db.updateUser(str(userId), str(oPassword), eU)
 
                 # update session info
                 session["user"] = nusername
@@ -1103,7 +1103,7 @@ def updatePersonalInfo():
                 # update user in user_events if username or email change
                 if (str(username) != str(nusername) or str(email) != str(nemail)):
                     chng = [str(nusername), str(nemail)]
-                    rt = db.updateUEventsByUId(cnx, cursor, str(userId), chng)
+                    rt = db.updateUEventsByUId(str(userId), chng)
 
                 return redirect(url_for("user"))
             # END UPDATE USER------------------------------------------------------------------^
