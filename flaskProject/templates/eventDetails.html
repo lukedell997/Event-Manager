@@ -119,7 +119,12 @@
                     <div class="form-group">
                         <input type='button' value="CANCEL" data-dismiss="modal" />
                         <input type='submit' value="Attend" name="attendPayinfo"/>
-                        <input type='text' value="" name="creditCard info"/>    <!--incoming user logs out-->
+                        <input type='number' placeholder="put your credit card number here"  name="creditCardNum"/>
+                        <input type='number' placeholder="put your credit card csv here"  name="csv"/>
+                        <input type='date' placeholder="put your credit card expiration here"  name="expiration"/>
+                        <input type='text' placeholder="put your billing address here"  name="billAdd"/>
+                        <input type='text' placeholder="put the name on the card"  name="cardName"/>
+                        <input type="text" placeholder="eventId" value="{{eventId}}" hidden>
                     </div>
                   </form>
                 </div>
