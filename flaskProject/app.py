@@ -456,7 +456,8 @@ def eventDetails():  # put application's code here
     # END ALL EVENT INFO------------------------------------------------------------
 
     if request.method == "POST":
-
+        if "user" not in session:
+            return redirect(url_for("index"))
         if "attend" in request.form:
             
             if attend == "attending" or attend == "admin":
