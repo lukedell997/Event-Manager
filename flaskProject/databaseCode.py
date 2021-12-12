@@ -46,7 +46,7 @@ class DataB:
 
     # Turn into hash
     def hashIt(self, pas):
-        hash_pas = hashlib.md5(pas.encode("utf-8")).hexdigest()
+        hash_pas = hashlib.sha256(pas.encode("utf-8")).hexdigest()
         return hash_pas
     #encrypt
 
@@ -96,6 +96,8 @@ class DataB:
     # CREATE USER EVENTS
     def newUEvents(self, cnx, cursor, data):
         try:
+            # = DataB()
+            cnx, cursor = self.openDatabase()
             userClms = ''.join(("userId, eventId, userName, userEmail,",
                                 " paid, seat, price"))
             cursor.execute(self.insert("user_events", userClms, data))
@@ -290,8 +292,9 @@ class DataB:
         try:
             eventClms = ''.join(("name, sDate, eDate, deadlineDate, price, des,",
                                  " capacity, occupants, iTag, address,",
-                                 " city, state, zipcode, userId"))
+                                 " city, state, zipcode, userId, sTime, eTime, dTime"))
             ts = self.insert("events", eventClms, data)
+            print(ts)
             cursor.execute(ts)
             print(cursor)
             cnx.commit()
@@ -324,7 +327,8 @@ class DataB:
                       " eDate = '%s', deadlineDate = '%s',"%(str(uC[2]),str(uC[3])),
                       " price = '%s', des = '%s', capacity = '%s',"%(str(uC[4]),str(uC[5]), str(uC[6])),
                       " iTag = '%s', address = '%s',"%(str(uC[7]),str(uC[8])),
-                      " city = '%s', state = '%s', zipcode = '%s'"%(str(uC[9]),str(uC[10]), str(uC[12])),
+                      " city = '%s', state = '%s', zipcode = '%s',"%(str(uC[9]),str(uC[10]), str(uC[12])),
+                          " sTime = '%s', eTime = '%s', dTime = '%s'"%(str(uC[13]),str(uC[14]), str(uC[15])),
                       " WHERE eventId ='%s' AND userId = '%s'"%(str(eventId),str(userId))))
             print(uU)
             cursor.execute(uU)

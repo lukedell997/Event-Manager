@@ -23,7 +23,7 @@ def imageReturn(imageNumber):
     elif imageNumber == 4:
         pic = 'img/festivalEvent.jpg'
     elif imageNumber == 5:
-        pic = 'img/movieEvent.jpg'
+        pic = 'img/movieEvents.jpg'
     else:
         pic = 'img/basicEventPicture.jpg'
 
@@ -387,9 +387,8 @@ def eventDetails():  # put application's code here
 
     eventId = request.form.get("eventId")
     attend = "attend"
-    userId = session["userId"]
-    
     if "user" in session:
+        userId = session["userId"]
         logedIn = True
         if (db.checkAny( "attendantId", "user_events", "eventId", str(eventId),
                         "userId", str(userId)) == True):
@@ -525,6 +524,7 @@ def eventDetails():  # put application's code here
             billAdd = request.form["billAdd"]
             cardName = request.form["cardName"]
 
+            
 
             print("AND AGAIN: ", creditCardNum, csv, expiration, billAdd, cardName)
             # if free, user has paid
@@ -672,7 +672,7 @@ def manageEvents():  # put application's code here
                                 str(userId), "eventId", str(leaveEventId)) == True):
 
                     # remove user from event attendance
-                    db.removeUEvents(userId, str(leaveEventId))
+                    db.removeUEvents(str(userId), str(leaveEventId))
                     rt = db.removeEventOcp(str(leaveEventId))
                     print(rt)
 
@@ -893,8 +893,7 @@ def editEvent():
                 userRange += 1
 
         # END GET ALL ATTENDING EVENT--------------------------------------^
-        #print(time.strftime('%H:%M:%S', time.gmtime(event[16])))
-        print(eventEndTime)
+ 
 
         userId = session["userId"]
 
@@ -946,6 +945,8 @@ def editEvent():
             # DELETE EVENT AND USER EVENTS----------------------------------------------
             if "deleteEvent" in request.form:
 
+
+
                 # check if user is admin
                 if (db.checkAny( "eventId", "events", "eventId", str(eventId),
                                 "eventId", str(eventId)) == True):
@@ -964,11 +965,53 @@ def editEvent():
             # DELETE EVENT AND USER EVENTS----------------------------------------------
 #DELETE USER IN EVENT--------------------------------------------------------
             if "del" in request.form:
-                uEID = request.form.get("userEId")
+                
+                uEID = request.form.get("userDel")
+                eventId = request.form.get("eventDelUserId")
+                event = db.getEventsByEId( str(eventId))
 
+                eventTitle = event[1]
+                eventStartDate = event[2]
+                eventEndDate = event[3]
+                eventDeadline = event[4]
+                eventPrice = event[5]
+                eventDes = event[6]
+                eventCap = event[7]
+                eventOcp = event[8]
+                eventITag = imageReturn(event[9])
+                eventAddress = event[10]
+                eventCity = event[11]
+                eventState = event[12]
+                eventZip = event[13]
+                eventUId = event[14]
+                eventStartTime = event[15]
+                eventEndTime = event[16]
+                eventDeadlineTime = event[17]
+                #eventDeadlineTime = 0
+
+                # GET ALL ATTENDING EVENT--------------------------------------^
+                # get user_events by userId
+                eventUsers = db.getUEventsByEvent( str(eventId))
+                userRange = 0
+
+                # for all user_events, get the event
+                for tupleEvent in eventUsers:
+                    # add each section to list
+                    usersId.append(tupleEvent[1])
+                    usersName.append(tupleEvent[3])
+                    usersEmail.append(tupleEvent[4])
+                    userRange += 1
+            # END GET ALL ATTENDING EVENT--------------------------------------^
+     
+
+                userId = session["userId"]
                 if (db.checkAny( "attendantId", "user_events", "eventId", str(eventId),
-                                "userId", str(userId))):
+                                "userId", str(uEID))):
+
                     db.removeUEvents(str(uEID), str(eventId))
+                    db.removeEventOcp(str(eventId))
+
+                    
                 else:
                     print("User not found in Event")
                     return render_template("editEvent.html", eventId=eventId, eventTitle=eventTitle,
