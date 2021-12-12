@@ -100,40 +100,6 @@
             </div>
         </div>
 
-
-        <!--payment modal-->
-        <div class="modal fade" id="modalPay" tabindex="-1" role="dialog" aria-labelledby="modalHeader" aria-hidden="true">
-            <div class="modal-dialog" role="document">
-              <div class="modal-content">
-                <div class="modal-header">
-                  <h5 class="modal-title" id="modalHeader">Confirm Logout</h5>
-                  <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                  </button>
-                </div>
-                <div class="modal-body">
-                  This event requires a payment of ${{ eventPrice }}
-                </div>
-                <div class="modal-footer">
-                  <form action="#" method="POST">
-                    <div class="form-group">
-                        <input type='button' value="CANCEL" data-dismiss="modal" />
-                        <input type='submit' value="Attend" name="attendPayinfo"/>
-                        <input type='number' placeholder="put your credit card number here"  name="creditCardNum"/>
-                        <input type='number' placeholder="put your credit card csv here"  name="csv"/>
-                        <input type='date' placeholder="put your credit card expiration here"  name="expiration"/>
-                        <input type='text' placeholder="put your billing address here"  name="billAdd"/>
-                        <input type='text' placeholder="put the name on the card"  name="cardName"/>
-                        <input type="text" placeholder="eventId" value="{{eventId}}" hidden>
-                    </div>
-                  </form>
-                </div>
-              </div>
-            </div>
-        </div>
-
-
-
         <!-- CONTENTS -->
         <div class="container">
 	    <!-- EVENT DETAILS -->
@@ -142,17 +108,15 @@
                     <div class="media">
                         <img class="d-flex mr-5 img-fluid img-thumbnail" src="{{ url_for('static', filename=eventITag)}}" alt="Event Image" />     <!--outgoing event image-->
                         <div class="media-body align-self-center">
-                            <h3>{{ eventDate }}</h3>                                                     <!--outgoing event date-->
-                            <h2>{{ eventTitle }}</h2>                                              <!--outgoing event title-->
+
+							<h2>{{ eventTitle }}</h2>                                              <!--outgoing event title-->
                             <h4>${{ eventPrice }}</h4>                                                        <!--outgoing event price-->
+							<h5>Date:{{ eventStartDate }}-{{ eventEndDate }}</h5>                                                     <!--outgoing event date-->
+                            <h5>Time: {{ eventSTime }}-{{ eventETime }}</h5>  
                             <form action="#" method="POST">
                                 <div class="form-group">
                                     <input type="text" name="eventId" value="{{eventId}}" hidden>
-                                    {% if eventPrice > 0 %}
-                                        <button type="button" name="attend" data-toggle="modal" data-target="#modalPay"> ATTEND </button>
-                                    {% else %}
-                                        <input type="submit" value="ATTEND" name="attend">
-                                    {% endif %}
+                                    <input type="submit" value="ATTEND" name="attend">
                                 </div>  <!--form-group-->           
                             </form>
                             <div class="progress mt-2">                                         <!--outgoing event capacity-->

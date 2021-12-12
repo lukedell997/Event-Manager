@@ -102,18 +102,18 @@
 
                         <div class="form-group">
                             <label for="eventTitle">Event Title</label>
-                            <input type="text" class="form-control" id="eventTitle" placeholder="Event Name" name="title" value="{{ eventTitle }}">          <!--outgoing event title-->
+                            <input type="text" class="form-control" id="eventTitle" placeholder="Event Name" name="title" value="{{ eventTitle }}" required="required">          <!--outgoing event title-->
                         </div>  <!--row-->
 
                         <div class="form-group">
                             <label for="eventAddress">Event Address</label>
-                            <input type="text" class="form-control" id="eventAddress" placeholder="Street" name="address" value="{{ eventAddress }}">           <!--outgoing event street-->
+                            <input type="text" class="form-control" id="eventAddress" placeholder="Street" name="address" value="{{ eventAddress }}" required="required">           <!--outgoing event street-->
                         </div>                
 
                         <div class="form-row">
                             <div class="form-group col-md-6">
                                 <label for="eventCity">City</label>
-                                <input type="text" class="form-control" id="eventCity" name="city" value="{{ eventCity }}">                                 <!--outgoing event city-->
+                                <input type="text" class="form-control" id="eventCity" name="city" value="{{ eventCity }}" required="required">                                 <!--outgoing event city-->
                             </div>
 
                             <div class="form-group col-md-4">
@@ -175,21 +175,21 @@
 
                             <div class="form-group col-md-2">
                                 <label for="eventZip">Zip</label>
-                                <input type="text" class="form-control" id="eventZip" name="zip" value="{{ eventZip }}" onkeypress="numbersOnly(event)">                           <!--outgoing event zip-->
+                                <input type="text" class="form-control" id="eventZip" name="zip" value="{{ eventZip }}" onkeypress="numbersOnly(event)" required="required">                           <!--outgoing event zip-->
                             </div>
                         </div>  <!--row-->     
 
                         <div class="form-row">
                             <div class="form-group col-md-6">
                                 <label for="eventStartDate">Starts</label>
-                                <input type="date" class="form-control" id="eventStartDate" name="startDate" value="{{ eventStartDate }}">               <!--outgoing start date-->
-                                <input type="time" class="form-control" id="eventStartTime" name="startTime" value="{{ eventStartTime }}">               <!--outgoing start time-->
+                                <input type="date" class="form-control" id="eventStartDate" name="startDate" value="{{ eventStartDate }}" required="required">               <!--outgoing start date-->
+                                <input type="time" class="form-control" id="eventStartTime" name="startTime" value="{{ eventStartTime }}" required="required">               <!--outgoing start time-->
                             </div>
 
                             <div class="form-group col-md-6">
                                 <label for="eventEndDate">Ends</label>
-                                <input type="date" class="form-control" id="eventEndDate" name="endDate" value="{{ eventEndDate }}">                   <!--outgoing end date-->
-                                <input type="time" class="form-control" id="eventEndTime" name="endTime" value="{{ eventEndTime }}">                   <!--outgoing end time-->
+                                <input type="date" class="form-control" id="eventEndDate" name="endDate" value="{{ eventEndDate }}" required="required">                   <!--outgoing end date-->
+                                <input type="time" class="form-control" id="eventEndTime" name="endTime" value="{{ eventEndTime }}" required="required">                   <!--outgoing end time-->
                             </div>
                         </div>
 
@@ -198,19 +198,19 @@
                                 <div class="row">
                                     <div class="col">
                                         <label for="eventPrice">Price</label>
-                                        <input type="number" step="0.01" min="0" class="form-control" id="eventPrice" placeholder="0.00" name="price" value="{{ eventPrice }}">    <!--outgoing event price-->
+                                        <input type="number" step="0.01" min="0" class="form-control" id="eventPrice" placeholder="0.00" name="price" value="{{ eventPrice }}" required="required">    <!--outgoing event price-->
                                     </div>
                                     <div class="col">
                                         <label for="eventCapacity">Max Capacity</label>
-                                        <input type="number" min="1" class="form-control" id="eventCapacity" name="maxCapacity" value="{{ eventCap }}">                             <!--outgoing event capacity-->
+                                        <input type="number" min="1" class="form-control" id="eventCapacity" name="maxCapacity" value="{{ eventCap }}" required="required">                             <!--outgoing event capacity-->
                                     </div>
                                 </div>
                             </div>
 
                             <div class="form-group col-md-6">
                                 <label for="deadlineDate">Registration Deadline</label>
-                                <input type="date" class="form-control" id="deadlineDate" name="deadlineDate" value="{{ eventDeadline }}">              <!--outgoing deadline date-->
-                                <input type="time" class="form-control" id="deadlineTime" name="deadlineTime" value="{{ eventDeadlineTime }}">              <!--outgoing deadline time-->
+                                <input type="date" class="form-control" id="deadlineDate" name="deadlineDate" value="{{ eventDeadline }}" required="required">              <!--outgoing deadline date-->
+                                <input type="time" class="form-control" id="deadlineTime" name="deadlineTime" value="{{ eventDeadlineTime }}" required="required">              <!--outgoing deadline time-->
                             </div>
                         </div>
                         
