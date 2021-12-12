@@ -461,7 +461,7 @@ def eventDetails():  # put application's code here
 
         if "attend" in request.form:
             
-           if attend == "attending" or attend == "admin":
+            if attend == "attending" or attend == "admin":
                 flash("You are already attending or admining this event")
                 return render_template("eventDetails.html", eventStartDate=eventStartDate, eventEndDate=eventEndDate,
                                        eventTitle=eventTitle, eventPrice=eventPrice, eventDescription=eventDescription,
@@ -475,40 +475,40 @@ def eventDetails():  # put application's code here
                                        popEventsState=popEventsState, popEventRange=popEventRange,
                                        popEventsItag=popEventsItag)
             else:
-            # ADD USER FROM ATTENDING EVENT--------------------------
-            # get all info you need
-            userId = session["userId"]
-            user = session["user"]
-            email = session["userEmail"]
-            paid = 1
-            seat = "O0"
-            price = eventPrice
-            atEventId = request.form["eventId"]
+                # ADD USER FROM ATTENDING EVENT--------------------------
+                # get all info you need
+                userId = session["userId"]
+                user = session["user"]
+                email = session["userEmail"]
+                paid = 1
+                seat = "O0"
+                price = eventPrice
+                atEventId = request.form["eventId"]
 
-            # if free, user has paid
-            if (price != 0):
-                paid = 0
+                # if free, user has paid
+                if (price != 0):
+                    paid = 0
 
-            # turn to string
-            cUE = getInputString([userId, eventId, user, email, paid, seat, price])
+                # turn to string
+                cUE = getInputString([userId, eventId, user, email, paid, seat, price])
 
-            # check if not already exists: AND if not full
-            if (db.checkAny( "attendantId", "user_events", "userId",
-                            str(userId), "eventId", str(atEventId)) == False
-                    and db.checkAvl( str(eventId)) == True):
+                # check if not already exists: AND if not full
+                if (db.checkAny( "attendantId", "user_events", "userId",
+                                str(userId), "eventId", str(atEventId)) == False
+                        and db.checkAvl( str(eventId)) == True):
 
-                # create new user events
-                db.newUEvents(cUE)
+                    # create new user events
+                    db.newUEvents(cUE)
 
-                # add occupant to event
-                rt = db.addEventOcp(eventId, eventOcp)
+                    # add occupant to event
+                    rt = db.addEventOcp(eventId, eventOcp)
 
-                return redirect(url_for("user"))
-            else:
-                print("Event Filled or you are already attending")
-                return redirect(url_for("eventDetails"))
+                    return redirect(url_for("user"))
+                else:
+                    print("Event Filled or you are already attending")
+                    return redirect(url_for("eventDetails"))
 
-        # END ADD USER FROM ATTENDING EVENT--------------------------
+            # END ADD USER FROM ATTENDING EVENT--------------------------
 
         elif "attendPayinfo" in request.form:
             # ADD USER FROM ATTENDING EVENT--------------------------
@@ -565,7 +565,7 @@ def eventDetails():  # put application's code here
                                    popEventsSDate=popEventsSDate, popEventsDetails=popEventsDetails,
                                    popEventsState=popEventsState, popEventRange=popEventRange,
                                    popEventsItag=popEventsItag)
-    # END POST
+        # END POST
     else:
         return render_template("eventDetails.html", eventStartDate=eventStartDate, eventEndDate=eventEndDate,
                                eventTitle=eventTitle, eventPrice=eventPrice, eventDescription=eventDescription,
