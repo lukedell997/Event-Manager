@@ -387,9 +387,8 @@ def eventDetails():  # put application's code here
 
     eventId = request.form.get("eventId")
     attend = "attend"
-    userId = session["userId"]
-    
     if "user" in session:
+        userId = session["userId"]
         logedIn = True
         if (db.checkAny( "attendantId", "user_events", "eventId", str(eventId),
                         "userId", str(userId)) == True):
