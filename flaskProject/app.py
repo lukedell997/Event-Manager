@@ -473,7 +473,7 @@ def eventDetails():  # put application's code here
                                        popEventsSDate=popEventsSDate, popEventsDetails=popEventsDetails,
                                        popEventsState=popEventsState, popEventRange=popEventRange,
                                        popEventsItag=popEventsItag)
-            elif 'user' in session:
+            elif 'attend' in request.form:
                 # ADD USER FROM ATTENDING EVENT--------------------------
                 # get all info you need
                 userId = session["userId"]
