@@ -81,7 +81,7 @@
                   Are you sure you want to log out?
                 </div>
                 <div class="modal-footer">
-                  <form action="#" method="POST">
+                  <form action="logout.html" method="POST">
                     <div class="form-group">
                         <input type='button' value="CANCEL" data-dismiss="modal" />      
                         <input type='submit' value="YES" name="userLogout"/>    <!--incoming user logs out-->
@@ -253,7 +253,7 @@
                 <div class="row row-content">
                     <div class="col">
                         <div class="form-group float-right">
-                            <input type='button' value="CANCEL" name="close"/>      <!--incoming cancel, go back to previous page-->
+                            <input type='submit' value="CANCEL" name="close"/>      <!--incoming cancel, go back to previous page-->
                             <input type='submit' value="SAVE" name="saveEvent"/>    <!--incoming save all event data, should redirect to manageEvents.html based on <form action>-->
                         </div>      
                     </div>
